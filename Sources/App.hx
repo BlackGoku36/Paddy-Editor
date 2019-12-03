@@ -58,6 +58,9 @@ class App {
 		objects: []
 	}
 
+	static var assetPath = "";
+	static var selectedImage = null;
+
 	public function new() {
 		Assets.loadFontFromPath("hn.ttf", function (fnt){
 			ui = new Zui({font: fnt});
@@ -109,6 +112,15 @@ class App {
 		// Draw window in editor
 		g.drawRect(coffX, coffY, window.width*0.5, window.height*0.5);
 
+		for (object in scene.objects){
+			var sprite = std.Assets.getImage(object.spriteRef);
+			if(sprite != null) {
+				g.pushRotation(object.rotation, coffX + object.x+(object.width/2), coffY + object.y+(object.height/2));
+				g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width, object.height);
+				g.popTransformation();
+			}
+		}
+
 		ObjectController.render(g);
 
 		var col = g.color;
@@ -126,7 +138,7 @@ class App {
 		ui.begin(g);
 		if(ui.window(Id.handle(), kha.System.windowWidth()-500, 0, 200, 30)){
 			ui.row([1/5, 4/5]);
-			if(ui.button("{}")){
+			if(ui.button("=>")){
 				if(buildMode == 0){
 					#if kha_krom
 					Krom.fileSaveBytes(scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(scene)).getData());
@@ -272,13 +284,21 @@ class App {
 			var filePath = "";
 			#end
 			if(ui.tab(Id.handle(), "File Browser")){
-				var path = Ext.fileBrowser(ui, Id.handle({text:filePath}));
-				if(StringTools.endsWith(path, "Assets")){
-					// std.Assets.loadImages(path);
-					// std.Assets.loadFonts(path);
-					// std.Assets.loadSounds(path);
-					// std.Assets.loadBlobs(path);
+				ui.row([3/5, 2/5]);
+				ui.textInput(Id.handle(), "Search", Right);
+				if(ui.button("Import")){
+					var isImage = StringTools.endsWith(assetPath, ".jpg") ||
+					  StringTools.endsWith(assetPath, ".png") ||
+					  StringTools.endsWith(assetPath, ".hdr");
+					var isFont = StringTools.endsWith(assetPath, ".ttf");
+					var isSound = StringTools.endsWith(assetPath, ".ogg");
+
+					if(isImage) std.Assets.loadImage(assetPath);
+					else if(isFont) std.Assets.loadFont(assetPath);
+					else if(isSound) std.Assets.loadSound(assetPath);
+					else std.Assets.loadBlob(assetPath);
 				}
+				assetPath = Ext.fileBrowser(ui, Id.handle({text:filePath}));
 			}
 		}
 		if(ui.window(Id.handle(), fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20)){
@@ -287,15 +307,26 @@ class App {
 				ui.row([9/10, 1/10]);
 				ui.textInput(Id.handle(), "Search", Right);
 				ui.button("Enter");
-				for (font in std.Assets.fonts) for (name => value in font) ui.text(name);
-				for (image in std.Assets.images) for (name => value in image) ui.text(name);
-				for (sound in std.Assets.sounds) for (name => value in sound) ui.text(name);
-				for (blob in std.Assets.blobs) for (name => value in blob) ui.text(name);
-				// ui.image(grid, 0xffffffff, null, 0, 0, 50, 50);
+				for (image in std.Assets.images) for (name => value in image){
+					var state = ui.image(value, 0xffffffff, 50, 0, 0, value.width, value.height);
+					if(state == 2) selectedImage = name;
+				}
+				// for (image in std.Assets.fonts) for (name => value in image) ui.text(name);
+				// for (sound in std.Assets.sounds) for (name => value in sound) ui.text(name);
+				// for (blob in std.Assets.blobs) for (name => value in blob) ui.text(name);
 			}
 			if(ui.tab(assetTabH, "Terminal")){}
 		}
 		ui.end();
+
+		g.begin(false);
+		if (selectedImage != null) {
+			var w = Math.min(128, std.Assets.getImage(selectedImage).width);
+			var ratio = w / std.Assets.getImage(selectedImage).width;
+			var h = std.Assets.getImage(selectedImage).height * ratio;
+			g.drawScaledImage(std.Assets.getImage(selectedImage), ui.inputX, ui.inputY, w, h);
+		}
+		g.end();
 
 		if (ui.changed && !ui.inputDown) {
 			drawGrid();
@@ -310,6 +341,13 @@ class App {
 
 	public function update() {
 		if(ui == null)return;
+
+		if(ui.inputReleased && selectedImage != null){
+			if (util.Math.hitbox(ui, coffX + selectedObj.x, coffY + selectedObj.y, selectedObj.width, selectedObj.height, selectedObj.rotation)) {
+				selectedObj.spriteRef = selectedImage;
+				selectedImage = null;
+			}
+		}
 
 		if(selectedObj!=null) propwin.redraws = 2;
 
