@@ -4,6 +4,7 @@ import zui.Zui;
 import kha.math.Vector2;
 
 class Math {
+	public static inline function toDegrees(radians:Float):Float { return radians * 57.29578; }
 	public static inline function toRadians(degrees:Float):Float { return degrees * 0.0174532924; }
 
 	public static function hitbox(ui:Zui, x:Float, y:Float, w:Float, h:Float, ?rotation:Float):Bool {
@@ -19,5 +20,14 @@ class Math {
 		var y = pointX * std.Math.sin(angle) + pointY * std.Math.cos(angle);
 
 		return new Vector2(centerX + x, centerY + y);
+	}
+
+	public static function roundPrecision(v:Float, ?precision=0):Float {
+		v *= std.Math.pow(10, precision);
+
+		v = Std.int(v) * 1.0;
+		v /= std.Math.pow(10, precision);
+
+		return v;
 	}
 }

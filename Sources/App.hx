@@ -207,10 +207,10 @@ class App {
 					ui.text("Width");
 					window.width = Std.parseInt(ui.textInput(Id.handle({text: window.width+""}), Right));
 					ui.row([1/4, 3/4]);
-					ui.text("Height:");
+					ui.text("Height");
 					window.height = Std.parseInt(ui.textInput(Id.handle({text: window.height+""}), Right));
 					ui.row([1/4, 3/4]);
-					ui.text("Mode:");
+					ui.text("Mode");
 					var windowHandle = Id.handle({position: 0});
 					ui.combo(Id.handle({position: 0}), ["Windowed", "Fullscreen"], Right);
 					if (windowHandle.changed) window.windowMode = windowHandle.position;
@@ -221,44 +221,44 @@ class App {
 					var id = obj.id;
 					if (ui.panel(Id.handle({selected: true}), "Object")) {
 						ui.indent();
-						ui.row([1/4, 3/4]);
+						ui.row([2/6, 4/6]);
 						ui.text("Name");
 						obj.name = ui.textInput(Id.handle().nest(id, {text: obj.name}), Right);
 
-						ui.row([1/4, 3/4]);
-						ui.text("X:");
+						ui.row([2/6, 4/6]);
+						ui.text("X");
 						var handlex = Id.handle().nest(id, {text: obj.x + ""});
 						handlex.text = obj.x + "";
 						var strx = ui.textInput(handlex, Right);
 						obj.x = Std.parseFloat(strx);
 
-						ui.row([1/4, 3/4]);
-						ui.text("Y:");
+						ui.row([2/6, 4/6]);
+						ui.text("Y");
 						var handley = Id.handle().nest(id, {text: obj.y + ""});
 						handley.text = obj.y + "";
 						var stry = ui.textInput(handley, Right);
 						obj.y = Std.parseFloat(stry);
 
-						ui.row([1/4, 3/4]);
+						ui.row([2/6, 4/6]);
 						ui.text("Width");
 						var handlew = Id.handle().nest(id, {text: obj.width + ""});
 						handlew.text = obj.width + "";
 						var strw = ui.textInput(handlew, Right);
 						obj.width = Std.int(Std.parseFloat(strw));
 
-						ui.row([1/4, 3/4]);
+						ui.row([2/6, 4/6]);
 						ui.text("Height");
 						var handleh = Id.handle().nest(id, {text: obj.height + ""});
 						handleh.text = obj.height + "";
 						var strh = ui.textInput(handleh, Right);
 						obj.height = Std.int(Std.parseFloat(strh));
 
-						ui.row([1/4, 3/4]);
-						ui.text("Rot");
-						var handler = Id.handle().nest(id, {text: obj.rotation + ""});
-						handler.text = obj.rotation + "";
-						var strr = ui.textInput(handler, Right);
-						obj.rotation = Std.int(Std.parseFloat(strr));
+						ui.row([2/6, 4/6]);
+						ui.text("Rotation");
+						var handlerot = Id.handle().nest(id, {value: util.Math.roundPrecision(util.Math.toDegrees(obj.rotation == null ? 0 : obj.rotation), 2)});
+						handlerot.value = util.Math.roundPrecision(util.Math.toDegrees(obj.rotation), 2);
+						if (handlerot.value >= 360) handlerot.value = 0;
+						obj.rotation = util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
 						ui.unindent();
 					}
 				}
