@@ -1,84 +1,84 @@
 package data;
 
 typedef WindowData = {
-    var name: String;
-    var width: Int;
-    var height: Int;
-    var windowMode: Int;
-    var clearColor: Array<Int>;
+	var name: String;
+	var width: Int;
+	var height: Int;
+	var windowMode: Int;
+	var clearColor: Array<Int>;
 }
 
 typedef SceneData = {
-    public var name: String;
-    public var objects: Array<ObjectData>;
-    public var ?assets: AssetData;
-    public var ?scripts: Array<String>;
-    // public var ?physicsWorld: echo.data.Options.WorldOptions;
-    public var ?canvasRef: String;
+	public var name: String;
+	public var objects: Array<ObjectData>;
+	public var ?assets: AssetData;
+	public var ?scripts: Array<String>;
+	// public var ?physicsWorld: echo.data.Options.WorldOptions;
+	public var ?canvasRef: String;
 }
 
 typedef AssetData = {
-    public var images: Array<String>;
-    public var fonts: Array<String>;
-    var ?sounds: Array<String>;
-    var ?blobs: Array<String>;
+	public var images: Array<String>;
+	public var fonts: Array<String>;
+	var ?sounds: Array<String>;
+	var ?blobs: Array<String>;
 }
 
 typedef ObjectData = {
-    public var id:Int;
-    public var name: String;
-    public var x: Float;
-    public var y: Float;
-    public var height: Float;
-    public var width: Float;
-    public var ?rotation:Float;
-    // public var ?rigidBodyData: echo.data.Options.BodyOptions;
-    public var ?culled: Bool;
-    public var ?spriteRef: String;
-    public var ?color: Array<Int>;
-    public var ?scripts: Array<ScriptData>;
+	public var id:Int;
+	public var name: String;
+	public var x: Float;
+	public var y: Float;
+	public var height: Float;
+	public var width: Float;
+	public var ?rotation:Float;
+	// public var ?rigidBodyData: echo.data.Options.BodyOptions;
+	public var ?culled: Bool;
+	public var ?spriteRef: String;
+	public var ?color: Array<Int>;
+	public var ?scripts: Array<ScriptData>;
 }
 
 typedef ParticleData = {
-    var type:ParticleType;
-    var width:Float;
-    var ?height:Float;
-    var speed: Float;
-    var lifeTime: Float;
-    var rots: Float;
-    var rote: Float;
-    var ?color: Array<Int>;
-    var ?spriteRef: String;
-    var ?controlLifetime: Array<LifetimeAttribute>;
+	var type:ParticleType;
+	var width:Float;
+	var ?height:Float;
+	var speed: Float;
+	var lifeTime: Float;
+	var rots: Float;
+	var rote: Float;
+	var ?color: Array<Int>;
+	var ?spriteRef: String;
+	var ?controlLifetime: Array<LifetimeAttribute>;
 }
 
 typedef EmitterData = {
-    var x: Float;
-    var y: Float;
-    var particle: ParticleData;
-    var amount:Int;
+	var x: Float;
+	var y: Float;
+	var particle: ParticleData;
+	var amount:Int;
 }
 
 @:enum abstract ParticleType(Int) from Int to Int {
-    var Sprite = 0;
-    var Rect = 1;
-    var Triangle = 2;
-    var Circle = 3;
+	var Sprite = 0;
+	var Rect = 1;
+	var Triangle = 2;
+	var Circle = 3;
 }
 
 @:enum abstract LifetimeAttribute(Int) from Int to Int {
-    var Alpha = 0;
-    var Size = 1;
+	var Alpha = 0;
+	var Size = 1;
 }
 
 typedef ScriptData = {
-    var name: String;
-    var scriptRef: String;
+	var name: String;
+	var scriptRef: String;
 }
 
 typedef ShaderData = {
-    var vertexShader: kha.graphics4.VertexShader;
-    var fragmentShader: kha.graphics4.FragmentShader;
+	var vertexShader: kha.graphics4.VertexShader;
+	var fragmentShader: kha.graphics4.FragmentShader;
 }
 
 typedef TweenData = {
