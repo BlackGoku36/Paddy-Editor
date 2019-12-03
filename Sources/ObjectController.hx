@@ -34,12 +34,12 @@ class ObjectController{
 	static var gridUseRelative:Bool = true;
 	static var useRotationSteps:Bool = false;
 	static var rotationSteps:Float = util.Math.toRadians(15);
-    static var gridSize = Project.gridSize;
+    static var gridSize = App.gridSize;
 
     public static function render(g:Graphics) {
-        var selectedObj = Project.selectedObj;
-        var coffX = Project.coffX;
-        var coffY = Project.coffY;
+        var selectedObj = App.selectedObj;
+        var coffX = App.coffX;
+        var coffY = App.coffY;
         if (selectedObj != null) {
 			g.color = 0xffffffff;
 			// Resize rects
@@ -124,9 +124,9 @@ class ObjectController{
     }
 
     public static function update() {
-        var selectedObj = Project.selectedObj;
-        var coffX = Project.coffX;
-        var coffY = Project.coffY;
+        var selectedObj = App.selectedObj;
+        var coffX = App.coffX;
+        var coffY = App.coffY;
         if (selectedObj != null) {
 			var obj = selectedObj;
 			var ex = selectedObj.x;
@@ -161,7 +161,7 @@ class ObjectController{
 			}
 
 			if (isManipulating) {
-				Project.propwin.redraws = 2;
+				App.propwin.redraws = 2;
 
 				// Confirm
 				if ((transformStartedMouse && ui.inputReleased) || (!transformStartedMouse && ui.inputStarted)) {
@@ -290,7 +290,7 @@ class ObjectController{
     }
 
     static function startObjectManipulation(?mousePressed=false) {
-        var selectedObj = Project.selectedObj;
+        var selectedObj = App.selectedObj;
 		if (isManipulating) endObjectManipulation(true);
 
 		transformInitInput = new Vector2(ui.inputX, ui.inputY);
@@ -303,7 +303,7 @@ class ObjectController{
 	}
 
 	static function endObjectManipulation(reset=false) {
-        var selectedObj = Project.selectedObj;
+        var selectedObj = App.selectedObj;
 		if (reset) {
 			selectedObj.x = transformInitPos.x;
 			selectedObj.y = transformInitPos.y;

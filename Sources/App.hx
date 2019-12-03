@@ -13,7 +13,7 @@ import kha.Framebuffer;
 using kha.graphics2.GraphicsExtension;
 
 @:access(zui.Zui)
-class Project {
+class App {
 
 	var ui:Zui;
 	var objects:Array<String> = [];
