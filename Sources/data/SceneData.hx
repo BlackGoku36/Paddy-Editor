@@ -32,6 +32,7 @@ typedef ObjectData = {
 	public var height: Float;
 	public var width: Float;
 	public var ?rotation:Float;
+	public var ?visible:Bool;
 	// public var ?rigidBodyData: echo.data.Options.BodyOptions;
 	public var ?culled: Bool;
 	public var ?spriteRef: String;

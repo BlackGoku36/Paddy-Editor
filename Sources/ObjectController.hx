@@ -1,5 +1,7 @@
 package;
 
+import data.SceneData;
+import data.SceneData.ObjectData;
 import zui.Zui;
 import kha.input.KeyCode;
 import kha.math.Vector2;
@@ -28,13 +30,6 @@ class ObjectController{
 	static var grabX = false;
 	static var grabY = false;
 	static var rotate = false;
-
-    static var gridSnapBounds:Bool = false;
-	static var gridSnapPos:Bool = true;
-	static var gridUseRelative:Bool = true;
-	static var useRotationSteps:Bool = false;
-	static var rotationSteps:Float = util.Math.toRadians(15);
-    static var gridSize = App.gridSize;
 
     public static function render(g:Graphics) {
         var selectedObj = App.selectedObj;
@@ -125,8 +120,15 @@ class ObjectController{
 
     public static function update() {
         var selectedObj = App.selectedObj;
+
         var coffX = App.coffX;
         var coffY = App.coffY;
+
+    	var gridSize = App.gridSize;
+		var gridSnapPos = App.gridSnapPos;
+		var useRotationSteps = App.useRotationSteps;
+		var rotationSteps = App.rotationSteps;
+
         if (selectedObj != null) {
 			var obj = selectedObj;
 			var ex = selectedObj.x;
@@ -261,7 +263,7 @@ class ObjectController{
 
 					// Ctrl toggles rotation step mode
 					if ((ui.isKeyDown && ui.key == Control) != useRotationSteps) {
-						inputAngle = Math.round(inputAngle / rotationSteps) * rotationSteps;
+						inputAngle = Math.round(inputAngle / util.Math.toRadians(rotationSteps)) * util.Math.toRadians(rotationSteps);
 					}
 
 					obj.rotation = inputAngle;
@@ -322,6 +324,10 @@ class ObjectController{
 	}
 
     static function calculateTransformDelta(value:Float, ?offset=0.0):Float {
+		var gridSize = App.gridSize;
+		var gridSnapPos = App.gridSnapPos;
+		var gridUseRelative = App.gridUseRelative;
+
 		var precisionMode = ui.isKeyDown && ui.key == Shift;
 		var enabled = gridSnapPos != (ui.isKeyDown && (ui.key == Control));
 		var useOffset = gridUseRelative != (ui.isKeyDown && (ui.key == Alt));

@@ -1,5 +1,6 @@
 package;
 
+import kha.graphics2.Graphics;
 import kha.input.KeyCode;
 import kha.math.Vector2;
 import data.SceneData;
@@ -16,6 +17,7 @@ using kha.graphics2.GraphicsExtension;
 class App {
 
 	var ui:Zui;
+	var uimodal:Zui;
 	var objects:Array<String> = [];
 	var at = 0;
 
@@ -26,10 +28,17 @@ class App {
 	var lastH = 0;
 
 	public static var coffX = 220.0;
-	public static var coffY = 80.0;
+	public static var coffY = 110.0;
 
 	static var grid:kha.Image = null;
 	public static var gridSize:Int = 20;
+	public static var gridSnapBounds:Bool = false;
+	public static var gridSnapPos:Bool = true;
+	public static var gridUseRelative:Bool = true;
+	public static var useRotationSteps:Bool = false;
+	public static var rotationSteps:Int = 15;
+
+	public static var editorLocked:Bool = false;
 
 	var sceneW = 200; var sceneH = 600;
 	var editorW = 300; var editorH = 300;
@@ -38,12 +47,16 @@ class App {
 	var fileW = 200; var fileH = 100;
 	var editorX = 0; var editorY = 0;
 
+	// var addbtnX = 0.0;
+	// var addbtnY = 0.0;
+
 	var buildMode = 0;
 
 	public static var propwin = Id.handle();
 	public static var sceneHandle = Id.handle();
 	public static var editorHandle = Id.handle();
 	public static var selectedObj:ObjectData = null;
+	// static var showObjectList = false;
 
 	var window:data.SceneData.WindowData = {
 		name: "Window",
@@ -64,6 +77,7 @@ class App {
 	public function new() {
 		Assets.loadFontFromPath("hn.ttf", function (fnt){
 			ui = new Zui({font: fnt});
+			uimodal = new Zui({font: fnt});
 			ObjectController.ui = ui;
 		});
 		editorX = kha.System.windowWidth() - editorW - propsW;
@@ -114,7 +128,7 @@ class App {
 
 		for (object in scene.objects){
 			var sprite = std.Assets.getImage(object.spriteRef);
-			if(sprite != null) {
+			if(sprite != null && object.visible) {
 				g.pushRotation(object.rotation, coffX + object.x+(object.width/2), coffY + object.y+(object.height/2));
 				g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width, object.height);
 				g.popTransformation();
@@ -170,6 +184,9 @@ class App {
 				ui.row([3/4, 1/4]);
 				ui.textInput(Id.handle(), "Search");
 				if(ui.button("+")){
+					// addbtnX = ui._x+(sceneW*3/4);
+					// addbtnY = ui._y+ui.buttonOffsetY+ui.BUTTON_H()+5;
+					// showObjectList = true;
 					var object:data.SceneData.ObjectData = {
 						id: getObjectId(scene),
 						name: "object"+at,
@@ -184,7 +201,7 @@ class App {
 				function drawList(h:zui.Zui.Handle, objData:ObjectData) {
 					if (selectedObj == objData) {
 						ui.g.color = 0xff205d9c;
-						ui.g.fillRect(0, ui._y, ui._windowW, ui.t.ELEMENT_H);
+						ui.g.fillRect(0, ui._y-2, ui._windowW, ui.t.ELEMENT_H+4);
 						ui.g.color = 0xffffffff;
 					}
 					var started = ui.getStarted();
@@ -193,7 +210,14 @@ class App {
 						selectedObj = objData;
 					}
 					ui._x += 18; // Sign offset
-					ui.text(objData.name);
+					ui.row([1/7, 1/3, 1/7, 1/7, 1/7]);
+					if(objData!=null){
+						objData.visible = ui.check(Id.handle().nest(objData.id, {selected: true}), "");
+						ui.text(objData.name);
+						if(ui.button("<")) moveObjectInList(1);
+						if(ui.button(">")) moveObjectInList(-1);
+						if(ui.button("X")) scene.objects.remove(objData);
+					}
 					ui._x -= 18;
 				}
 				for (i in 0...scene.objects.length) {
@@ -204,12 +228,21 @@ class App {
 		}
 		if(ui.window(Id.handle(), sceneW, 30, kha.System.windowWidth()-propsW-sceneW, editorH)){
 			var editorTabH = Id.handle();
-			if(ui.tab(editorTabH, "2D")){}
+			if(ui.tab(editorTabH, "2D")){
+				ui.row([1/20, 1/15, 1/10]);
+				ui.text("Editor");
+				editorLocked = ui.check(Id.handle({selected:false}), "Lock");
+				if(ui.button("Reset Pos")){
+					coffX = 220.0;
+					coffY = 110.0;
+				}
+			}
 			if(ui.tab(editorTabH, "Nodes")){}
 		}
 
 		if(ui.window(propwin, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH)){
-			if(ui.tab(Id.handle(), "Properties")){
+			var propTabHandle = Id.handle();
+			if(ui.tab(propTabHandle, "Properties")){
 				if(ui.panel(Id.handle({selected:true}), "Window")){
 					ui.indent();
 					ui.row([1/4, 3/4]);
@@ -275,6 +308,22 @@ class App {
 					}
 				}
 			}
+			if(ui.tab(propTabHandle, "Editor")){
+				if(ui.panel(Id.handle(), "Grid")){
+					ui.indent();
+						gridSize = Std.parseInt(ui.textInput(Id.handle({text:gridSize+""}), "Size", Right));
+						gridSnapPos = ui.check(Id.handle({selected:true}), "Snap Pos");
+						gridSnapBounds = ui.check(Id.handle({selected:false}), "Snap Bounds");
+						gridUseRelative = ui.check(Id.handle({selected:true}), "Use Relative");
+					ui.unindent();
+				}
+				if(ui.panel(Id.handle(), "Rotation")){
+					ui.indent();
+						useRotationSteps = ui.check(Id.handle({selected:true}), "Use Steps");
+						if(useRotationSteps) rotationSteps = Std.parseInt(ui.textInput(Id.handle({text:rotationSteps+""}), "Steps", Right));
+					ui.unindent();
+				}
+			}
 		}
 		if(ui.window(Id.handle(), 0, sceneH, fileW, kha.System.windowHeight()-sceneH-20)){
 			#if kha_debug_html5
@@ -308,8 +357,11 @@ class App {
 				ui.textInput(Id.handle(), "Search", Right);
 				ui.button("Enter");
 				for (image in std.Assets.images) for (name => value in image){
+					ui.row([1/5, 4/5]);
 					var state = ui.image(value, 0xffffffff, 50, 0, 0, value.width, value.height);
+					ui.text(name, Center);
 					if(state == 2) selectedImage = name;
+					ui._y += Std.int(value.height/50*ui.SCALE()+10);
 				}
 				// for (image in std.Assets.fonts) for (name => value in image) ui.text(name);
 				// for (sound in std.Assets.sounds) for (name => value in sound) ui.text(name);
@@ -337,21 +389,24 @@ class App {
 		}
 		lastW = kha.System.windowWidth();
 		lastH = kha.System.windowHeight();
+
+		// if(showObjectList) renderObjectList(g);
 	}
 
 	public function update() {
 		if(ui == null)return;
 
 		if(ui.inputReleased && selectedImage != null){
-			if (util.Math.hitbox(ui, coffX + selectedObj.x, coffY + selectedObj.y, selectedObj.width, selectedObj.height, selectedObj.rotation)) {
+			if (selectedObj!=null && util.Math.hitbox(ui, coffX + selectedObj.x, coffY + selectedObj.y, selectedObj.width, selectedObj.height, selectedObj.rotation)) {
 				selectedObj.spriteRef = selectedImage;
-				selectedImage = null;
 			}
+			selectedImage = null;
 		}
+		// if(ui.inputReleased) selectedImage = null;
 
 		if(selectedObj!=null) propwin.redraws = 2;
 
-		if(!ObjectController.isManipulating && ui.inputDownR) {
+		if(!editorLocked && !ObjectController.isManipulating && ui.inputDownR) {
 			coffX += Std.int(ui.inputDX);
 			coffY += Std.int(ui.inputDY);
 		}
@@ -370,9 +425,43 @@ class App {
 		}
 	}
 
+	// function renderObjectList(g:Graphics) {
+	// 	var x = Std.int(addbtnX);
+	// 	var y = Std.int(addbtnY);
+	// 	var width = 150;
+	// 	var height = 200;
+
+	// 	g.begin(false);
+	// 	var col = g.color;
+	// 	g.color = 0xff202020;
+	// 	g.fillRect(x-5, y+5, width+10, height+3);
+	// 	g.color = 0xff353535;
+	// 	g.fillRect(x, y, width+10, height);
+	// 	g.color = col;
+	// 	uimodal.beginRegion(g, x+5, y+5, width);
+	// 	if (uimodal.button("OK")) {
+	// 	}
+	// 	uimodal.endRegion(false);
+
+	// 	g.end();
+	// }
+
 	static var elemId = -1;
 	public static function getObjectId(scene: SceneData): Int {
 		if (elemId == -1) for (e in scene.objects) if (elemId < e.id) elemId = e.id;
 		return ++elemId;
+	}
+
+	function moveObjectInList(d:Int) {
+		var ar = scene.objects;
+		var i = ar.indexOf(selectedObj);
+
+		while (true) {
+			i += d;
+			if (i < 0 || i >= ar.length) break;
+			ar.remove(selectedObj);
+			ar.insert(i, selectedObj);
+			break;
+		}
 	}
 }
