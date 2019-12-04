@@ -75,9 +75,9 @@ class App {
 	static var selectedImage = null;
 
 	public function new() {
-		Assets.loadFontFromPath("hn.ttf", function (fnt){
-			ui = new Zui({font: fnt});
-			uimodal = new Zui({font: fnt});
+		Assets.loadEverything(function (){
+			ui = new Zui({font: Assets.fonts.hn});
+			uimodal = new Zui({font: Assets.fonts.hn});
 			ObjectController.ui = ui;
 		});
 		editorX = kha.System.windowWidth() - editorW - propsW;
@@ -216,7 +216,10 @@ class App {
 						ui.text(objData.name);
 						if(ui.button("<")) moveObjectInList(1);
 						if(ui.button(">")) moveObjectInList(-1);
-						if(ui.button("X")) scene.objects.remove(objData);
+						if(ui.button("X")){
+							scene.objects.remove(objData);
+							selectedObj = null;
+						}
 					}
 					ui._x -= 18;
 				}
@@ -358,14 +361,39 @@ class App {
 				ui.button("Enter");
 				for (image in std.Assets.images) for (name => value in image){
 					ui.row([1/5, 4/5]);
+					ui._y += Std.int(value.height/50*ui.SCALE());
 					var state = ui.image(value, 0xffffffff, 50, 0, 0, value.width, value.height);
 					ui.text(name, Center);
 					if(state == 2) selectedImage = name;
-					ui._y += Std.int(value.height/50*ui.SCALE()+10);
 				}
-				// for (image in std.Assets.fonts) for (name => value in image) ui.text(name);
-				// for (sound in std.Assets.sounds) for (name => value in sound) ui.text(name);
-				// for (blob in std.Assets.blobs) for (name => value in blob) ui.text(name);
+				for (font in std.Assets.fonts) for (name => value in font){
+					ui.row([1/5, 4/5]);
+					var image:kha.Image = null;
+					if(name.split(".")[1] == "ttf") image = Assets.images.get("ttf");
+					else if(name.split(".")[1]== "otf") image = Assets.images.get("otf");
+					ui._y += Std.int(image.height/50*ui.SCALE()+25);
+					ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
+					ui.text(name, Center);
+				}
+				for (blob in std.Assets.blobs) for (name => value in blob){
+					ui.row([1/5, 4/5]);
+					var image:kha.Image = null;
+					if(name.split(".")[1] == "txt") image = Assets.images.get("document");
+					else if(name.split(".")[1]== "json") image = Assets.images.get("json");
+					else if(name.split(".")[1]== "hx") image = Assets.images.get("code");
+					ui._y += Std.int(image.height/50*ui.SCALE()+25);
+					ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
+					ui.text(name, Center);
+				}
+				for (sound in std.Assets.sounds) for (name => value in sound){
+					ui.row([1/5, 4/5]);
+					var image:kha.Image = null;
+					if(name.split(".")[1] == "ogg") image = Assets.images.get("ogg");
+					else if(name.split(".")[1]== "wav") image = Assets.images.get("wav");
+					ui._y += Std.int(image.height/50*ui.SCALE()+25);
+					ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
+					ui.text(name, Center);
+				}
 			}
 			if(ui.tab(assetTabH, "Terminal")){}
 		}
@@ -402,7 +430,6 @@ class App {
 			}
 			selectedImage = null;
 		}
-		// if(ui.inputReleased) selectedImage = null;
 
 		if(selectedObj!=null) propwin.redraws = 2;
 
