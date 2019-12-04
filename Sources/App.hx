@@ -1,17 +1,15 @@
 package;
 
-import kha.graphics2.Graphics;
-import kha.input.KeyCode;
-import kha.math.Vector2;
-import data.SceneData;
-import data.SceneData.ObjectData;
 import zui.Ext;
 import kha.Assets;
-import kha.Window;
 import zui.Id;
 import zui.Zui;
 import kha.Framebuffer;
-using kha.graphics2.GraphicsExtension;
+
+import ui.UIAssets;
+import ui.UIProperties;
+import data.Data;
+import export.Export;
 
 @:access(zui.Zui)
 class App {
@@ -58,7 +56,7 @@ class App {
 	public static var selectedObj:ObjectData = null;
 	// static var showObjectList = false;
 
-	var window:data.SceneData.WindowData = {
+	public static var window: WindowData = {
 		name: "Window",
 		width: 1440,
 		height: 900,
@@ -66,13 +64,13 @@ class App {
 		clearColor: [0, 0, 0, 255]
 	}
 
-	var scene:data.SceneData = {
+	public static var scene: SceneData = {
 		name: "scene",
 		objects: []
 	}
 
 	static var assetPath = "";
-	static var selectedImage = null;
+	public static var selectedImage = null;
 
 	public function new() {
 		Assets.loadEverything(function (){
@@ -154,24 +152,8 @@ class App {
 			ui.row([1/5, 4/5]);
 			if(ui.button("=>")){
 				if(buildMode == 0){
-					#if kha_krom
-					Krom.fileSaveBytes(scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(scene)).getData());
-					#elseif kha_debug_html5
-						var fs = untyped __js__('require("fs");');
-						var path = untyped __js__('require("path")');
-						var filePath = path.resolve(untyped __js__('__dirname'), "../../"+scene.name+'.json');
-						try { fs.writeFileSync(filePath, haxe.Json.stringify(scene)); }
-						catch (x: Dynamic) { trace('saving "${filePath}" failed'+x); }
-					#end
-					#if kha_krom
-					Krom.fileSaveBytes("window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(window)).getData());
-					#elseif kha_debug_html5
-						var fs = untyped __js__('require("fs");');
-						var path = untyped __js__('require("path")');
-						var filePath = path.resolve(untyped __js__('__dirname'), "../../"+'window.json');
-						try { fs.writeFileSync(filePath, haxe.Json.stringify(window)); }
-						catch (x: Dynamic) { trace('saving "${filePath}" failed'+x); }
-					#end
+					Export.exportScene();
+					Export.exportWindow();
 				}
 			}
 			var mode = Id.handle({position: 0});
@@ -187,7 +169,7 @@ class App {
 					// addbtnX = ui._x+(sceneW*3/4);
 					// addbtnY = ui._y+ui.buttonOffsetY+ui.BUTTON_H()+5;
 					// showObjectList = true;
-					var object:data.SceneData.ObjectData = {
+					var object: ObjectData = {
 						id: getObjectId(scene),
 						name: "object"+at,
 						x: 0, y: 0,
@@ -243,91 +225,8 @@ class App {
 			if(ui.tab(editorTabH, "Nodes")){}
 		}
 
-		if(ui.window(propwin, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH)){
-			var propTabHandle = Id.handle();
-			if(ui.tab(propTabHandle, "Properties")){
-				if(ui.panel(Id.handle({selected:true}), "Window")){
-					ui.indent();
-					ui.row([1/4, 3/4]);
-					ui.text("Name");
-					window.name = ui.textInput(Id.handle({text: window.name}), Right);
-					ui.row([1/4, 3/4]);
-					ui.text("Width");
-					window.width = Std.parseInt(ui.textInput(Id.handle({text: window.width+""}), Right));
-					ui.row([1/4, 3/4]);
-					ui.text("Height");
-					window.height = Std.parseInt(ui.textInput(Id.handle({text: window.height+""}), Right));
-					ui.row([1/4, 3/4]);
-					ui.text("Mode");
-					var windowHandle = Id.handle({position: 0});
-					ui.combo(Id.handle({position: 0}), ["Windowed", "Fullscreen"], Right);
-					if (windowHandle.changed) window.windowMode = windowHandle.position;
-					ui.unindent();
-				}
-				if(selectedObj!=null){
-					var obj = selectedObj;
-					var id = obj.id;
-					if (ui.panel(Id.handle({selected: true}), "Object")) {
-						ui.indent();
-						ui.row([2/6, 4/6]);
-						ui.text("Name");
-						obj.name = ui.textInput(Id.handle().nest(id, {text: obj.name}), Right);
+		UIProperties.render(ui, propwin, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH);
 
-						ui.row([2/6, 4/6]);
-						ui.text("X");
-						var handlex = Id.handle().nest(id, {text: obj.x + ""});
-						handlex.text = obj.x + "";
-						var strx = ui.textInput(handlex, Right);
-						obj.x = Std.parseFloat(strx);
-
-						ui.row([2/6, 4/6]);
-						ui.text("Y");
-						var handley = Id.handle().nest(id, {text: obj.y + ""});
-						handley.text = obj.y + "";
-						var stry = ui.textInput(handley, Right);
-						obj.y = Std.parseFloat(stry);
-
-						ui.row([2/6, 4/6]);
-						ui.text("Width");
-						var handlew = Id.handle().nest(id, {text: obj.width + ""});
-						handlew.text = obj.width + "";
-						var strw = ui.textInput(handlew, Right);
-						obj.width = Std.int(Std.parseFloat(strw));
-
-						ui.row([2/6, 4/6]);
-						ui.text("Height");
-						var handleh = Id.handle().nest(id, {text: obj.height + ""});
-						handleh.text = obj.height + "";
-						var strh = ui.textInput(handleh, Right);
-						obj.height = Std.int(Std.parseFloat(strh));
-
-						ui.row([2/6, 4/6]);
-						ui.text("Rotation");
-						var handlerot = Id.handle().nest(id, {value: util.Math.roundPrecision(util.Math.toDegrees(obj.rotation == null ? 0 : obj.rotation), 2)});
-						handlerot.value = util.Math.roundPrecision(util.Math.toDegrees(obj.rotation), 2);
-						if (handlerot.value >= 360) handlerot.value = 0;
-						obj.rotation = util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
-						ui.unindent();
-					}
-				}
-			}
-			if(ui.tab(propTabHandle, "Editor")){
-				if(ui.panel(Id.handle(), "Grid")){
-					ui.indent();
-						gridSize = Std.parseInt(ui.textInput(Id.handle({text:gridSize+""}), "Size", Right));
-						gridSnapPos = ui.check(Id.handle({selected:true}), "Snap Pos");
-						gridSnapBounds = ui.check(Id.handle({selected:false}), "Snap Bounds");
-						gridUseRelative = ui.check(Id.handle({selected:true}), "Use Relative");
-					ui.unindent();
-				}
-				if(ui.panel(Id.handle(), "Rotation")){
-					ui.indent();
-						useRotationSteps = ui.check(Id.handle({selected:true}), "Use Steps");
-						if(useRotationSteps) rotationSteps = Std.parseInt(ui.textInput(Id.handle({text:rotationSteps+""}), "Steps", Right));
-					ui.unindent();
-				}
-			}
-		}
 		if(ui.window(Id.handle(), 0, sceneH, fileW, kha.System.windowHeight()-sceneH-20)){
 			#if kha_debug_html5
 			var path = untyped __js__('require("path")');
@@ -353,50 +252,7 @@ class App {
 				assetPath = Ext.fileBrowser(ui, Id.handle({text:filePath}));
 			}
 		}
-		if(ui.window(Id.handle(), fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20)){
-			var assetTabH = Id.handle();
-			if(ui.tab(assetTabH, "Assets")){
-				ui.row([9/10, 1/10]);
-				ui.textInput(Id.handle(), "Search", Right);
-				ui.button("Enter");
-				for (image in std.Assets.images) for (name => value in image){
-					ui.row([1/5, 4/5]);
-					ui._y += Std.int(value.height/50*ui.SCALE());
-					var state = ui.image(value, 0xffffffff, 50, 0, 0, value.width, value.height);
-					ui.text(name, Center);
-					if(state == 2) selectedImage = name;
-				}
-				for (font in std.Assets.fonts) for (name => value in font){
-					ui.row([1/5, 4/5]);
-					var image:kha.Image = null;
-					if(name.split(".")[1] == "ttf") image = Assets.images.get("ttf");
-					else if(name.split(".")[1]== "otf") image = Assets.images.get("otf");
-					ui._y += Std.int(image.height/50*ui.SCALE()+25);
-					ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
-					ui.text(name, Center);
-				}
-				for (blob in std.Assets.blobs) for (name => value in blob){
-					ui.row([1/5, 4/5]);
-					var image:kha.Image = null;
-					if(name.split(".")[1] == "txt") image = Assets.images.get("document");
-					else if(name.split(".")[1]== "json") image = Assets.images.get("json");
-					else if(name.split(".")[1]== "hx") image = Assets.images.get("code");
-					ui._y += Std.int(image.height/50*ui.SCALE()+25);
-					ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
-					ui.text(name, Center);
-				}
-				for (sound in std.Assets.sounds) for (name => value in sound){
-					ui.row([1/5, 4/5]);
-					var image:kha.Image = null;
-					if(name.split(".")[1] == "ogg") image = Assets.images.get("ogg");
-					else if(name.split(".")[1]== "wav") image = Assets.images.get("wav");
-					ui._y += Std.int(image.height/50*ui.SCALE()+25);
-					ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
-					ui.text(name, Center);
-				}
-			}
-			if(ui.tab(assetTabH, "Terminal")){}
-		}
+		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
 		ui.end();
 
 		g.begin(false);

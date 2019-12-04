@@ -9,22 +9,33 @@ class Assets {
 
     public static function getImage(imageRef:String) {
         var newImage:kha.Image = null;
-        for (image in images){
-            if(image.exists(imageRef)) newImage = image.get(imageRef);
-        }
+        for (image in images) if(image.exists(imageRef)) newImage = image.get(imageRef);
         return newImage;
     }
 
 	public static function getImagesName(){
-		var names:Array<String> = [""];
-		for (image in images){
-			for (key => value in image) {
-				names.push(key);
-			}
-		}
+		var names:Array<String> = [];
+		for (image in images)for (name => img in image) names.push(name);
 		return names;
 	}
 
+	public static function getFontsName(){
+		var names:Array<String> = [];
+		for (font in fonts)for (name => fnt in font) names.push(name);
+		return names;
+	}
+
+	public static function getSoundsName(){
+		var names:Array<String> = [];
+		for (sound in sounds)for (name => snd in sound) names.push(name);
+		return names;
+	}
+
+	public static function getBlobsName(){
+		var names:Array<String> = [];
+		for (blob in blobs)for (name => blb in blob) names.push(name);
+		return names;
+	}
     public static function getFont(fontRef:String) {
         var newFont:kha.Font = null;
         for (font in fonts){
@@ -35,17 +46,13 @@ class Assets {
 
     public static function getSound(soundRef:String) {
         var newSound:kha.Sound = null;
-        for (sound in sounds){
-            if(sound.exists(soundRef)) newSound = sound.get(soundRef);
-        }
+        for (sound in sounds) if(sound.exists(soundRef)) newSound = sound.get(soundRef);
         return newSound;
     }
 
     public static function getBlob(blobRef:String) {
         var newBlob:kha.Blob = null;
-        for (blob in blobs){
-            if(blob.exists(blobRef)) newBlob = blob.get(blobRef);
-        }
+        for (blob in blobs) if(blob.exists(blobRef)) newBlob = blob.get(blobRef);
         return newBlob;
     }
 

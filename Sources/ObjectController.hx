@@ -1,7 +1,5 @@
 package;
 
-import data.SceneData;
-import data.SceneData.ObjectData;
 import zui.Zui;
 import kha.input.KeyCode;
 import kha.math.Vector2;
