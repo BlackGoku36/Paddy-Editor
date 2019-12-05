@@ -24,7 +24,7 @@ class Plugin {
         });
     }
 
-    public function stop() {
+    public function disable() {
         for(plugin in plugins){
             var p = plugin.get(name);
 		    if(p.name == name){

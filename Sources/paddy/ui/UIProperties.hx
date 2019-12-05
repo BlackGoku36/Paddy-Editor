@@ -116,7 +116,7 @@ class UIProperties {
                             ui.row([4/5, 1/5]);
                             if(value.name!=null){
                                 ui.text(value.name);
-                                if(ui.button("X")) value.stop();
+                                if(ui.button("X")) value.disable();
                                 trace(Plugin.plugins);
                             }
                         }
