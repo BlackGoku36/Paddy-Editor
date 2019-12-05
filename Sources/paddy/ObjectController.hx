@@ -1,4 +1,4 @@
-package;
+package paddy;
 
 import zui.Zui;
 import kha.input.KeyCode;
@@ -51,7 +51,7 @@ class ObjectController{
 			g.color = 0xffffffff;
 
 			// Rotate mouse coords in opposite direction as the object
-			var rotatedInput:Vector2 = util.Math.rotatePoint(ui.inputX, ui.inputY, cx, cy, -selectedObj.rotation);
+			var rotatedInput:Vector2 = paddy.util.Math.rotatePoint(ui.inputX, ui.inputY, cx, cy, -selectedObj.rotation);
 
 			// Draw corner drag handles
 			for (handlePosX in 0...3) {
@@ -133,11 +133,11 @@ class ObjectController{
 			var ey = selectedObj.y;
 			var ew = selectedObj.width;
 			var eh = selectedObj.height;
-			var rotatedInput:Vector2 = util.Math.rotatePoint(ui.inputX, ui.inputY, coffX + ex + ew / 2, coffY + ey + eh / 2, -obj.rotation);
+			var rotatedInput:Vector2 = paddy.util.Math.rotatePoint(ui.inputX, ui.inputY, coffX + ex + ew / 2, coffY + ey + eh / 2, -obj.rotation);
 
 			if (ui.inputStarted && ui.inputDown) {
 				// Drag selected object
-				if (util.Math.hitbox(ui, coffX + ex - handleSize / 2, coffY + ey - handleSize / 2, ew + handleSize, eh + handleSize, selectedObj.rotation)) {
+				if (paddy.util.Math.hitbox(ui, coffX + ex - handleSize / 2, coffY + ey - handleSize / 2, ew + handleSize, eh + handleSize, selectedObj.rotation)) {
 					drag = true;
 					// Resize
 					dragLeft = dragRight = dragTop = dragBottom = false;
@@ -261,7 +261,7 @@ class ObjectController{
 
 					// Ctrl toggles rotation step mode
 					if ((ui.isKeyDown && ui.key == Control) != useRotationSteps) {
-						inputAngle = Math.round(inputAngle / util.Math.toRadians(rotationSteps)) * util.Math.toRadians(rotationSteps);
+						inputAngle = Math.round(inputAngle / paddy.util.Math.toRadians(rotationSteps)) * paddy.util.Math.toRadians(rotationSteps);
 					}
 
 					obj.rotation = inputAngle;

@@ -1,4 +1,4 @@
-package data;
+package paddy.data;
 
 typedef WindowData = {
 	var name: String;

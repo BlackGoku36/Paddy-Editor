@@ -1,7 +1,9 @@
-package ui;
+package paddy.ui;
 
 import zui.Id;
 import zui.Zui;
+
+import paddy.Assets;
 
 @:access(zui.Zui)
 class UIAssets {
@@ -15,7 +17,7 @@ class UIAssets {
                 ui.button("Enter");
                 if(ui.panel(Id.handle(), "Images")){
                     ui.indent();
-                    for (image in std.Assets.images) for (name => value in image){
+                    for (image in Assets.images) for (name => value in image){
                         ui.row([1/5, 4/5]);
                         var state = ui.image(value, 0xffffffff, 50, 0, 0, value.width, value.height);
                         ui.text(name, Center);
@@ -26,7 +28,7 @@ class UIAssets {
                 }
                 if(ui.panel(Id.handle(), "Sounds")){
                     ui.indent();
-                    for (sound in std.Assets.sounds) for (name => value in sound){
+                    for (sound in Assets.sounds) for (name => value in sound){
                         ui.row([1/5, 4/5]);
                         var image = kha.Assets.images.get(name.split(".")[1]);
                         ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
@@ -37,7 +39,7 @@ class UIAssets {
                 }
                 if(ui.panel(Id.handle(), "Fonts")){
                     ui.indent();
-                    for (font in std.Assets.fonts) for (name => value in font){
+                    for (font in Assets.fonts) for (name => value in font){
                         ui.row([1/5, 4/5]);
                         var image = kha.Assets.images.get(name.split(".")[1]);
                         ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
@@ -48,7 +50,7 @@ class UIAssets {
                 }
                 if(ui.panel(Id.handle(), "Codes")){
                     ui.indent();
-                    for (blob in std.Assets.blobs) for (name => value in blob){
+                    for (blob in Assets.blobs) for (name => value in blob){
                         ui.row([1/5, 4/5]);
                         var image = kha.Assets.images.get(getTextImageTypeFromExt(name));
                         ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);

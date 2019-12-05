@@ -1,8 +1,9 @@
-package ui;
+package paddy.ui;
 
 import zui.Id;
 import zui.Zui;
 
+@:access(zui.Zui)
 class UIProperties {
 
     public static function render(ui:Zui, idHandle:Handle, x:Int, y:Int, w:Int, h:Int) {
@@ -77,10 +78,10 @@ class UIProperties {
 
                         ui.row([2/6, 4/6]);
                         ui.text("Rotation");
-                        var handlerot = Id.handle().nest(id, {value: util.Math.roundPrecision(util.Math.toDegrees(obj.rotation == null ? 0 : obj.rotation), 2)});
-                        handlerot.value = util.Math.roundPrecision(util.Math.toDegrees(obj.rotation), 2);
+                        var handlerot = Id.handle().nest(id, {value: paddy.util.Math.roundPrecision(paddy.util.Math.toDegrees(obj.rotation == null ? 0 : obj.rotation), 2)});
+                        handlerot.value = paddy.util.Math.roundPrecision(paddy.util.Math.toDegrees(obj.rotation), 2);
                         if (handlerot.value >= 360) handlerot.value = 0;
-                        obj.rotation = util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
+                        obj.rotation = paddy.util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
                         ui.unindent();
                     }
                 }
@@ -99,6 +100,27 @@ class UIProperties {
                         useRotationSteps = ui.check(Id.handle({selected:true}), "Use Steps");
                         if(useRotationSteps) rotationSteps = Std.parseInt(ui.textInput(Id.handle({text:rotationSteps+""}), "Steps", Right));
                     ui.unindent();
+                }
+            }
+            if(ui.tab(propTabHandle, "Plugins Manager")){
+                if(ui.panel(Id.handle(), "Plugins List")){
+                    ui.row([3/5, 2/5]);
+                    var file = ui.textInput(Id.handle(), "File Name");
+                    if(ui.button("Import") && file != ""){
+                        var plug = new Plugin(file);
+                        plug.enable();
+                        trace(Plugin.plugins);
+                    }
+                    for (p in paddy.Plugin.plugins){
+                        for (key => value in p) {
+                            ui.row([4/5, 1/5]);
+                            if(value.name!=null){
+                                ui.text(value.name);
+                                if(ui.button("X")) value.stop();
+                                trace(Plugin.plugins);
+                            }
+                        }
+                    }
                 }
             }
         }

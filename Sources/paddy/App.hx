@@ -1,15 +1,17 @@
-package;
+package paddy;
 
 import zui.Ext;
-import kha.Assets;
+// import kha.Assets;
 import zui.Id;
 import zui.Zui;
 import kha.Framebuffer;
 
-import ui.UIAssets;
-import ui.UIProperties;
-import data.Data;
-import export.Export;
+import paddy.ui.UIAssets;
+import paddy.ui.UIProperties;
+import paddy.data.Data;
+import paddy.export.Export;
+
+import paddy.Assets;
 
 @:access(zui.Zui)
 class App {
@@ -73,10 +75,11 @@ class App {
 	public static var selectedImage = null;
 
 	public function new() {
-		Assets.loadEverything(function (){
-			ui = new Zui({font: Assets.fonts.hn});
-			uimodal = new Zui({font: Assets.fonts.hn});
-			ObjectController.ui = ui;
+		kha.Assets.loadEverything(function (){
+			ui = new Zui({font: kha.Assets.fonts.hn});
+			uimodal = new Zui({font: kha.Assets.fonts.hn});
+			paddy.ObjectController.ui = ui;
+			// Plugins.run();
 		});
 		editorX = kha.System.windowWidth() - editorW - propsW;
 		editorY = 60;
@@ -125,7 +128,7 @@ class App {
 		g.drawRect(coffX, coffY, window.width*0.5, window.height*0.5);
 
 		for (object in scene.objects){
-			var sprite = std.Assets.getImage(object.spriteRef);
+			var sprite = Assets.getImage(object.spriteRef);
 			if(sprite != null && object.visible) {
 				g.pushRotation(object.rotation, coffX + object.x+(object.width/2), coffY + object.y+(object.height/2));
 				g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width, object.height);
@@ -244,23 +247,30 @@ class App {
 					var isFont = StringTools.endsWith(assetPath, ".ttf");
 					var isSound = StringTools.endsWith(assetPath, ".ogg");
 
-					if(isImage) std.Assets.loadImage(assetPath);
-					else if(isFont) std.Assets.loadFont(assetPath);
-					else if(isSound) std.Assets.loadSound(assetPath);
-					else std.Assets.loadBlob(assetPath);
+					if(isImage) Assets.loadImage(assetPath);
+					else if(isFont) Assets.loadFont(assetPath);
+					else if(isSound) Assets.loadSound(assetPath);
+					else Assets.loadBlob(assetPath);
 				}
 				assetPath = Ext.fileBrowser(ui, Id.handle({text:filePath}));
 			}
 		}
 		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
+
+		for (p in paddy.Plugin.plugins){
+			for (key => value in p) {
+				if (value.drawUI != null) value.drawUI(ui);
+			}
+		}
+
 		ui.end();
 
 		g.begin(false);
 		if (selectedImage != null) {
-			var w = Math.min(128, std.Assets.getImage(selectedImage).width);
-			var ratio = w / std.Assets.getImage(selectedImage).width;
-			var h = std.Assets.getImage(selectedImage).height * ratio;
-			g.drawScaledImage(std.Assets.getImage(selectedImage), ui.inputX, ui.inputY, w, h);
+			var w = Math.min(128, Assets.getImage(selectedImage).width);
+			var ratio = w / Assets.getImage(selectedImage).width;
+			var h = Assets.getImage(selectedImage).height * ratio;
+			g.drawScaledImage(Assets.getImage(selectedImage), ui.inputX, ui.inputY, w, h);
 		}
 		g.end();
 
@@ -281,7 +291,7 @@ class App {
 		if(ui == null)return;
 
 		if(ui.inputReleased && selectedImage != null){
-			if (selectedObj!=null && util.Math.hitbox(ui, coffX + selectedObj.x, coffY + selectedObj.y, selectedObj.width, selectedObj.height, selectedObj.rotation)) {
+			if (selectedObj!=null && paddy.util.Math.hitbox(ui, coffX + selectedObj.x, coffY + selectedObj.y, selectedObj.width, selectedObj.height, selectedObj.rotation)) {
 				selectedObj.spriteRef = selectedImage;
 			}
 			selectedImage = null;
@@ -298,7 +308,7 @@ class App {
 
 		if (ui.inputStartedR && ui.inputDownR) {
 			for (object in scene.objects) {
-				if (util.Math.hitbox(ui, coffX + object.x, coffY + object.y, object.width, object.height, object.rotation) &&
+				if (paddy.util.Math.hitbox(ui, coffX + object.x, coffY + object.y, object.width, object.height, object.rotation) &&
 						selectedObj != object) {
 					selectedObj = object;
 					sceneHandle.redraws = 2;

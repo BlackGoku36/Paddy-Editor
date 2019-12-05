@@ -11,7 +11,7 @@ class Main {
 
 	public static function main() {
 		System.start({title: title, width: width, height: height}, function (_) {
-			var project = new App();
+			var project = new paddy.App();
 			Scheduler.addTimeTask(function () { project.update(); }, 0, 1 / 60);
 			System.notifyOnFrames(function (frames) { project.render(frames); });
 		});

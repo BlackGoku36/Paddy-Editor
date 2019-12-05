@@ -1,4 +1,4 @@
-package util;
+package paddy.util;
 
 import zui.Zui;
 import kha.math.Vector2;

@@ -1,4 +1,4 @@
-package export;
+package paddy.export;
 
 class Export{
 
@@ -7,10 +7,10 @@ class Export{
 
     public static function exportScene() {
         scene.assets = {
-            images: Assets.getImagesName(),
-            fonts: Assets.getFontsName(),
-            sounds: Assets.getSoundsName(),
-            blobs: Assets.getBlobsName()
+            images: paddy.Assets.getImagesName(),
+            fonts:  paddy.Assets.getFontsName(),
+            sounds: paddy.Assets.getSoundsName(),
+            blobs:  paddy.Assets.getBlobsName()
         }
         #if kha_krom
         Krom.fileSaveBytes(scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(scene)).getData());

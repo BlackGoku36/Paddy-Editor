@@ -1,4 +1,4 @@
-package;
+package paddy;
 
 class Assets {
 
