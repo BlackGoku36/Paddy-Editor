@@ -4,6 +4,11 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Clean Build",
+            "type": "shell",
+            "command": "rm -r \"${workspaceRoot}/build\""
+        },
+        {
             "label": "Build Krom",
             "type": "shell",
             "command":"node /Applications/Blender.app/armsdk/Kha/make krom -g opengl",
@@ -11,8 +16,8 @@
         {
             "label": "Krom",
             "type": "shell",
-            "command": "/Applications/Blender.app/armsdk/Krom/Krom.app/Contents/MacOS/Krom /Users/urjasvisuthar/Paddy-Editor/build/krom /Users/urjasvisuthar/Paddy-Editor/build/krom-resources --debug",
-            "dependsOn": "Build Krom",
+            "command": "/Applications/Blender.app/armsdk/Krom/Krom.app/Contents/MacOS/Krom ${workspaceRoot}/build/krom ${workspaceRoot}/build/krom-resources --debug",
+            "dependsOn": ["Clean Build","Build Krom"],
             "dependsOrder": "sequence"
         }
     ]
