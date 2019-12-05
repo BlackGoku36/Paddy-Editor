@@ -1,0 +1,19 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Krom",
+            "type": "shell",
+            "command":"node /Applications/Blender.app/armsdk/Kha/make krom -g opengl",
+        },
+        {
+            "label": "Krom",
+            "type": "shell",
+            "command": "/Applications/Blender.app/armsdk/Krom/Krom.app/Contents/MacOS/Krom /Users/urjasvisuthar/Paddy-Editor/build/krom /Users/urjasvisuthar/Paddy-Editor/build/krom-resources --debug",
+            "dependsOn": "Build Krom",
+            "dependsOrder": "sequence"
+        }
+    ]
+}
