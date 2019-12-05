@@ -54,6 +54,7 @@ class App {
 
 	public static var propwin = Id.handle();
 	public static var sceneHandle = Id.handle();
+	public static var htab = Id.handle({position: 0});
 	public static var editorHandle = Id.handle();
 	public static var selectedObj:ObjectData = null;
 	// static var showObjectList = false;
@@ -164,7 +165,6 @@ class App {
 			if (mode.changed) buildMode = mode.position;
 		}
 		if(ui.window(sceneHandle, 0, 30, Std.int(sceneW*ui.SCALE()), sceneH)){
-			var htab = Id.handle({position: 0});
 			if(ui.tab(htab, "Scene")){
 				ui.row([3/4, 1/4]);
 				ui.textInput(Id.handle(), "Search");
@@ -213,6 +213,9 @@ class App {
 					drawList(Id.handle(), objData);
 				}
 			}
+
+			for (value in paddy.Plugin.plugins) if (value.sceneWinUI != null) value.sceneWinUI(ui);
+
 		}
 		if(ui.window(Id.handle(), sceneW, 30, kha.System.windowWidth()-propsW-sceneW, editorH)){
 			var editorTabH = Id.handle();
@@ -256,12 +259,6 @@ class App {
 			}
 		}
 		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
-
-		for (p in paddy.Plugin.plugins){
-			for (key => value in p) {
-				if (value.drawUI != null) value.drawUI(ui);
-			}
-		}
 
 		ui.end();
 
@@ -316,6 +313,8 @@ class App {
 				}
 			}
 		}
+
+		for (value in paddy.Plugin.plugins) if(value.update != null) value.update();
 	}
 
 	// function renderObjectList(g:Graphics) {

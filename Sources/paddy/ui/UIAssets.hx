@@ -8,9 +8,10 @@ import paddy.Assets;
 @:access(zui.Zui)
 class UIAssets {
 
+    public static var assetTabH = Id.handle();
+
     public static function render(ui:Zui, x:Int, y:Int, w:Int, h:Int) {
         if(ui.window(Id.handle(), x, y, w, h)){
-            var assetTabH = Id.handle();
             if(ui.tab(assetTabH, "Assets")){
                 ui.row([9/10, 1/10]);
                 ui.textInput(Id.handle(), "Search", Right);
@@ -61,6 +62,9 @@ class UIAssets {
                 }
             }
             if(ui.tab(assetTabH, "Terminal")){}
+
+            for (value in paddy.Plugin.plugins) if (value.assetWinUI != null) value.assetWinUI(ui);
+    
         }
 	}
 

@@ -6,6 +6,12 @@ import zui.Zui;
 @:access(zui.Zui)
 class UIProperties {
 
+    public static var propTabHandle = Id.handle();
+    public static var propPanelWinH = Id.handle({selected:true});
+    public static var propPanelObjH = Id.handle({selected:true});
+    public static var propPanelGridH = Id.handle({selected:true});
+    public static var propPanelRotH = Id.handle({selected:true});
+
     public static function render(ui:Zui, idHandle:Handle, x:Int, y:Int, w:Int, h:Int) {
         var window = App.window;
 
@@ -19,9 +25,8 @@ class UIProperties {
         var selectedObj = App.selectedObj;
 
         if(ui.window(idHandle, x, y, w, h)){
-            var propTabHandle = Id.handle();
             if(ui.tab(propTabHandle, "Properties")){
-                if(ui.panel(Id.handle({selected:true}), "Window")){
+                if(ui.panel(propPanelWinH, "Window")){
                     ui.indent();
                     ui.row([1/4, 3/4]);
                     ui.text("Name");
@@ -37,12 +42,15 @@ class UIProperties {
                     var windowHandle = Id.handle({position: 0});
                     ui.combo(Id.handle({position: 0}), ["Windowed", "Fullscreen"], Right);
                     if (windowHandle.changed) window.windowMode = windowHandle.position;
+
+                    for (value in paddy.Plugin.plugins) if (value.propWinPanelUI != null) value.propWinPanelUI(ui);
+
                     ui.unindent();
                 }
                 if(selectedObj!=null){
                     var obj = selectedObj;
                     var id = obj.id;
-                    if (ui.panel(Id.handle({selected: true}), "Object")) {
+                    if (ui.panel(propPanelObjH, "Object")) {
                         ui.indent();
                         ui.row([2/6, 4/6]);
                         ui.text("Name");
@@ -82,48 +90,51 @@ class UIProperties {
                         handlerot.value = paddy.util.Math.roundPrecision(paddy.util.Math.toDegrees(obj.rotation), 2);
                         if (handlerot.value >= 360) handlerot.value = 0;
                         obj.rotation = paddy.util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
+
+                        for (value in paddy.Plugin.plugins) if (value.propObjPanelUI != null) value.propObjPanelUI(ui);
+
                         ui.unindent();
                     }
                 }
+                for (value in paddy.Plugin.plugins) if (value.propTabUI != null) value.propTabUI(ui);
             }
             if(ui.tab(propTabHandle, "Editor")){
-                if(ui.panel(Id.handle(), "Grid")){
+                if(ui.panel(propPanelGridH, "Grid")){
                     ui.indent();
                         gridSize = Std.parseInt(ui.textInput(Id.handle({text:gridSize+""}), "Size", Right));
                         gridSnapPos = ui.check(Id.handle({selected:true}), "Snap Pos");
                         gridSnapBounds = ui.check(Id.handle({selected:false}), "Snap Bounds");
                         gridUseRelative = ui.check(Id.handle({selected:true}), "Use Relative");
+                        for (value in paddy.Plugin.plugins) if (value.editorGridPanelUI != null) value.editorGridPanelUI(ui);
                     ui.unindent();
                 }
-                if(ui.panel(Id.handle(), "Rotation")){
+                if(ui.panel(propPanelRotH, "Rotation")){
                     ui.indent();
                         useRotationSteps = ui.check(Id.handle({selected:true}), "Use Steps");
                         if(useRotationSteps) rotationSteps = Std.parseInt(ui.textInput(Id.handle({text:rotationSteps+""}), "Steps", Right));
+                        for (value in paddy.Plugin.plugins) if (value.editorRotPanelUI != null) value.editorRotPanelUI(ui);
                     ui.unindent();
                 }
+
+                for (value in paddy.Plugin.plugins) if (value.editorTabUI != null) value.editorTabUI(ui);
+
             }
-            if(ui.tab(propTabHandle, "Plugins Manager")){
-                if(ui.panel(Id.handle(), "Plugins List")){
-                    ui.row([3/5, 2/5]);
-                    var file = ui.textInput(Id.handle(), "File Name");
-                    if(ui.button("Import") && file != ""){
-                        var plug = new Plugin(file);
-                        plug.enable();
-                        trace(Plugin.plugins);
-                    }
-                    for (p in paddy.Plugin.plugins){
-                        for (key => value in p) {
-                            ui.row([4/5, 1/5]);
-                            if(value.name!=null){
-                                ui.text(value.name);
-                                if(ui.button("X")) value.disable();
-                                trace(Plugin.plugins);
-                            }
-                        }
-                    }
+            if(ui.tab(propTabHandle, "Plugins")){
+                ui.row([3/5, 2/5]);
+                var file = ui.textInput(Id.handle(), "Name");
+                if(ui.button("Import") && file != ""){
+                    if(Plugin.plugins.exists(file)) return;
+                    Plugin.enable(file);
+                }
+                ui.row([3/5, 2/5]);
+                var file2 = ui.textInput(Id.handle(), "Name");
+                if(ui.button("Remove") && file2 != ""){
+                    if(!Plugin.plugins.exists(file2)) return;
+                    Plugin.disable(file2);
                 }
             }
         }
 
+        for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
     }
 }
