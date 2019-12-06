@@ -234,12 +234,6 @@ class App {
 		UIProperties.render(ui, propwin, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH);
 
 		if(ui.window(Id.handle(), 0, sceneH, fileW, kha.System.windowHeight()-sceneH-20)){
-			#if kha_debug_html5
-			var path = untyped __js__('require("path")');
-			var filePath = path.resolve(untyped __js__('__dirname'), "../../");
-			#else
-			var filePath = "";
-			#end
 			if(ui.tab(Id.handle(), "File Browser")){
 				ui.row([3/5, 2/5]);
 				ui.textInput(Id.handle(), "Search", Right);
@@ -255,7 +249,7 @@ class App {
 					else if(isSound) Assets.loadSound(assetPath);
 					else Assets.loadBlob(assetPath);
 				}
-				assetPath = Ext.fileBrowser(ui, Id.handle({text:filePath}));
+				assetPath = Ext.fileBrowser(ui, Id.handle({text:""}));
 			}
 		}
 		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
