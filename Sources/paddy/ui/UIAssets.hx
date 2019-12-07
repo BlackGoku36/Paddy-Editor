@@ -13,9 +13,6 @@ class UIAssets {
     public static function render(ui:Zui, x:Int, y:Int, w:Int, h:Int) {
         if(ui.window(Id.handle(), x, y, w, h)){
             if(ui.tab(assetTabH, "Assets")){
-                ui.row([9/10, 1/10]);
-                ui.textInput(Id.handle(), "Search", Right);
-                ui.button("Enter");
                 if(ui.panel(Id.handle(), "Images")){
                     ui.indent();
                     for (image in Assets.images) for (name => value in image){

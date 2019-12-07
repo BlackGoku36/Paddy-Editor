@@ -29,8 +29,6 @@ class Plugin {
 			#if js
 			untyped __js__("(1, eval)({0})", blob.toString());
 			#end
-		}, function (error){
-			throw error;
 		});
 	}
 
@@ -63,8 +61,14 @@ class KhaBridge {
 	public static var Assets = kha.Assets;
 }
 
+@:expose("krom")
+class KromBridge {
+	public static var Kromx = Krom;
+}
+
 @:expose("std")
 class HaxeBridge {
 	public static var Math = std.Math;
 	public static var Json = haxe.Json;
+	public static var Bytes = haxe.io.Bytes;
 }

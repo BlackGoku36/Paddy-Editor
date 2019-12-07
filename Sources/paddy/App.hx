@@ -69,7 +69,13 @@ class App {
 
 	public static var scene: SceneData = {
 		name: "scene",
-		objects: []
+		objects: [],
+		assets: {
+			images: paddy.Assets.imagesPaths,
+			fonts:  paddy.Assets.fontsPaths,
+			sounds: paddy.Assets.soundsPaths,
+			blobs:  paddy.Assets.blobsPaths
+		}
 	}
 
 	static var assetPath = "";
@@ -77,10 +83,9 @@ class App {
 
 	public function new() {
 		kha.Assets.loadEverything(function (){
-			ui = new Zui({font: kha.Assets.fonts.hn});
-			uimodal = new Zui({font: kha.Assets.fonts.hn});
+			ui = new Zui({font: kha.Assets.fonts.mainfont});
+			uimodal = new Zui({font: kha.Assets.fonts.mainfont});
 			paddy.ObjectController.ui = ui;
-			// Plugins.run();
 		});
 		editorX = kha.System.windowWidth() - editorW - propsW;
 		editorY = 60;
@@ -126,13 +131,13 @@ class App {
 		// Draw grid
 		g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
 		// Draw window in editor
-		g.drawRect(coffX, coffY, window.width*0.5, window.height*0.5);
+		g.drawRect(coffX, coffY, window.width/2, window.height/2);
 
 		for (object in scene.objects){
 			var sprite = Assets.getImage(object.spriteRef);
 			if(sprite != null && object.visible) {
-				g.pushRotation(object.rotation, coffX + object.x+(object.width/2), coffY + object.y+(object.height/2));
-				g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width, object.height);
+				g.pushRotation(object.rotation, coffX + object.x+(object.width/4), coffY + object.y+(object.height/4));
+				g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width/2, object.height/2);
 				g.popTransformation();
 			}
 		}
@@ -177,7 +182,8 @@ class App {
 						name: "object"+at,
 						x: 0, y: 0,
 						width: 100, height: 100,
-						rotation: 0
+						rotation: 0,
+						isSprite: false
 					}
 					scene.objects.push(object);
 					selectedObj = object;

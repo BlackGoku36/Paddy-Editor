@@ -1,5 +1,7 @@
 package paddy.data;
 
+import kha.math.FastVector2;
+
 typedef WindowData = {
 	var name: String;
 	var width: Int;
@@ -11,7 +13,7 @@ typedef WindowData = {
 typedef SceneData = {
 	public var name: String;
 	public var objects: Array<ObjectData>;
-	public var ?assets: AssetData;
+	public var assets: AssetData;
 	public var ?scripts: Array<String>;
 	// public var ?physicsWorld: echo.data.Options.WorldOptions;
 	public var ?canvasRef: String;
@@ -31,6 +33,7 @@ typedef ObjectData = {
 	public var y: Float;
 	public var height: Float;
 	public var width: Float;
+	public var isSprite:Bool;
 	public var ?rotation:Float;
 	public var ?visible:Bool;
 	// public var ?rigidBodyData: echo.data.Options.BodyOptions;
@@ -83,8 +86,8 @@ typedef ShaderData = {
 }
 
 typedef TweenData = {
-	var start: kha.math.Vector2;
-	var end: kha.math.Vector2;
+	var start: FastVector2;
+	var end: FastVector2;
 	var duration: Float;
 	var ease: Null<EaseType>;
 	var onDone: Void->Void;

@@ -2,7 +2,7 @@ package paddy;
 
 import zui.Zui;
 import kha.input.KeyCode;
-import kha.math.Vector2;
+import kha.math.FastVector2;
 import kha.graphics2.Graphics;
 using kha.graphics2.GraphicsExtension;
 
@@ -13,10 +13,10 @@ class ObjectController{
     static var handleSize = 8;
 
     public static var isManipulating = false;
-    static var transformInitInput:Vector2;
-	static var transformInitPos:Vector2;
+    static var transformInitInput:FastVector2;
+	static var transformInitPos:FastVector2;
 	static var transformInitRot:Float;
-	static var transformInitSize:Vector2;
+	static var transformInitSize:FastVector2;
 	// Was the transformation editing started by dragging the mouse
 	static var transformStartedMouse = false;
 	static var drag = false;
@@ -38,8 +38,8 @@ class ObjectController{
 			// Resize rects
 			var ex = selectedObj.x;
 			var ey = selectedObj.y;
-			var ew = selectedObj.width;
-			var eh = selectedObj.height;
+			var ew = selectedObj.width/2;
+			var eh = selectedObj.height/2;
 			// object center
 			var cx = coffX + ex + ew / 2;
 			var cy = coffY + ey + eh / 2;
@@ -51,7 +51,7 @@ class ObjectController{
 			g.color = 0xffffffff;
 
 			// Rotate mouse coords in opposite direction as the object
-			var rotatedInput:Vector2 = paddy.util.Math.rotatePoint(ui.inputX, ui.inputY, cx, cy, -selectedObj.rotation);
+			var rotatedInput:FastVector2 = paddy.util.Math.rotatePoint(ui.inputX, ui.inputY, cx, cy, -selectedObj.rotation);
 
 			// Draw corner drag handles
 			for (handlePosX in 0...3) {
@@ -103,7 +103,7 @@ class ObjectController{
 			// Draw rotation handle
 			g.drawLine(cx, coffY + ey, cx, coffY + ey - handleSize * 2);
 
-			var rotHandleCenter = new Vector2(cx, coffY + ey - handleSize * 2);
+			var rotHandleCenter = new FastVector2(cx, coffY + ey - handleSize * 2);
 			if (rotatedInput.sub(rotHandleCenter).length <= handleSize / 2 || rotate) {
 				g.color = 0xff205d9c;
 				g.fillCircle(rotHandleCenter.x, rotHandleCenter.y, handleSize / 2);
@@ -131,9 +131,9 @@ class ObjectController{
 			var obj = selectedObj;
 			var ex = selectedObj.x;
 			var ey = selectedObj.y;
-			var ew = selectedObj.width;
-			var eh = selectedObj.height;
-			var rotatedInput:Vector2 = paddy.util.Math.rotatePoint(ui.inputX, ui.inputY, coffX + ex + ew / 2, coffY + ey + eh / 2, -obj.rotation);
+			var ew = selectedObj.width/2;
+			var eh = selectedObj.height/2;
+			var rotatedInput:FastVector2 = paddy.util.Math.rotatePoint(ui.inputX, ui.inputY, coffX + ex + ew / 2, coffY + ey + eh / 2, -obj.rotation);
 
 			if (ui.inputStarted && ui.inputDown) {
 				// Drag selected object
@@ -149,7 +149,7 @@ class ObjectController{
 					startObjectManipulation(true);
 
 				} else {
-					var rotHandleCenter = new Vector2(coffX + ex + ew / 2, coffY + ey - handleSize * 2);
+					var rotHandleCenter = new FastVector2(coffX + ex + ew / 2, coffY + ey - handleSize * 2);
 					var inputPos = rotatedInput.sub(rotHandleCenter);
 
 					// Rotate selected object
@@ -172,7 +172,7 @@ class ObjectController{
 					endObjectManipulation(true);
 
 				} else if (drag) {
-					var transformDelta = new Vector2(ui.inputX, ui.inputY).sub(transformInitInput);
+					var transformDelta = new FastVector2(ui.inputX, ui.inputY).sub(transformInitInput);
 
 					if (!transformStartedMouse) {
 						if (ui.isKeyPressed && ui.key == KeyCode.X) {
@@ -220,7 +220,7 @@ class ObjectController{
 					}
 
 				} else if (grab) {
-					var transformDelta = new Vector2(ui.inputX, ui.inputY).sub(transformInitInput);
+					var transformDelta = new FastVector2(ui.inputX, ui.inputY).sub(transformInitInput);
 
 					if (ui.isKeyPressed && ui.key == KeyCode.X) {
 						obj.x = transformInitPos.x;
@@ -249,8 +249,8 @@ class ObjectController{
 					else if (!grabY) transformDelta.y = 0;
 
 				} else if (rotate) {
-					var elemCenter = new Vector2(coffX + ex + ew / 2, coffY + ey + eh / 2);
-					var inputPos = new Vector2(ui.inputX, ui.inputY).sub(elemCenter);
+					var elemCenter = new FastVector2(coffX + ex + ew / 2, coffY + ey + eh / 2);
+					var inputPos = new FastVector2(ui.inputX, ui.inputY).sub(elemCenter);
 
 					// inputPos.x and inputPos.y are both positive when the mouse is in the lower right
 					// corner of the Objects center, so the positive x axis used for the angle calculation
@@ -293,9 +293,9 @@ class ObjectController{
         var selectedObj = App.selectedObj;
 		if (isManipulating) endObjectManipulation(true);
 
-		transformInitInput = new Vector2(ui.inputX, ui.inputY);
-		transformInitPos = new Vector2(selectedObj.x, selectedObj.y);
-		transformInitSize = new Vector2(selectedObj.width, selectedObj.height);
+		transformInitInput = new FastVector2(ui.inputX, ui.inputY);
+		transformInitPos = new FastVector2(selectedObj.x, selectedObj.y);
+		transformInitSize = new FastVector2(selectedObj.width, selectedObj.height);
 		transformInitRot = selectedObj.rotation;
 		transformStartedMouse = mousePressed;
 
