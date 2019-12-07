@@ -21,6 +21,8 @@ class App {
 	var objects:Array<String> = [];
 	var at = 0;
 
+	public static var projectPath:String = "";
+
 	var ww = kha.System.windowWidth();
 	var wh = kha.System.windowHeight();
 
@@ -59,6 +61,12 @@ class App {
 	public static var selectedObj:ObjectData = null;
 	// static var showObjectList = false;
 
+	public static var paddydata: PaddyData = {
+		name: "",
+		window: "",
+		scene: "",
+	}
+
 	public static var window: WindowData = {
 		name: "Window",
 		width: 1440,
@@ -79,6 +87,9 @@ class App {
 	}
 
 	static var assetPath = "";
+
+	public static var showFileBrowser = false;
+
 	public static var selectedImage = null;
 
 	public function new() {
@@ -242,7 +253,12 @@ class App {
 		if(ui.window(Id.handle(), 0, sceneH, fileW, kha.System.windowHeight()-sceneH-20)){
 			if(ui.tab(Id.handle(), "File Browser")){
 				ui.row([3/5, 2/5]);
-				ui.textInput(Id.handle(), "Search", Right);
+				if(ui.button("Open Browser")){
+					showFileBrowser = true;
+					paddy.ui.UIFileBrowser.onDone = function(path){
+						trace(path);
+					}
+				}
 				if(ui.button("Import")){
 					var isImage = StringTools.endsWith(assetPath, ".jpg") ||
 					  StringTools.endsWith(assetPath, ".png") ||
@@ -281,7 +297,8 @@ class App {
 		lastW = kha.System.windowWidth();
 		lastH = kha.System.windowHeight();
 
-		// if(showObjectList) renderObjectList(g);
+		if(showFileBrowser) paddy.ui.UIFileBrowser.render(uimodal, g);
+		paddy.ui.UIMenu.render(uimodal, g);
 	}
 
 	public function update() {

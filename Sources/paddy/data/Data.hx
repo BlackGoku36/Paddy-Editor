@@ -2,6 +2,12 @@ package paddy.data;
 
 import kha.math.FastVector2;
 
+typedef PaddyData = {
+	var name: String;
+	var window: String;
+	var scene: String;
+}
+
 typedef WindowData = {
 	var name: String;
 	var width: Int;
