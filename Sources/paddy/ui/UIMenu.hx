@@ -1,6 +1,7 @@
 package paddy.ui;
 
-import paddy.export.Export;
+import paddy.files.Export;
+import paddy.files.Imports;
 import zui.Zui;
 import zui.Id;
 import zui.Ext;
@@ -66,7 +67,18 @@ class UIMenu {
                     App.paddydata.window = path+"/window.json";
 					Export.exportJsonFile('$path/paddy.json', haxe.Json.stringify(App.paddydata));
 				}
-                // onDone(path);
+            }
+            if(ui.button("Open")){
+                App.showFileBrowser = true;
+                paddy.ui.UIFileBrowser.onDone = function(path){
+                    Imports.importPaddy(path);
+                }
+            }
+            if(ui.button("Save")){
+                App.showFileBrowser = true;
+                paddy.ui.UIFileBrowser.onDone = function(path){
+                    Export.exportPaddy(path);
+                }
             }
             ui.endRegion(false);
         }

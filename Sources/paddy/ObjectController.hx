@@ -161,7 +161,7 @@ class ObjectController{
 			}
 
 			if (isManipulating) {
-				App.propwin.redraws = 2;
+				App.propWinH.redraws = 2;
 
 				// Confirm
 				if ((transformStartedMouse && ui.inputReleased) || (!transformStartedMouse && ui.inputStarted)) {

@@ -9,7 +9,7 @@ import kha.Framebuffer;
 import paddy.ui.UIAssets;
 import paddy.ui.UIProperties;
 import paddy.data.Data;
-import paddy.export.Export;
+import paddy.files.Export;
 
 import paddy.Assets;
 
@@ -54,10 +54,11 @@ class App {
 
 	var buildMode = 0;
 
-	public static var propwin = Id.handle();
-	public static var sceneHandle = Id.handle();
+	public static var propWinH = Id.handle();
+	public static var assetsWinH = Id.handle();
+	public static var sceneWinH = Id.handle();
 	public static var htab = Id.handle({position: 0});
-	public static var editorHandle = Id.handle();
+	public static var editorWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
 	// static var showObjectList = false;
 
@@ -180,7 +181,7 @@ class App {
 			ui.combo(Id.handle({position: 0}), ["Build", "Play"], Right);
 			if (mode.changed) buildMode = mode.position;
 		}
-		if(ui.window(sceneHandle, 0, 30, Std.int(sceneW*ui.SCALE()), sceneH)){
+		if(ui.window(sceneWinH, 0, 30, Std.int(sceneW*ui.SCALE()), sceneH)){
 			if(ui.tab(htab, "Scene")){
 				ui.row([3/4, 1/4]);
 				ui.textInput(Id.handle(), "Search");
@@ -248,9 +249,9 @@ class App {
 			if(ui.tab(editorTabH, "Nodes")){}
 		}
 
-		UIProperties.render(ui, propwin, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH);
+		UIProperties.render(ui, propWinH, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH);
 
-		if(ui.window(Id.handle(), 0, sceneH, fileW, kha.System.windowHeight()-sceneH-20)){
+		if(ui.window(assetsWinH, 0, sceneH, fileW, kha.System.windowHeight()-sceneH-20)){
 			if(ui.tab(Id.handle(), "File Browser")){
 				ui.row([3/5, 2/5]);
 				if(ui.button("Open Browser")){
@@ -271,7 +272,9 @@ class App {
 					else if(isSound) Assets.loadSound(assetPath);
 					else Assets.loadBlob(assetPath);
 				}
-				assetPath = Ext.fileBrowser(ui, Id.handle({text:""}));
+				var assetHandle = Id.handle();
+				assetHandle.text = projectPath;
+				assetPath = Ext.fileBrowser(ui, assetHandle);
 			}
 		}
 		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
@@ -311,7 +314,7 @@ class App {
 			selectedImage = null;
 		}
 
-		if(selectedObj!=null) propwin.redraws = 2;
+		if(selectedObj!=null) propWinH.redraws = 2;
 
 		if(!editorLocked && !ObjectController.isManipulating && ui.inputDownR) {
 			coffX += Std.int(ui.inputDX);
@@ -325,7 +328,7 @@ class App {
 				if (paddy.util.Math.hitbox(ui, coffX + object.x, coffY + object.y, object.width, object.height, object.rotation) &&
 						selectedObj != object) {
 					selectedObj = object;
-					sceneHandle.redraws = 2;
+					sceneWinH.redraws = 2;
 					break;
 				}
 			}

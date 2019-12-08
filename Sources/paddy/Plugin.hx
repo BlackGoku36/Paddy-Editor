@@ -45,7 +45,7 @@ class PaddyBridge {
 	public static var Plugin = paddy.Plugin;
 	public static var Assets = paddy.Assets;
 	public static var UtilMath = paddy.util.Math;
-	public static var Export = paddy.export.Export;
+	public static var Export = paddy.files.Export;
 }
 
 @:expose("ui")
@@ -61,10 +61,12 @@ class KhaBridge {
 	public static var Assets = kha.Assets;
 }
 
+#if kha_krom
 @:expose("krom")
 class KromBridge {
 	public static var Kromx = Krom;
 }
+#end
 
 @:expose("std")
 class HaxeBridge {

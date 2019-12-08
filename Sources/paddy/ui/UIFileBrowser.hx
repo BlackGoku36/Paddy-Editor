@@ -39,7 +39,9 @@ class UIFileBrowser {
 				var pathHandle = Id.handle({text:path});
 				pathHandle.text = path;
 				var dirLoc = ui.textInput(pathHandle, "Path");
-				if(ui.button("Create Directory")) if(dirLoc!="")Krom.sysCommand('mkdir $dirLoc');
+				#if kha_krom
+				if(ui.button("Create Directory")) if(dirLoc!="") Krom.sysCommand('mkdir $dirLoc');
+				#end
 			}
 			path = Ext.fileBrowser(ui, Id.handle());
 		}
