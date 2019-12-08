@@ -99,6 +99,14 @@ class UIProperties {
 				for (value in paddy.Plugin.plugins) if (value.propTabUI != null) value.propTabUI(ui);
 			}
 			if(ui.tab(propTabHandle, "Editor")){
+				if(ui.panel(Id.handle(), "UI")){
+					ui.indent();
+						var mode = Id.handle({position: 1});
+						ui.combo(mode, ["Light", "Dark"], Right);
+							if(mode.position == 0) paddy.data.PaddyData.lightTheme(ui);
+							else paddy.data.PaddyData.darkTheme(ui);
+					ui.unindent();
+				}
 				if(ui.panel(propPanelGridH, "Grid")){
 					ui.indent();
 						App.gridSize = Std.parseInt(ui.textInput(Id.handle({text:App.gridSize+""}), "Size", Right));

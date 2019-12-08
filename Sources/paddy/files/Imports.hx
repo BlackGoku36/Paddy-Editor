@@ -5,7 +5,7 @@ class Imports {
     public static function importPaddy(path:String) {
         kha.Assets.loadBlobFromPath(path, function(blob){
             if(!StringTools.endsWith(path, "paddy.json")) return;
-            var parsed: paddy.data.Data.PaddyData = haxe.Json.parse(blob.toString());
+            var parsed: paddy.data.PaddyData.PData = haxe.Json.parse(blob.toString());
             App.paddydata = parsed;
             App.paddydata.name = parsed.name;
             App.paddydata.scene = parsed.scene;

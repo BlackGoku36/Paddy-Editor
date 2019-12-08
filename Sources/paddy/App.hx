@@ -4,11 +4,13 @@ import zui.Ext;
 // import kha.Assets;
 import zui.Id;
 import zui.Zui;
+import zui.Themes;
 import kha.Framebuffer;
 
 import paddy.ui.UIAssets;
 import paddy.ui.UIProperties;
 import paddy.data.Data;
+import paddy.data.PaddyData;
 import paddy.files.Export;
 
 import paddy.Assets;
@@ -62,7 +64,7 @@ class App {
 	public static var selectedObj:ObjectData = null;
 	// static var showObjectList = false;
 
-	public static var paddydata: PaddyData = {
+	public static var paddydata: PData = {
 		name: "",
 		window: "",
 		scene: "",
