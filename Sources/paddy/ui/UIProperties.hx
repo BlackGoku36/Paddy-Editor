@@ -15,12 +15,12 @@ class UIProperties {
 	public static function render(ui:Zui, idHandle:Handle, x:Int, y:Int, w:Int, h:Int) {
 		var window = App.window;
 
-		var gridSize = App.gridSize;
-	    var gridSnapBounds = App.gridSnapBounds;
-	    var gridSnapPos = App.gridSnapPos;
-	    var gridUseRelative = App.gridUseRelative;
-	    var useRotationSteps = App.useRotationSteps;
-	    var rotationSteps = App.rotationSteps;
+		// var gridSize = App.gridSize;
+	    // var gridSnapBounds = App.gridSnapBounds;
+	    // var gridSnapPos = App.gridSnapPos;
+	    // var gridUseRelative = App.gridUseRelative;
+	    // var useRotationSteps = App.useRotationSteps;
+	    // var rotationSteps = App.rotationSteps;
 
 		var selectedObj = App.selectedObj;
 
@@ -101,17 +101,17 @@ class UIProperties {
 			if(ui.tab(propTabHandle, "Editor")){
 				if(ui.panel(propPanelGridH, "Grid")){
 					ui.indent();
-						gridSize = Std.parseInt(ui.textInput(Id.handle({text:gridSize+""}), "Size", Right));
-						gridSnapPos = ui.check(Id.handle({selected:true}), "Snap Pos");
-						gridSnapBounds = ui.check(Id.handle({selected:false}), "Snap Bounds");
-						gridUseRelative = ui.check(Id.handle({selected:true}), "Use Relative");
+						App.gridSize = Std.parseInt(ui.textInput(Id.handle({text:App.gridSize+""}), "Size", Right));
+						App.gridSnapPos = ui.check(Id.handle({selected:true}), "Snap Pos");
+						App.gridSnapBounds = ui.check(Id.handle({selected:false}), "Snap Bounds");
+						App.gridUseRelative = ui.check(Id.handle({selected:true}), "Use Relative");
 						for (value in paddy.Plugin.plugins) if (value.editorGridPanelUI != null) value.editorGridPanelUI(ui);
 					ui.unindent();
 				}
 				if(ui.panel(propPanelRotH, "Rotation")){
 					ui.indent();
-						useRotationSteps = ui.check(Id.handle({selected:true}), "Use Steps");
-						if(useRotationSteps) rotationSteps = Std.parseInt(ui.textInput(Id.handle({text:rotationSteps+""}), "Steps", Right));
+						App.useRotationSteps = ui.check(Id.handle({selected:true}), "Use Steps");
+						if(App.useRotationSteps) App.rotationSteps = Std.parseInt(ui.textInput(Id.handle({text:App.rotationSteps+""}), "Steps", Right));
 						for (value in paddy.Plugin.plugins) if (value.editorRotPanelUI != null) value.editorRotPanelUI(ui);
 					ui.unindent();
 				}

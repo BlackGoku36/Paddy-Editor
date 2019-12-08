@@ -32,7 +32,7 @@ class App {
 	public static var coffX = 220.0;
 	public static var coffY = 110.0;
 
-	static var grid:kha.Image = null;
+	public static var grid:kha.Image = null;
 	public static var gridSize:Int = 20;
 	public static var gridSnapBounds:Bool = false;
 	public static var gridSnapPos:Bool = true;
