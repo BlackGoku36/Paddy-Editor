@@ -5,15 +5,15 @@ import zui.Id;
 import zui.Ext;
 
 class UIFileBrowser {
-    static var modalW = 655;
+	static var modalW = 655;
 	static var modalH = 550;
 	static var modalHeaderH = 66;
 	static var modalRectW = 625; // No shadow
 	static var modalRectH = 545;
 
-    public static var onDone: String->Void = null;
+	public static var onDone: String->Void = null;
 
-    static var path = "/";
+	static var path = "/";
 
 	public static function render(ui:Zui, g:kha.graphics2.Graphics) {
 		var appw = kha.System.windowWidth();
@@ -51,7 +51,7 @@ class UIFileBrowser {
 
 		ui.beginRegion(g, rightRect - 100, bottomRect - 30, 100);
 		if (ui.button("OK")) {
-            if (onDone!=null) onDone(path);
+			if (onDone!=null) onDone(path);
 			App.showFileBrowser = false;
 		}
 		ui.endRegion(false);
