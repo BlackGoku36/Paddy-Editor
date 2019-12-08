@@ -118,6 +118,8 @@ class App {
 		var h = wh + doubleGridSize * 2;
 		grid = kha.Image.createRenderTarget(w, h);
 		grid.g2.begin(true, 0xff242424);
+		grid.g2.color = 0xff202020;
+		grid.g2.fillRect(0, 0, w, h);
 		for (i in 0...Std.int(h / doubleGridSize) + 1) {
 			grid.g2.color = 0xff282828;
 			grid.g2.drawLine(0, i * doubleGridSize, w, i * doubleGridSize);
