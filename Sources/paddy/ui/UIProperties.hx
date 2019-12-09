@@ -3,6 +3,9 @@ package paddy.ui;
 import zui.Id;
 import zui.Zui;
 
+import paddy.data.PaddyData;
+import paddy.data.Themes;
+
 @:access(zui.Zui)
 class UIProperties {
 
@@ -11,6 +14,9 @@ class UIProperties {
 	public static var propPanelObjH = Id.handle({selected:true});
 	public static var propPanelGridH = Id.handle({selected:true});
 	public static var propPanelRotH = Id.handle({selected:true});
+
+	public static var themesName = ["Light", "Dark"];
+	public static var tthemes = [Themes.light, Themes.dark];
 
 	public static function render(ui:Zui, idHandle:Handle, x:Int, y:Int, w:Int, h:Int) {
 		var window = App.window;
@@ -102,9 +108,8 @@ class UIProperties {
 				if(ui.panel(Id.handle(), "UI")){
 					ui.indent();
 						var mode = Id.handle({position: 1});
-						ui.combo(mode, ["Light", "Dark"], Right);
-							if(mode.position == 0) paddy.data.PaddyData.lightTheme(ui);
-							else paddy.data.PaddyData.darkTheme(ui);
+						ui.combo(mode, themesName, Right);
+						if(mode.changed) PaddyData.changeTheme(ui, tthemes[mode.position]);
 					ui.unindent();
 				}
 				if(ui.panel(propPanelGridH, "Grid")){
