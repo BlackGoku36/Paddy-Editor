@@ -75,9 +75,12 @@ class UIMenu {
 				}
 			}
 			if(ui.button("Save")){
-				App.showFileBrowser = true;
-				paddy.ui.UIFileBrowser.onDone = function(path){
-					Export.exportPaddy(path);
+				if(App.projectPath!="") Export.exportPaddy(App.projectPath);
+				else{
+					App.showFileBrowser = true;
+					paddy.ui.UIFileBrowser.onDone = function(path){
+						Export.exportPaddy(path);
+					}
 				}
 			}
 			ui.endRegion(false);
