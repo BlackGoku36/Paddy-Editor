@@ -97,8 +97,8 @@ class App {
 
 	public function new() {
 		kha.Assets.loadEverything(function (){
-			ui = new Zui({font: kha.Assets.fonts.mainfont});
-			uimodal = new Zui({font: kha.Assets.fonts.mainfont});
+			ui = new Zui({font: kha.Assets.fonts.mainfont, theme: paddy.data.Themes.dark});
+			uimodal = new Zui({font: kha.Assets.fonts.mainfont, theme: paddy.data.Themes.dark});
 			paddy.ObjectController.ui = ui;
 		});
 		editorX = kha.System.windowWidth() - editorW - propsW;
