@@ -1,10 +1,8 @@
 package paddy;
 
 import zui.Ext;
-// import kha.Assets;
 import zui.Id;
 import zui.Zui;
-import zui.Themes;
 import kha.Framebuffer;
 
 import paddy.ui.UIAssets;
@@ -12,8 +10,6 @@ import paddy.ui.UIProperties;
 import paddy.data.Data;
 import paddy.data.PaddyData;
 import paddy.files.Export;
-
-import paddy.Assets;
 
 @:access(zui.Zui)
 class App {
@@ -51,9 +47,6 @@ class App {
 	var fileW = 200; var fileH = 100;
 	var editorX = 0; var editorY = 0;
 
-	// var addbtnX = 0.0;
-	// var addbtnY = 0.0;
-
 	var buildMode = 0;
 
 	public static var propWinH = Id.handle();
@@ -62,7 +55,6 @@ class App {
 	public static var htab = Id.handle({position: 0});
 	public static var editorWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
-	// static var showObjectList = false;
 
 	public static var paddydata: PData = {
 		name: "",
@@ -190,9 +182,6 @@ class App {
 				ui.row([3/4, 1/4]);
 				ui.textInput(Id.handle(), "Search");
 				if(ui.button("+")){
-					// addbtnX = ui._x+(sceneW*3/4);
-					// addbtnY = ui._y+ui.buttonOffsetY+ui.BUTTON_H()+5;
-					// showObjectList = true;
 					var object: ObjectData = {
 						id: getObjectId(scene),
 						name: "object"+at,
@@ -281,6 +270,7 @@ class App {
 				assetPath = Ext.fileBrowser(ui, assetHandle);
 			}
 		}
+
 		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
 
 		ui.end();
@@ -340,27 +330,6 @@ class App {
 
 		for (value in paddy.Plugin.plugins) if(value.update != null) value.update();
 	}
-
-	// function renderObjectList(g:Graphics) {
-	// 	var x = Std.int(addbtnX);
-	// 	var y = Std.int(addbtnY);
-	// 	var width = 150;
-	// 	var height = 200;
-
-	// 	g.begin(false);
-	// 	var col = g.color;
-	// 	g.color = 0xff202020;
-	// 	g.fillRect(x-5, y+5, width+10, height+3);
-	// 	g.color = 0xff353535;
-	// 	g.fillRect(x, y, width+10, height);
-	// 	g.color = col;
-	// 	uimodal.beginRegion(g, x+5, y+5, width);
-	// 	if (uimodal.button("OK")) {
-	// 	}
-	// 	uimodal.endRegion(false);
-
-	// 	g.end();
-	// }
 
 	static var elemId = -1;
 	public static function getObjectId(scene: SceneData): Int {

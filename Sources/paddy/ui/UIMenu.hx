@@ -31,13 +31,6 @@ class UIMenu {
 		var apph = kha.System.windowHeight();
 		var menuWidth = 600;
 
-		// g.begin(false);
-		// if(menu != null){
-		//     g.color = 0xff202020;
-		//     g.fillRect(x, y, 50, 100);
-		// }
-		// g.end();
-
 		ui.begin(g);
 		if (ui.window(Id.handle(), 3, 5, menuWidth, 25)) {
 			ui.row([1/10, 1/10]);
@@ -51,12 +44,16 @@ class UIMenu {
 
 		if(menu == File){
 			g.begin(false);
+
 			if(menu != null){
 				g.color = 0xff202020;
 				g.fillRect(3, 30, 120, 100);
 			}
+
 			g.end();
+
 			ui.beginRegion(g, 5, 32, 116);
+	
 			if (ui.button("New")) {
 				App.showFileBrowser = true;
 				paddy.ui.UIFileBrowser.onDone = function(path){
@@ -68,12 +65,14 @@ class UIMenu {
 					Export.exportJsonFile('$path/paddy.json', haxe.Json.stringify(App.paddydata));
 				}
 			}
+
 			if(ui.button("Open")){
 				App.showFileBrowser = true;
 				paddy.ui.UIFileBrowser.onDone = function(path){
 					Imports.importPaddy(path);
 				}
 			}
+
 			if(ui.button("Save")){
 				if(App.projectPath!="") Export.exportPaddy(App.projectPath);
 				else{
@@ -83,6 +82,7 @@ class UIMenu {
 					}
 				}
 			}
+
 			ui.endRegion(false);
 		}
 	}

@@ -21,13 +21,6 @@ class UIProperties {
 	public static function render(ui:Zui, idHandle:Handle, x:Int, y:Int, w:Int, h:Int) {
 		var window = App.window;
 
-		// var gridSize = App.gridSize;
-	    // var gridSnapBounds = App.gridSnapBounds;
-	    // var gridSnapPos = App.gridSnapPos;
-	    // var gridUseRelative = App.gridUseRelative;
-	    // var useRotationSteps = App.useRotationSteps;
-	    // var rotationSteps = App.rotationSteps;
-
 		var selectedObj = App.selectedObj;
 
 		if(ui.window(idHandle, x, y, w, h)){

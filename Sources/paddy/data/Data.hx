@@ -15,7 +15,6 @@ typedef SceneData = {
 	public var objects: Array<ObjectData>;
 	public var assets: AssetData;
 	public var ?scripts: Array<String>;
-	// public var ?physicsWorld: echo.data.Options.WorldOptions;
 	public var ?canvasRef: String;
 }
 
@@ -36,7 +35,6 @@ typedef ObjectData = {
 	public var isSprite:Bool;
 	public var ?rotation:Float;
 	public var ?visible:Bool;
-	// public var ?rigidBodyData: echo.data.Options.BodyOptions;
 	public var ?culled: Bool;
 	public var ?spriteRef: String;
 	public var ?color: Array<Int>;
