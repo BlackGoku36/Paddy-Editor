@@ -259,8 +259,7 @@ class App {
 				}
 				if(ui.button("Import")){
 					var isImage = StringTools.endsWith(assetPath, ".jpg") ||
-					  StringTools.endsWith(assetPath, ".png") ||
-					  StringTools.endsWith(assetPath, ".hdr");
+					  StringTools.endsWith(assetPath, ".png");
 					var isFont = StringTools.endsWith(assetPath, ".ttf");
 					var isSound = StringTools.endsWith(assetPath, ".ogg");
 
