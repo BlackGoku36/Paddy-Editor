@@ -1,28 +1,24 @@
 package paddy.files;
 
-class Export{
+import paddy.data.Data.AssetData;
 
-	static var paddy = App.paddydata;
-	static var scene = App.scene;
-	static var window = App.window;
+class Export{
 
 	public static function exportPaddy(path:String = "") {
 		adjustObjectSpritePath(path);
-		scene.assets = {
-			images: adjustImagePath(path),
-			fonts: []
-		}
-		if(paddy.name =="") paddy.name = "PaddyProject";
-		if(paddy.scene =="") paddy.scene = path+"/"+scene.name+".json";
-		if(paddy.window =="") paddy.window = path+"/"+"window.json";
+		App.scene.assets = adjustAssetsPath(path);
+		if(App.paddydata.name =="") App.paddydata.name = "PaddyProject";
+		if(App.paddydata.scene =="") App.paddydata.scene = path+"/"+App.paddydata.scene+".json";
+		if(App.paddydata.window =="") App.paddydata.window = path+"/"+"window.json";
 		#if kha_krom
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(paddy)).getData());
+		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
 		exportScene(path);
 		exportWindow(path);
 		Krom.sysCommand('mkdir $path/Assets');
 		copyAssets('$path/Assets');
+		App.projectPath = path;
 		#end
 	}
 
@@ -40,7 +36,7 @@ class Export{
 		#if kha_krom
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(scene)).getData());
+		Krom.fileSaveBytes(newPath+App.scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.scene)).getData());
 		#end
 	}
 
@@ -48,7 +44,7 @@ class Export{
 		#if kha_krom
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+"window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(window)).getData());
+		Krom.fileSaveBytes(newPath+"window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.window)).getData());
 		#end
 	}
 
@@ -64,22 +60,40 @@ class Export{
 		#end
 	}
 
-	static function adjustImagePath(newPath:String) {
-		var adjustedImagePath:Array<String> = [];
-		for (image in Assets.imagesPaths){
-			var name = image.split("/");
-			var newName = name[name.length-1];
-			adjustedImagePath.push('$newPath/Assets/$newName');
+	static function adjustAssetsPath(newPath:String): AssetData{
+
+		var adjustedImagesPath:Array<String> = [];
+		var adjustedFontsPath:Array<String> = [];
+		var adjustedSoundsPath:Array<String> = [];
+		var adjustedBlobsPath:Array<String> = [];
+
+		for (image in Assets.imagesPaths) adjustedImagesPath.push('$newPath/Assets/' + getNameFromPath(image));
+		for (font in Assets.fontsPaths) adjustedFontsPath.push('$newPath/Assets/' + getNameFromPath(font));
+		for (sound in Assets.soundsPaths) adjustedSoundsPath.push('$newPath/Assets/' + getNameFromPath(sound));
+		for (blob in Assets.blobsPaths) adjustedBlobsPath.push('$newPath/Assets/' + getNameFromPath(blob));
+
+		var adjustedAssetsPath:AssetData = {
+			images: adjustedImagesPath,
+			fonts: adjustedFontsPath,
+			sounds: adjustedSoundsPath,
+			blobs: adjustedBlobsPath
 		}
-		return adjustedImagePath;
+		return adjustedAssetsPath;
 	}
 
 	static function adjustObjectSpritePath(newPath:String) {
-		for (object in scene.objects){
-			var ref = object.spriteRef;
-			var name = ref.split("/");
-			var newName = name[name.length-1];
-			object.spriteRef = '$newPath/Assets/$newName';
+		for (object in App.scene.objects){
+			if(object.spriteRef!= null){
+				var ref = object.spriteRef;
+				var name = ref.split("/");
+				var newName = name[name.length-1];
+				object.spriteRef = '$newPath/Assets/$newName';
+			}
 		}
+	}
+
+	static function getNameFromPath(name:String):String {
+		var nameArr = name.split("/");
+		return nameArr[nameArr.length-1];
 	}
 }

@@ -11,34 +11,34 @@ typedef WindowData = {
 }
 
 typedef SceneData = {
-	public var name: String;
-	public var objects: Array<ObjectData>;
-	public var assets: AssetData;
-	public var ?scripts: Array<String>;
-	public var ?canvasRef: String;
+	var name: String;
+	var objects: Array<ObjectData>;
+	var assets: AssetData;
+	var ?scripts: Array<String>;
+	var ?canvasRef: String;
 }
 
 typedef AssetData = {
-	public var images: Array<String>;
-	public var fonts: Array<String>;
+	var images: Array<String>;
+	var ?fonts: Array<String>;
 	var ?sounds: Array<String>;
 	var ?blobs: Array<String>;
 }
 
 typedef ObjectData = {
-	public var id:Int;
-	public var name: String;
-	public var x: Float;
-	public var y: Float;
-	public var height: Float;
-	public var width: Float;
-	public var isSprite:Bool;
-	public var ?rotation:Float;
-	public var ?visible:Bool;
-	public var ?culled: Bool;
-	public var ?spriteRef: String;
-	public var ?color: Array<Int>;
-	public var ?scripts: Array<ScriptData>;
+	var id:Int;
+	var name: String;
+	var x: Float;
+	var y: Float;
+	var height: Float;
+	var width: Float;
+	var isSprite:Bool;
+	var ?rotation:Float;
+	var ?visible:Bool;
+	var ?culled: Bool;
+	var ?spriteRef: String;
+	var ?color: Array<Int>;
+	var ?scripts: Array<ScriptData>;
 }
 
 typedef ParticleData = {
