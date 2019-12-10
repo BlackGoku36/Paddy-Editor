@@ -83,7 +83,9 @@ class App {
 
 	static var assetPath = "";
 
+	public static var assetHandle = Id.handle();
 	public static var showFileBrowser = false;
+	public static var fileBrowserPath = "";
 
 	public static var selectedImage = null;
 
@@ -252,7 +254,7 @@ class App {
 				if(ui.button("Open Browser")){
 					showFileBrowser = true;
 					paddy.ui.UIFileBrowser.onDone = function(path){
-						trace(path);
+						assetHandle.text = fileBrowserPath;
 					}
 				}
 				if(ui.button("Import")){
@@ -267,9 +269,7 @@ class App {
 					else if(isSound) Assets.loadSound(assetPath);
 					else Assets.loadBlob(assetPath);
 				}
-				// var assetHandle = Id.handle();
-				// assetHandle.text = projectPath;
-				assetPath = Ext.fileBrowser(ui, Id.handle({text: projectPath}));
+				assetPath = Ext.fileBrowser(ui, assetHandle);
 			}
 		}
 
