@@ -8,7 +8,7 @@ class Export{
 		adjustObjectSpritePath(path);
 		App.scene.assets = adjustAssetsPath(path);
 		if(App.paddydata.name =="") App.paddydata.name = "PaddyProject";
-		if(App.paddydata.scene =="") App.paddydata.scene = path+"/"+App.paddydata.scene+".json";
+		if(App.paddydata.scene =="") App.paddydata.scene = path+"/"+"scene.json";
 		if(App.paddydata.window =="") App.paddydata.window = path+"/"+"window.json";
 		#if kha_krom
 		var newPath = path;
