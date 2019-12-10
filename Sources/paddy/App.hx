@@ -171,10 +171,12 @@ class App {
 				if(buildMode == 0){
 					Export.exportScene();
 					Export.exportWindow();
+				}else if(buildMode == 1){
+					for (plug in Plugin.plugins) plug.executeRunUI();
 				}
 			}
 			var mode = Id.handle({position: 0});
-			ui.combo(Id.handle({position: 0}), ["Build", "Play"], Right);
+			ui.combo(mode, ["Build", "Play"], Right);
 			if (mode.changed) buildMode = mode.position;
 		}
 		if(ui.window(sceneWinH, 0, 30, Std.int(sceneW*ui.SCALE()), sceneH)){
@@ -265,9 +267,9 @@ class App {
 					else if(isSound) Assets.loadSound(assetPath);
 					else Assets.loadBlob(assetPath);
 				}
-				var assetHandle = Id.handle();
-				assetHandle.text = projectPath;
-				assetPath = Ext.fileBrowser(ui, assetHandle);
+				// var assetHandle = Id.handle();
+				// assetHandle.text = projectPath;
+				assetPath = Ext.fileBrowser(ui, Id.handle({text: projectPath}));
 			}
 		}
 

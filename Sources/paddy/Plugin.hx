@@ -5,6 +5,7 @@ class Plugin {
 
 	public static var plugins:Map<String, Plugin> = [];
 	static var pluginName:String;
+	public var executeRunUI: Void->Void = null;
 	public var propWinUI: zui.Zui->Void = null;
 	public var propTabUI: zui.Zui->Void = null;
 	public var propObjPanelUI: zui.Zui->Void = null;
