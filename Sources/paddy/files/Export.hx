@@ -67,10 +67,10 @@ class Export{
 		var adjustedSoundsPath:Array<String> = [];
 		var adjustedBlobsPath:Array<String> = [];
 
-		for (image in Assets.imagesPaths) adjustedImagesPath.push('$newPath/Assets/' + getNameFromPath(image));
-		for (font in Assets.fontsPaths) adjustedFontsPath.push('$newPath/Assets/' + getNameFromPath(font));
-		for (sound in Assets.soundsPaths) adjustedSoundsPath.push('$newPath/Assets/' + getNameFromPath(sound));
-		for (blob in Assets.blobsPaths) adjustedBlobsPath.push('$newPath/Assets/' + getNameFromPath(blob));
+		for (image in Assets.imagesPaths) adjustedImagesPath.push('$newPath/Assets/' + Path.getNameFromPath(image));
+		for (font in Assets.fontsPaths) adjustedFontsPath.push('$newPath/Assets/' + Path.getNameFromPath(font));
+		for (sound in Assets.soundsPaths) adjustedSoundsPath.push('$newPath/Assets/' + Path.getNameFromPath(sound));
+		for (blob in Assets.blobsPaths) adjustedBlobsPath.push('$newPath/Assets/' + Path.getNameFromPath(blob));
 
 		var adjustedAssetsPath:AssetData = {
 			images: adjustedImagesPath,
@@ -90,10 +90,5 @@ class Export{
 				object.spriteRef = '$newPath/Assets/$newName';
 			}
 		}
-	}
-
-	static function getNameFromPath(name:String):String {
-		var nameArr = name.split("/");
-		return nameArr[nameArr.length-1];
 	}
 }

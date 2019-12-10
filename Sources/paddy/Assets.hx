@@ -1,5 +1,7 @@
 package paddy;
 
+import paddy.files.Path;
+
 class Assets {
 
 	public static var images: Array<Map<String, kha.Image>> = [];
@@ -17,29 +19,6 @@ class Assets {
 		return newImage;
 	}
 
-	public static function getImagesName(){
-		var names:Array<String> = [];
-		for (image in images)for (name => img in image) names.push(name);
-		return names;
-	}
-
-	public static function getFontsName(){
-		var names:Array<String> = [];
-		for (font in fonts)for (name => fnt in font) names.push(name);
-		return names;
-	}
-
-	public static function getSoundsName(){
-		var names:Array<String> = [];
-		for (sound in sounds)for (name => snd in sound) names.push(name);
-		return names;
-	}
-
-	public static function getBlobsName(){
-		var names:Array<String> = [];
-		for (blob in blobs)for (name => blb in blob) names.push(name);
-		return names;
-	}
 	public static function getFont(fontRef:String) {
 		var newFont:kha.Font = null;
 		for (font in fonts){
