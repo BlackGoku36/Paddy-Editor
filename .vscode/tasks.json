@@ -11,12 +11,12 @@
         {
             "label": "Build Krom",
             "type": "shell",
-            "command": "node /Applications/Blender.app/armsdk/Kha/make krom -g opengl"
+            "command": "node /Applications/Blender.app/armsdk/Kha/make krom"
         },
         {
             "label": "Krom",
             "type": "shell",
-            "command": "/Applications/Blender.app/armsdk/Krom/Krom.app/Contents/MacOS/Krom ${workspaceRoot}/build/krom ${workspaceRoot}/build/krom-resources --debug",
+            "command": "/Users/urjasvisuthar/Krom_bin/Krom.app/Contents/MacOS/Krom ${workspaceRoot}/build/krom ${workspaceRoot}/build/krom-resources",
             "dependsOn": [
                 "Clean Build",
                 "Build Krom"
