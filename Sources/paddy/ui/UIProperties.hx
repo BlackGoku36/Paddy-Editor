@@ -98,7 +98,7 @@ class UIProperties {
 				for (value in paddy.Plugin.plugins) if (value.propTabUI != null) value.propTabUI(ui);
 			}
 			if(ui.tab(propTabHandle, "Editor")){
-				if(ui.panel(Id.handle(), "UI")){
+				if(ui.panel(Id.handle({selected:true}), "UI")){
 					ui.indent();
 						var mode = Id.handle({position: 1});
 						ui.combo(mode, themesName, Right);
