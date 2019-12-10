@@ -24,7 +24,12 @@ class UIMenu {
 
 	static var path = "/";
 
-	static var menu:MenuType = null;
+	public static var menu:MenuType = null;
+
+	public static var outx = 0;
+	public static var outy = 0;
+	public static var outw = 0;
+	public static var outh = 0;
 
 	public static function render(ui:Zui, g:kha.graphics2.Graphics) {
 		var appw = kha.System.windowWidth();
@@ -45,10 +50,9 @@ class UIMenu {
 		if(menu == File){
 			g.begin(false);
 
-			if(menu != null){
-				g.color = 0xff202020;
-				g.fillRect(3, 30, 120, 100);
-			}
+			g.color = 0xff202020;
+			g.fillRect(3, 30, 120, 100);
+			outx = 3; outy = 30; outw = 120; outh = 100;
 
 			g.end();
 

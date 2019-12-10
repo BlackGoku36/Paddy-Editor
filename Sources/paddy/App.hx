@@ -1,5 +1,6 @@
 package paddy;
 
+import paddy.ui.UIMenu;
 import zui.Ext;
 import zui.Id;
 import zui.Zui;
@@ -301,6 +302,10 @@ class App {
 
 	public function update() {
 		if(ui == null)return;
+
+		if(ui.inputStarted && !paddy.util.Math.hitbox(ui, UIMenu.outx, UIMenu.outy, UIMenu.outw, UIMenu.outh, 0)){
+			if(UIMenu.menu != null) UIMenu.menu = null;
+		}
 
 		if(ui.inputReleased && selectedImage != null){
 			if (selectedObj!=null && paddy.util.Math.hitbox(ui, coffX + selectedObj.x, coffY + selectedObj.y, selectedObj.width, selectedObj.height, selectedObj.rotation)) {
