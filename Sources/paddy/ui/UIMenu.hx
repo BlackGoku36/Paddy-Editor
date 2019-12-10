@@ -59,15 +59,22 @@ class UIMenu {
 			ui.beginRegion(g, 5, 32, 116);
 	
 			if (ui.button("New")) {
-				App.showFileBrowser = true;
-				paddy.ui.UIFileBrowser.onDone = function(path){
-					App.paddydata.name = "PaddyProject";
-					Export.exportScene(path);
-					Export.exportWindow(path);
-					App.paddydata.scene = path+"/scene.json";
-					App.paddydata.window = path+"/window.json";
-					Export.exportJsonFile('$path/paddy.json', haxe.Json.stringify(App.paddydata));
-				}
+				if(App.projectPath!="") App.projectPath = "";
+				App.paddydata = { name: "", window: "", scene: "" }
+				App.scene = { name: "scene", objects: [], assets: {
+					images: paddy.Assets.imagesPaths,
+					fonts:  paddy.Assets.fontsPaths,
+					sounds: paddy.Assets.soundsPaths,
+					blobs:  paddy.Assets.blobsPaths}}
+				App.window = { name: "Window", width: 1440, height: 900, windowMode: 0, clearColor: [0, 0, 0, 255] }
+				Assets.images.resize(0);
+				Assets.imagesPaths.resize(0);
+				Assets.fonts.resize(0);
+				Assets.fontsPaths.resize(0);
+				Assets.sounds.resize(0);
+				Assets.soundsPaths.resize(0);
+				Assets.blobs.resize(0);
+				Assets.blobsPaths.resize(0);
 			}
 
 			if(ui.button("Open")){
