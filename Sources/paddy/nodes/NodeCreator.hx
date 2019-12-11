@@ -5,6 +5,7 @@ import zui.Nodes;
 import zui.Nodes.TNode;
 
 class NodeCreator {
+
     public static function createNode(node: TNode, nodes: Nodes, nodeCanvas: TNodeCanvas):TNode {
         var node:TNode = Json.parse(Json.stringify(node));
         node.id = nodes.getNodeId(nodeCanvas.nodes);

@@ -1,6 +1,8 @@
 package paddy.ui;
 
-import paddy.nodes.MathsNode;
+import paddy.nodes.MathNode;
+import paddy.nodes.VariableNode;
+import paddy.nodes.StdNode;
 import paddy.nodes.NodeCreator;
 import zui.Id;
 import zui.Zui;
@@ -76,6 +78,9 @@ class UINodes {
 
 	public static function renderNodesMenu(ui:Zui) {
 		if(ui.window(Id.handle(), 200, 60, 150, 540)){
+			if(ui.button("Export")){
+				Krom.fileSaveBytes("nodes.json", haxe.io.Bytes.ofString(haxe.Json.stringify(nodeCanvas)).getData());
+			}
 
 			if(ui.panel(Id.handle(), "Logic")){
 				ui.button("Gate");
@@ -86,24 +91,22 @@ class UINodes {
 				ui.button("While");
 			}
 			if(ui.panel(Id.handle(), "Variable")){
-				ui.button("String");
-				ui.button("Float");
-				ui.button("Int");
-				ui.button("Array");
-				ui.button("Bool");
+				if(ui.button("String")) nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.string, nodes, nodeCanvas));
+				if(ui.button("Float")) nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.float, nodes, nodeCanvas));
+				// ui.button("Array");
+				if(ui.button("Boolean")) nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.boolean, nodes, nodeCanvas));
 			}
 			if(ui.panel(Id.handle(), "Std")){
-				ui.button("Parse Int");
-				ui.button("Parse Float");
-				ui.button("Float To Int");
+				if(ui.button("Parse Int")) nodeCanvas.nodes.push(NodeCreator.createNode(StdNode.parseInt, nodes, nodeCanvas));
+				if(ui.button("Parse Float")) nodeCanvas.nodes.push(NodeCreator.createNode(StdNode.parseFloat, nodes, nodeCanvas));
+				if(ui.button("Float To Int")) nodeCanvas.nodes.push(NodeCreator.createNode(StdNode.floatToInt, nodes, nodeCanvas));
 			}
 			if(ui.panel(Id.handle(), "Math")){
-				if(ui.button("Maths")) nodeCanvas.nodes.push(NodeCreator.createNode(MathsNode.maths, nodes, nodeCanvas));
-				ui.button("Rad to Deg");
-				ui.button("Deg to Rad");
-				ui.button("Random (Int)");
-				ui.button("Random (Float)");
-				ui.button("Random (Color)");
+				if(ui.button("Maths")) nodeCanvas.nodes.push(NodeCreator.createNode(MathNode.maths, nodes, nodeCanvas));
+				if(ui.button("Rad to Deg")) nodeCanvas.nodes.push(NodeCreator.createNode(MathNode.radtodeg, nodes, nodeCanvas));
+				if(ui.button("Deg to Rad")) nodeCanvas.nodes.push(NodeCreator.createNode(MathNode.degtorad, nodes, nodeCanvas));
+				if(ui.button("Random (Int)")) nodeCanvas.nodes.push(NodeCreator.createNode(MathNode.randi, nodes, nodeCanvas));
+				if(ui.button("Random (Float)")) nodeCanvas.nodes.push(NodeCreator.createNode(MathNode.randf, nodes, nodeCanvas));
 			}
 		}
 	}
