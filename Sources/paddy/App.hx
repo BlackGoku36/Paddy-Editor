@@ -1,5 +1,6 @@
 package paddy;
 
+import paddy.ui.UINodes;
 import paddy.ui.UIMenu;
 import zui.Ext;
 import zui.Id;
@@ -42,7 +43,7 @@ class App {
 	public static var editorLocked:Bool = false;
 
 	var sceneW = 200; var sceneH = 600;
-	var editorW = 300; var editorH = 300;
+	var editorW = 300; var editorH = 600;
 	var propsW = 200; var propsH = 600;
 	var assetW = 500; var assetH = 100;
 	var fileW = 200; var fileH = 100;
@@ -55,6 +56,7 @@ class App {
 	public static var sceneWinH = Id.handle();
 	public static var htab = Id.handle({position: 0});
 	public static var editorWinH = Id.handle();
+	public static var editorTabH = Id.handle();
 	public static var selectedObj:ObjectData = null;
 
 	public static var paddydata: PData = {
@@ -90,11 +92,14 @@ class App {
 
 	public static var selectedImage = null;
 
+	public static var editorMode = 0;
+
 	public function new() {
 		kha.Assets.loadEverything(function (){
 			ui = new Zui({font: kha.Assets.fonts.mainfont, theme: paddy.data.Themes.dark});
 			uimodal = new Zui({font: kha.Assets.fonts.mainfont, theme: paddy.data.Themes.dark});
 			paddy.ObjectController.ui = ui;
+			paddy.ui.UINodes.initNodes();
 		});
 		editorX = kha.System.windowWidth() - editorW - propsW;
 		editorY = 60;
@@ -119,13 +124,13 @@ class App {
 		grid.g2.fillRect(0, 0, w, h);
 		for (i in 0...Std.int(h / doubleGridSize) + 1) {
 			grid.g2.color = 0xff282828;
-			grid.g2.drawLine(0, i * doubleGridSize, w, i * doubleGridSize);
+			grid.g2.drawLine(0, i * doubleGridSize, w, i * doubleGridSize, 2);
 			grid.g2.color = 0xff323232;
 			grid.g2.drawLine(0, i * doubleGridSize + gridSize, w, i * doubleGridSize + gridSize);
 		}
 		for (i in 0...Std.int(w / doubleGridSize) + 1) {
 			grid.g2.color = 0xff282828;
-			grid.g2.drawLine(i * doubleGridSize, 0, i * doubleGridSize, h);
+			grid.g2.drawLine(i * doubleGridSize, 0, i * doubleGridSize, h, 2);
 			grid.g2.color = 0xff323232;
 			grid.g2.drawLine(i * doubleGridSize + gridSize, 0, i * doubleGridSize + gridSize, h);
 		}
@@ -140,20 +145,24 @@ class App {
 
 		g.begin();
 		// Draw grid
-		g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
-		// Draw window in editor
-		g.drawRect(coffX, coffY, window.width/2, window.height/2);
+		if(editorMode == 0) g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
+		else g.drawImage(grid, (UINodes.nodes.panX * UINodes.nodes.SCALE()) % 40 - 40, (UINodes.nodes.panY * UINodes.nodes.SCALE()) % 40 - 40);
 
-		for (object in scene.objects){
-			var sprite = Assets.getImage(object.spriteRef);
-			if(sprite != null && object.visible) {
-				g.pushRotation(object.rotation, coffX + object.x+(object.width/4), coffY + object.y+(object.height/4));
-				g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width/2, object.height/2);
-				g.popTransformation();
+		if(editorMode == 0){
+			// Draw window in editor
+			g.drawRect(coffX, coffY, window.width/2, window.height/2);
+
+			for (object in scene.objects){
+				var sprite = Assets.getImage(object.spriteRef);
+				if(sprite != null && object.visible) {
+					g.pushRotation(object.rotation, coffX + object.x+(object.width/4), coffY + object.y+(object.height/4));
+					g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width/2, object.height/2);
+					g.popTransformation();
+				}
 			}
-		}
 
-		ObjectController.render(g);
+			ObjectController.render(g);
+		}
 
 		var col = g.color;
 		g.color = 0xff323232;
@@ -168,6 +177,7 @@ class App {
 		g.end();
 
 		ui.begin(g);
+
 		if(ui.window(Id.handle(), kha.System.windowWidth()-500, 0, 200, 30)){
 			ui.row([1/5, 4/5]);
 			if(ui.button("=>")){
@@ -234,8 +244,8 @@ class App {
 
 		}
 		if(ui.window(Id.handle(), sceneW, 30, kha.System.windowWidth()-propsW-sceneW, editorH)){
-			var editorTabH = Id.handle();
 			if(ui.tab(editorTabH, "2D")){
+				editorMode = 0;
 				ui.row([1/20, 1/15, 1/10]);
 				ui.text("Editor");
 				editorLocked = ui.check(Id.handle({selected:false}), "Lock");
@@ -244,7 +254,10 @@ class App {
 					coffY = 110.0;
 				}
 			}
-			if(ui.tab(editorTabH, "Nodes")){}
+			if(ui.tab(editorTabH, "Nodes")){
+				editorMode = 1;
+				paddy.ui.UINodes.renderNodes(ui);
+			}
 		}
 
 		UIProperties.render(ui, propWinH, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH);
@@ -274,6 +287,8 @@ class App {
 		}
 
 		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
+
+		if(editorMode == 1) UINodes.renderNodesMenu(ui);
 
 		ui.end();
 
