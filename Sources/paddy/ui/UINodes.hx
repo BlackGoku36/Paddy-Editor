@@ -1,5 +1,6 @@
 package paddy.ui;
 
+import paddy.nodes.LogicNode;
 import paddy.nodes.MathNode;
 import paddy.nodes.VariableNode;
 import paddy.nodes.StdNode;
@@ -83,7 +84,7 @@ class UINodes {
 			}
 
 			if(ui.panel(Id.handle(), "Logic")){
-				ui.button("Gate");
+				if(ui.button("Gate")) nodeCanvas.nodes.push(NodeCreator.createNode(LogicNode.gate, nodes, nodeCanvas));
 				ui.button("Branch");
 				ui.button("Is False");
 				ui.button("Is True");
@@ -97,6 +98,7 @@ class UINodes {
 				if(ui.button("Boolean")) nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.boolean, nodes, nodeCanvas));
 			}
 			if(ui.panel(Id.handle(), "Std")){
+				if(ui.button("Print")) nodeCanvas.nodes.push(NodeCreator.createNode(StdNode.print, nodes, nodeCanvas));
 				if(ui.button("Parse Int")) nodeCanvas.nodes.push(NodeCreator.createNode(StdNode.parseInt, nodes, nodeCanvas));
 				if(ui.button("Parse Float")) nodeCanvas.nodes.push(NodeCreator.createNode(StdNode.parseFloat, nodes, nodeCanvas));
 				if(ui.button("Float To Int")) nodeCanvas.nodes.push(NodeCreator.createNode(StdNode.floatToInt, nodes, nodeCanvas));

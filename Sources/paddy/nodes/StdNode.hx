@@ -94,5 +94,26 @@ class StdNode {
         buttons: [],
         color: Color.fromBytes(50, 50, 200)
     }
+
+    public static var print: TNode = {
+        id: 0,
+        name: "Print",
+        type: "STRING",
+        x: 200,
+        y: 200,
+        inputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "Value",
+                type: "STRING",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: ""
+            }
+        ],
+        outputs: [],
+        buttons: [],
+        color: Color.fromBytes(50, 50, 200)
+    }
     
 }
