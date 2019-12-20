@@ -9,10 +9,11 @@ import paddy.Assets;
 @:access(zui.Zui)
 class UIAssets {
 
+	public static var assetHandle = Id.handle();
 	public static var assetTabH = Id.handle();
 
-	public static function render(ui:Zui, x:Int, y:Int, w:Int, h:Int) {
-		if(ui.window(Id.handle(), x, y, w, h)){
+	public static function render(ui:Zui) {
+		if(ui.window(assetHandle, App.fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-App.fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20)){
 			if(ui.tab(assetTabH, "Assets")){
 				if(ui.panel(Id.handle(), "Images")){
 					ui.indent();

@@ -3,6 +3,7 @@ package paddy;
 import paddy.ui.UIOutliner;
 import paddy.ui.UINodes;
 import paddy.ui.UIMenu;
+import paddy.ui.UIEditor;
 import zui.Ext;
 import zui.Id;
 import zui.Zui;
@@ -41,20 +42,17 @@ class App {
 	public static var useRotationSteps:Bool = false;
 	public static var rotationSteps:Int = 15;
 
-	public static var editorLocked:Bool = false;
-
-	var editorW = 300; var editorH = 600;
-	var propsW = 200; var propsH = 600;
+	// var editorW = 300; var editorH = 600;
+	// var propsW = 200; var propsH = 600;
 	var assetW = 500; var assetH = 100;
-	var fileW = 200; var fileH = 100;
-	var editorX = 0; var editorY = 0;
+	public static var fileW = 200; 
+	public static var fileH = 100;
+	// var editorX = 0; var editorY = 0;
 
 	var buildMode = 0;
 
-	public static var propWinH = Id.handle();
+	// public static var propWinH = Id.handle();
 	public static var assetsWinH = Id.handle();
-	public static var editorWinH = Id.handle();
-	public static var editorTabH = Id.handle();
 	public static var selectedObj:ObjectData = null;
 
 	public static var paddydata: PData = {
@@ -90,8 +88,6 @@ class App {
 
 	public static var selectedImage = null;
 
-	public static var editorMode = 0;
-
 	public function new() {
 		kha.Assets.loadEverything(function (){
 			ui = new Zui({font: kha.Assets.fonts.mainfont, theme: paddy.data.Themes.dark});
@@ -99,8 +95,8 @@ class App {
 			paddy.ObjectController.ui = ui;
 			paddy.ui.UINodes.initNodes();
 		});
-		editorX = kha.System.windowWidth() - editorW - propsW;
-		editorY = 60;
+		UIEditor.editorX = kha.System.windowWidth() - UIEditor.editorW - UIProperties.propsW;
+		UIEditor.editorY = 60;
 	}
 
 	function resize() {
@@ -143,10 +139,10 @@ class App {
 
 		g.begin();
 		// Draw grid
-		if(editorMode == 0) g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
+		if(UIEditor.editorMode == 0) g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
 		else g.drawImage(grid, (UINodes.nodes.panX * UINodes.nodes.SCALE()) % 40 - 40, (UINodes.nodes.panY * UINodes.nodes.SCALE()) % 40 - 40);
 
-		if(editorMode == 0){
+		if(UIEditor.editorMode == 0){
 			// Draw window in editor
 			g.drawRect(coffX, coffY, window.width/2, window.height/2);
 
@@ -165,8 +161,8 @@ class App {
 		var col = g.color;
 		g.color = 0xff323232;
 		g.fillRect(0, 30, UIOutliner.outlinerW, UIOutliner.outlinerH);
-		g.fillRect(kha.System.windowWidth()-propsW, 30, propsW, kha.System.windowHeight());
-		g.fillRect(fileW, UIOutliner.outlinerH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
+		g.fillRect(kha.System.windowWidth()-UIProperties.propsW, 30, UIProperties.propsW, kha.System.windowHeight());
+		g.fillRect(fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
 		g.fillRect(0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
 		g.fillRect(0, 0, kha.System.windowWidth(), 30);
 		g.color = 0xff252525;
@@ -193,24 +189,9 @@ class App {
 
 		UIOutliner.render(ui);
 
-		if(ui.window(Id.handle(), UIOutliner.outlinerW, 30, kha.System.windowWidth()-propsW-UIOutliner.outlinerW, editorH)){
-			if(ui.tab(editorTabH, "2D")){
-				editorMode = 0;
-				ui.row([1/20, 1/15, 1/10]);
-				ui.text("Editor");
-				editorLocked = ui.check(Id.handle({selected:false}), "Lock");
-				if(ui.button("Reset Pos")){
-					coffX = 220.0;
-					coffY = 110.0;
-				}
-			}
-			if(ui.tab(editorTabH, "Nodes")){
-				editorMode = 1;
-				paddy.ui.UINodes.renderNodes(ui);
-			}
-		}
+		UIEditor.render(ui);
 
-		UIProperties.render(ui, propWinH, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH);
+		UIProperties.render(ui);
 
 		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20)){
 			if(ui.tab(Id.handle(), "File Browser")){
@@ -236,9 +217,9 @@ class App {
 			}
 		}
 
-		UIAssets.render(ui, fileW, UIOutliner.outlinerH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
+		UIAssets.render(ui);
 
-		if(editorMode == 1) UINodes.renderNodesMenu(ui);
+		if(UIEditor.editorMode == 1) UINodes.renderNodesMenu(ui);
 
 		ui.end();
 
@@ -279,9 +260,9 @@ class App {
 			selectedImage = null;
 		}
 
-		if(selectedObj!=null) propWinH.redraws = 2;
+		if(selectedObj!=null) UIProperties.propsHandle.redraws = 2;
 
-		if(!editorLocked && !ObjectController.isManipulating && ui.inputDownR) {
+		if(!UIEditor.editorLocked && !ObjectController.isManipulating && ui.inputDownR) {
 			coffX += Std.int(ui.inputDX);
 			coffY += Std.int(ui.inputDY);
 		}

@@ -161,7 +161,7 @@ class ObjectController{
 			}
 
 			if (isManipulating) {
-				App.propWinH.redraws = 2;
+				paddy.ui.UIProperties.propsHandle.redraws = 2;
 
 				// Confirm
 				if ((transformStartedMouse && ui.inputReleased) || (!transformStartedMouse && ui.inputStarted)) {

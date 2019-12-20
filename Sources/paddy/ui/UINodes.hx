@@ -12,7 +12,7 @@ import zui.Nodes;
 @:access(zui.Zui)
 class UINodes {
 
-	public static var winHandle = Id.handle();
+	public static var nodeHandle = Id.handle();
     public static var nodes: Nodes;
 
     public static var nodeCanvas:TNodeCanvas = {
@@ -30,7 +30,7 @@ class UINodes {
     }
 
 	public static function renderNodesMenu(ui:Zui) {
-		if(ui.window(winHandle, 200, 60, 150, 540)){
+		if(ui.window(nodeHandle, 200, 60, 150, 540)){
 			if(ui.button("Export")){
 				Krom.fileSaveBytes("nodes.json", haxe.io.Bytes.ofString(haxe.Json.stringify(nodeCanvas)).getData());
 			}

@@ -9,7 +9,13 @@ import paddy.data.Themes;
 @:access(zui.Zui)
 class UIProperties {
 
+	public static var propsW = 200; 
+	public static var propsH = 600;
+
+	public static var propsHandle = Id.handle();
+
 	public static var propTabHandle = Id.handle();
+
 	public static var propPanelWinH = Id.handle({selected:true});
 	public static var propPanelObjH = Id.handle({selected:true});
 	public static var propPanelGridH = Id.handle({selected:true});
@@ -18,12 +24,12 @@ class UIProperties {
 	public static var themesName = ["Light", "Dark"];
 	public static var tthemes = [Themes.light, Themes.dark];
 
-	public static function render(ui:Zui, idHandle:Handle, x:Int, y:Int, w:Int, h:Int) {
+	public static function render(ui:Zui) {
 		var window = App.window;
 
 		var selectedObj = App.selectedObj;
 
-		if(ui.window(idHandle, x, y, w, h)){
+		if(ui.window(propsHandle, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH)){
 			if(ui.tab(propTabHandle, "Properties")){
 				if(ui.panel(propPanelWinH, "Window")){
 					ui.indent();

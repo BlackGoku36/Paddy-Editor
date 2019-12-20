@@ -5,6 +5,7 @@ import zui.Id;
 import zui.Ext;
 
 class UIFileBrowser {
+
 	static var modalW = 655;
 	static var modalH = 550;
 	static var modalHeaderH = 66;
