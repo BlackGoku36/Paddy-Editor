@@ -1,5 +1,6 @@
 package paddy;
 
+import paddy.ui.UIOutliner;
 import paddy.ui.UINodes;
 import paddy.ui.UIMenu;
 import zui.Ext;
@@ -42,7 +43,6 @@ class App {
 
 	public static var editorLocked:Bool = false;
 
-	var sceneW = 200; var sceneH = 600;
 	var editorW = 300; var editorH = 600;
 	var propsW = 200; var propsH = 600;
 	var assetW = 500; var assetH = 100;
@@ -53,8 +53,6 @@ class App {
 
 	public static var propWinH = Id.handle();
 	public static var assetsWinH = Id.handle();
-	public static var sceneWinH = Id.handle();
-	public static var htab = Id.handle({position: 0});
 	public static var editorWinH = Id.handle();
 	public static var editorTabH = Id.handle();
 	public static var selectedObj:ObjectData = null;
@@ -166,10 +164,10 @@ class App {
 
 		var col = g.color;
 		g.color = 0xff323232;
-		g.fillRect(0, 30, sceneW, sceneH);
+		g.fillRect(0, 30, UIOutliner.outlinerW, UIOutliner.outlinerH);
 		g.fillRect(kha.System.windowWidth()-propsW, 30, propsW, kha.System.windowHeight());
-		g.fillRect(fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
-		g.fillRect(0, sceneH, fileW, kha.System.windowHeight()-sceneH-20);
+		g.fillRect(fileW, UIOutliner.outlinerH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
+		g.fillRect(0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
 		g.fillRect(0, 0, kha.System.windowWidth(), 30);
 		g.color = 0xff252525;
 		g.fillRect(0, kha.System.windowHeight()-20, kha.System.windowWidth(), 20);
@@ -192,58 +190,10 @@ class App {
 			ui.combo(mode, ["Build", "Play"], Right);
 			if (mode.changed) buildMode = mode.position;
 		}
-		if(ui.window(sceneWinH, 0, 30, Std.int(sceneW*ui.SCALE()), sceneH)){
-			if(ui.tab(htab, "Scene")){
-				ui.row([3/4, 1/4]);
-				ui.textInput(Id.handle(), "Search");
-				if(ui.button("+")){
-					var object: ObjectData = {
-						id: getObjectId(scene),
-						name: "object"+at,
-						x: 0, y: 0,
-						width: 100, height: 100,
-						rotation: 0,
-						isSprite: false
-					}
-					scene.objects.push(object);
-					selectedObj = object;
-					at++;
-				}
-				function drawList(h:zui.Zui.Handle, objData:ObjectData) {
-					if (selectedObj == objData) {
-						ui.g.color = 0xff205d9c;
-						ui.g.fillRect(0, ui._y-2, ui._windowW, ui.t.ELEMENT_H+4);
-						ui.g.color = 0xffffffff;
-					}
-					var started = ui.getStarted();
-					// Select
-					if (started && !ui.inputDownR) {
-						selectedObj = objData;
-					}
-					ui._x += 18; // Sign offset
-					ui.row([1/7, 1/3, 1/7, 1/7, 1/7]);
-					if(objData!=null){
-						objData.visible = ui.check(Id.handle().nest(objData.id, {selected: true}), "");
-						ui.text(objData.name);
-						if(ui.button("<")) moveObjectInList(1);
-						if(ui.button(">")) moveObjectInList(-1);
-						if(ui.button("X")){
-							scene.objects.remove(objData);
-							selectedObj = null;
-						}
-					}
-					ui._x -= 18;
-				}
-				for (i in 0...scene.objects.length) {
-					var objData = scene.objects[scene.objects.length - 1 - i];
-					drawList(Id.handle(), objData);
-				}
-			}
 
-			for (value in paddy.Plugin.plugins) if (value.sceneWinUI != null) value.sceneWinUI(ui);
+		UIOutliner.render(ui);
 
-		}
-		if(ui.window(Id.handle(), sceneW, 30, kha.System.windowWidth()-propsW-sceneW, editorH)){
+		if(ui.window(Id.handle(), UIOutliner.outlinerW, 30, kha.System.windowWidth()-propsW-UIOutliner.outlinerW, editorH)){
 			if(ui.tab(editorTabH, "2D")){
 				editorMode = 0;
 				ui.row([1/20, 1/15, 1/10]);
@@ -262,7 +212,7 @@ class App {
 
 		UIProperties.render(ui, propWinH, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH);
 
-		if(ui.window(assetsWinH, 0, sceneH, fileW, kha.System.windowHeight()-sceneH-20)){
+		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20)){
 			if(ui.tab(Id.handle(), "File Browser")){
 				ui.row([3/5, 2/5]);
 				if(ui.button("Open Browser")){
@@ -286,7 +236,7 @@ class App {
 			}
 		}
 
-		UIAssets.render(ui, fileW, sceneH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-sceneH-20);
+		UIAssets.render(ui, fileW, UIOutliner.outlinerH, kha.System.windowWidth()-propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
 
 		if(editorMode == 1) UINodes.renderNodesMenu(ui);
 
@@ -343,31 +293,12 @@ class App {
 				if (paddy.util.Math.hitbox(ui, coffX + object.x, coffY + object.y, object.width, object.height, object.rotation) &&
 						selectedObj != object) {
 					selectedObj = object;
-					sceneWinH.redraws = 2;
+					UIOutliner.outlinerHandle.redraws = 2;
 					break;
 				}
 			}
 		}
 
 		for (value in paddy.Plugin.plugins) if(value.update != null) value.update();
-	}
-
-	static var elemId = -1;
-	public static function getObjectId(scene: SceneData): Int {
-		if (elemId == -1) for (e in scene.objects) if (elemId < e.id) elemId = e.id;
-		return ++elemId;
-	}
-
-	function moveObjectInList(d:Int) {
-		var ar = scene.objects;
-		var i = ar.indexOf(selectedObj);
-
-		while (true) {
-			i += d;
-			if (i < 0 || i >= ar.length) break;
-			ar.remove(selectedObj);
-			ar.insert(i, selectedObj);
-			break;
-		}
 	}
 }
