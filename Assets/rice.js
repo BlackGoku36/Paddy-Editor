@@ -7,20 +7,20 @@ var main = "package;\nimport rice2d.App;\nclass Main {\npublic static function m
 plug.executeRunUI = function (){
     var path = paddy.App.projectPath;
     if (path!="") {
-        krom.Kromx.sysCommand(`mkdir ${path}/Sources`);
-        krom.Kromx.sysCommand(`cp Assets/mainfont.ttf ${path}/Assets/mainfont.ttf`);
-        krom.Kromx.sysCommand(`mkdir ${path}/Sources/scripts`);
+        kha.Krom.sysCommand(`mkdir ${path}/Sources`);
+        kha.Krom.sysCommand(`cp Assets/mainfont.ttf ${path}/Assets/mainfont.ttf`);
+        kha.Krom.sysCommand(`mkdir ${path}/Sources/scripts`);
         paddy.Export.exportScene(`${path}/Assets`);
         paddy.Export.exportWindow(`${path}/Assets`);
         paddy.Export.exportFile(`${path}/khafile.js`, khafile);
         paddy.Export.exportFile(`${path}/Sources/Main.hx`, main);
-        krom.Kromx.sysCommand('echo doesnt work');
-        krom.Kromx.sysCommand(`cd ${path}; node /Applications/Blender.app/armsdk/Kha/make krom -g opengl`);
-        krom.Kromx.sysCommand(`/Applications/Blender.app/armsdk/Krom/Krom.app/Contents/MacOS/Krom ${path}/build/krom ${path}/build/krom-resources --debug`);
+        kha.Krom.sysCommand('echo doesnt work');
+        kha.Krom.sysCommand(`cd ${path}; node /Applications/Blender.app/armsdk/Kha/make krom -g opengl`);
+        kha.Krom.sysCommand(`/Applications/Blender.app/armsdk/Krom/Krom.app/Contents/MacOS/Krom ${path}/build/krom ${path}/build/krom-resources --debug`);
     }
 }
 
-var menuHandle = new ui.Handle();
+var menuHandle = new zui.Handle();
 
 let initNode = {
     id: 0,
@@ -43,8 +43,8 @@ let initNode = {
     color: 0xff44aa44
 }
 
-let nodeCanvas = ui.UINodes.nodeCanvas;
-let nodes = ui.UINodes.nodes;
+let nodeCanvas = paddy.UINodes.nodeCanvas;
+let nodes = paddy.UINodes.nodes;
 
 plug.nodeMenuUI = function (ui) {
     if(ui.panel(menuHandle, "Rice2D")){
