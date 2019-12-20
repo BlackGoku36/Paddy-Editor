@@ -12,61 +12,13 @@ import zui.Nodes;
 @:access(zui.Zui)
 class UINodes {
 
+	public static var winHandle = Id.handle();
     public static var nodes: Nodes;
 
-    static var nodeCanvas:TNodeCanvas = {
+    public static var nodeCanvas:TNodeCanvas = {
 		name: "My Nodes",
-		nodes: [
-			{
-				id: 0,
-				name: "Node 1",
-				type: "VALUE",
-				x: 100,
-				y: 100,
-				color: 0xffaa4444,
-				inputs: [],
-				outputs: [
-					{
-						id: 0,
-						node_id: 0,
-						name: "Output",
-						type: "VALUE",
-						default_value: 0.0,
-						color: 0xff44aa44
-					}
-				],
-				buttons: []
-			},
-			{
-				id: 1,
-				name: "Node 2",
-				type: "VALUE",
-				x: 300,
-				y: 100,
-				color: 0xff4444aa,
-				inputs: [
-					{
-						id: 0,
-						node_id: 1,
-						name: "Input",
-						type: "VALUE",
-						default_value: 0.0,
-						color: 0xff44aa44
-					}
-				],
-				outputs: [],
-				buttons: []
-			}
-		],
-		links: [
-			{
-				id: 0,
-				from_id: 0,
-				from_socket: 0,
-				to_id: 1,
-				to_socket: 0
-			}
-		]
+		nodes: [],
+		links: []
 	}
 
     public static function initNodes() {
@@ -78,7 +30,7 @@ class UINodes {
     }
 
 	public static function renderNodesMenu(ui:Zui) {
-		if(ui.window(Id.handle(), 200, 60, 150, 540)){
+		if(ui.window(winHandle, 200, 60, 150, 540)){
 			if(ui.button("Export")){
 				Krom.fileSaveBytes("nodes.json", haxe.io.Bytes.ofString(haxe.Json.stringify(nodeCanvas)).getData());
 			}
@@ -110,6 +62,7 @@ class UINodes {
 				if(ui.button("Random (Int)")) nodeCanvas.nodes.push(NodeCreator.createNode(MathNode.randi, nodes, nodeCanvas));
 				if(ui.button("Random (Float)")) nodeCanvas.nodes.push(NodeCreator.createNode(MathNode.randf, nodes, nodeCanvas));
 			}
+			for (value in paddy.Plugin.plugins) if (value.nodeMenuUI != null) value.nodeMenuUI(ui);
 		}
 	}
 

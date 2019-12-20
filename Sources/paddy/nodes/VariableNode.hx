@@ -8,7 +8,7 @@ class VariableNode {
     public static var string: TNode = {
         id: 0,
         name: "String",
-        type: "STRING",
+        type: "StringNode",
         x: 200,
         y: 200,
         inputs: [],
@@ -16,7 +16,7 @@ class VariableNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "",
+                name: "String",
                 type: "STRING",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: ""
@@ -24,7 +24,7 @@ class VariableNode {
         ],
         buttons: [
             {
-                name: "String",
+                name: "value",
                 type: "STRING",
                 default_value: "",
                 output: 0

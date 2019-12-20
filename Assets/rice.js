@@ -19,3 +19,37 @@ plug.executeRunUI = function (){
         krom.Kromx.sysCommand(`/Applications/Blender.app/armsdk/Krom/Krom.app/Contents/MacOS/Krom ${path}/build/krom ${path}/build/krom-resources --debug`);
     }
 }
+
+var menuHandle = new ui.Handle();
+
+let initNode = {
+    id: 0,
+    name: "Init",
+    type: "InitNode",
+    x: 200,
+    y: 200,
+    inputs: [],
+    outputs: [
+        {
+            id: 0,
+            node_id: 0,
+            name: "Out",
+            type: "ACTION",
+            color: 0xffaa4444,
+            default_value: ""
+        }
+    ],
+    buttons: [],
+    color: 0xff44aa44
+}
+
+let nodeCanvas = ui.UINodes.nodeCanvas;
+let nodes = ui.UINodes.nodes;
+
+plug.nodeMenuUI = function (ui) {
+    if(ui.panel(menuHandle, "Rice2D")){
+        if(ui.button("Init")){
+            nodeCanvas.nodes.push(paddy.NodeCreator.createNode(initNode, nodes, nodeCanvas));
+        }
+    }
+}

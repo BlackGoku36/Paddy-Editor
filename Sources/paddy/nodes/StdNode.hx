@@ -98,12 +98,20 @@ class StdNode {
     public static var print: TNode = {
         id: 0,
         name: "Print",
-        type: "STRING",
+        type: "PrintNode",
         x: 200,
         y: 200,
         inputs: [
             {
                 id: 0,
+                node_id: 0,
+                name: "In",
+                type: "ACTION",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: ""
+            },
+            {
+                id: 1,
                 node_id: 0,
                 name: "Value",
                 type: "STRING",
