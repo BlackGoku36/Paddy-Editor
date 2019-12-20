@@ -1,5 +1,7 @@
 package paddy.data;
 
+import zui.Nodes;
+import zui.Nodes.TNodeCanvas;
 import kha.math.FastVector2;
 
 typedef WindowData = {
@@ -39,6 +41,12 @@ typedef ObjectData = {
 	var ?spriteRef: String;
 	var ?color: Array<Int>;
 	var ?scripts: Array<ScriptData>;
+}
+
+typedef NodeData = {
+	var name: String;
+	var nodes: Nodes;
+	var nodeCanvas: TNodeCanvas;
 }
 
 typedef ParticleData = {

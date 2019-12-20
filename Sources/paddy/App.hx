@@ -89,7 +89,6 @@ class App {
 			ui = new Zui({font: kha.Assets.fonts.mainfont, theme: paddy.data.Themes.dark});
 			uimodal = new Zui({font: kha.Assets.fonts.mainfont, theme: paddy.data.Themes.dark});
 			paddy.ObjectController.ui = ui;
-			paddy.ui.UINodes.initNodes();
 		});
 		UIEditor.editorX = kha.System.windowWidth() - UIEditor.editorW - UIProperties.propsW;
 		UIEditor.editorY = 60;
@@ -136,7 +135,15 @@ class App {
 		g.begin();
 		// Draw grid
 		if(UIEditor.editorMode == 0) g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
-		else g.drawImage(grid, (UINodes.nodes.panX * UINodes.nodes.SCALE()) % 40 - 40, (UINodes.nodes.panY * UINodes.nodes.SCALE()) % 40 - 40);
+		else {
+			var nodePanX = 0.0;
+			var nodePanY = 0.0;
+			if(UINodes.selectedNode != null) {
+				nodePanX = UINodes.selectedNode.nodes.panX * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
+				nodePanY = UINodes.selectedNode.nodes.panY * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
+			}
+			g.drawImage(grid, nodePanX, nodePanY);
+		}
 
 		if(UIEditor.editorMode == 0){
 			// Draw window in editor

@@ -1,5 +1,6 @@
 package paddy.ui;
 
+import zui.Nodes;
 import zui.Id;
 import zui.Zui;
 
@@ -59,6 +60,51 @@ class UIOutliner {
 				for (i in 0...App.scene.objects.length) {
 					var objData = App.scene.objects[App.scene.objects.length - 1 - i];
 					drawList(Id.handle(), objData);
+				}
+			}
+
+			if(ui.tab(outlinerTab, "Nodes")){
+				ui.row([3/4, 1/4]);
+				var nodeName = ui.textInput(Id.handle({text: "NodeGroup"}), "Name");
+				if(ui.button("+")){
+					var nData = {
+						name: nodeName,
+						nodes: new Nodes(),
+						nodeCanvas: {
+							name: "My Nodes",
+							nodes: [],
+							links: []
+						}
+					}
+					UINodes.nodesArray.push(nData);
+					UINodes.selectedNode = nData;
+				}
+
+				function drawList(h:zui.Zui.Handle, nodeData:NodeData) {
+					if (UINodes.selectedNode == nodeData) {
+						ui.g.color = 0xff205d9c;
+						ui.g.fillRect(0, ui._y-2, ui._windowW, ui.t.ELEMENT_H+4);
+						ui.g.color = 0xffffffff;
+					}
+					var started = ui.getStarted();
+					// Select
+					if (started && !ui.inputDownR) {
+						UINodes.selectedNode = nodeData;
+					}
+					ui._x += 18; // Sign offset
+					if(nodeData!=null){
+						ui.row([3/5, 1/5]);
+						ui.text(nodeData.name);
+						if(ui.button("X")){
+							UINodes.nodesArray.remove(nodeData);
+							UINodes.selectedNode = null;
+						}
+					}
+					ui._x -= 18;
+				}
+				for (i in 0...UINodes.nodesArray.length) {
+					var nodeData = UINodes.nodesArray[UINodes.nodesArray.length - 1 - i];
+					drawList(Id.handle(), nodeData);
 				}
 			}
 
