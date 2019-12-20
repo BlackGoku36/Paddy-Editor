@@ -42,16 +42,12 @@ class App {
 	public static var useRotationSteps:Bool = false;
 	public static var rotationSteps:Int = 15;
 
-	// var editorW = 300; var editorH = 600;
-	// var propsW = 200; var propsH = 600;
 	var assetW = 500; var assetH = 100;
-	public static var fileW = 200; 
+	public static var fileW = 200;
 	public static var fileH = 100;
-	// var editorX = 0; var editorY = 0;
 
 	var buildMode = 0;
 
-	// public static var propWinH = Id.handle();
 	public static var assetsWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
 

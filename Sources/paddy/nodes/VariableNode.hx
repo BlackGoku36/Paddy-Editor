@@ -90,5 +90,5 @@ class VariableNode {
         ],
         color: Color.fromBytes(50, 50, 200)
     }
-    
+
 }

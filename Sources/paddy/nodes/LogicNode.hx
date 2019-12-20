@@ -62,8 +62,8 @@ class LogicNode {
                 data: [
                     "OR",
                     "AND",
-                    "Equal", 
-                    "Less", "Less Than", 
+                    "Equal",
+                    "Less", "Less Than",
                     "Greater", "Greater Than"
                     ]
             }

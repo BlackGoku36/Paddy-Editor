@@ -9,7 +9,7 @@ import paddy.data.Themes;
 @:access(zui.Zui)
 class UIProperties {
 
-	public static var propsW = 200; 
+	public static var propsW = 200;
 	public static var propsH = 600;
 
 	public static var propsHandle = Id.handle();
