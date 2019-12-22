@@ -170,7 +170,8 @@ class MathNode {
                 type: "INT",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
-                max: 100
+                max: 100,
+                precision: 1
             },
             {
                 id: 1,
@@ -179,7 +180,8 @@ class MathNode {
                 type: "INT",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
-                max: 100
+                max: 100,
+                precision: 1
             }
         ],
         outputs: [
