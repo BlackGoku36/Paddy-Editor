@@ -114,7 +114,7 @@ class StdNode {
             {
                 id: 1,
                 node_id: 0,
-                name: "value",
+                name: "Value",
                 type: "STRING",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: ""

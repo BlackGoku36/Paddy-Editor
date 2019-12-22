@@ -24,7 +24,7 @@ class LogicNode {
             {
                 id: 1,
                 node_id: 0,
-                name: "Value",
+                name: "Bool",
                 type: "BOOLEAN",
                 color: Color.fromBytes(90, 220, 90),
                 default_value: 0.0
@@ -32,7 +32,7 @@ class LogicNode {
             {
                 id: 2,
                 node_id: 0,
-                name: "Value",
+                name: "Bool",
                 type: "BOOLEAN",
                 color: Color.fromBytes(90, 220, 90),
                 default_value: 0.0

@@ -19,7 +19,8 @@ class MathNode {
                 name: "Value",
                 type: "VALUE",
                 color: Color.fromBytes(90, 220, 90),
-                default_value: 0.0
+                default_value: 0.0,
+                max: 100.0
             },
             {
                 id: 1,
@@ -27,24 +28,27 @@ class MathNode {
                 name: "Value",
                 type: "VALUE",
                 color: Color.fromBytes(90, 220, 90),
-                default_value: 0.0
+                default_value: 0.0,
+                max: 100.0
             }
         ],
         outputs: [
             {
                 id: 0,
                 node_id: 0,
-                name: "Value",
-                type: "VALUE",
+                name: "value",
+                type: "Value",
                 color: Color.fromBytes(90, 220, 90),
                 default_value: 0.0
             }
         ],
         buttons: [
             {
-                name: "Operations",
+                name: "operations",
                 type: "ENUM",
-                data: ["Addition", "Substraction", "Multiplication", "Division"]
+                data: ["Add", "Subtract", "Multiply", "Divide"],
+                output: 0,
+                default_value: 0
             }
         ]
     }
@@ -60,18 +64,19 @@ class MathNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "Radian",
+                name: "Rad",
                 type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
-                default_value: 0.0
+                default_value: 0.0,
+                max: 6.28
             }
         ],
         outputs: [
             {
                 id: 0,
                 node_id: 0,
-                name: "Degree",
-                type: "VALUE",
+                name: "Deg",
+                type: "Value",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0.0
             }
@@ -90,18 +95,19 @@ class MathNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "Degree",
+                name: "Deg",
                 type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
-                default_value: 0.0
+                default_value: 0.0,
+                max: 360.0
             }
         ],
         outputs: [
             {
                 id: 0,
                 node_id: 0,
-                name: "Radian",
-                type: "VALUE",
+                name: "Rad",
+                type: "Value",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0.0
             }
@@ -116,13 +122,32 @@ class MathNode {
         x: 200,
         y: 200,
         color: -4962746,
-        inputs: [],
+        inputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "Value",
+                type: "VALUE",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: 0.0,
+                max: 100.0
+            },
+            {
+                id: 1,
+                node_id: 0,
+                name: "Value",
+                type: "VALUE",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: 0.0,
+                max: 100.0
+            }
+        ],
         outputs: [
             {
                 id: 0,
                 node_id: 0,
                 name: "Float",
-                type: "VALUE",
+                type: "Value",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0.0
             }
@@ -141,7 +166,7 @@ class MathNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "value",
+                name: "Value",
                 type: "INT",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
@@ -150,11 +175,11 @@ class MathNode {
             {
                 id: 1,
                 node_id: 0,
-                name: "value",
+                name: "Value",
                 type: "INT",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
-                max:100
+                max: 100
             }
         ],
         outputs: [

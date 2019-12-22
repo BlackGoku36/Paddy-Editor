@@ -16,7 +16,7 @@ class VariableNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "value",
+                name: "String",
                 type: "STRING",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: ""
@@ -26,7 +26,7 @@ class VariableNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "value",
+                name: "String",
                 type: "STRING",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: ""
@@ -42,27 +42,28 @@ class VariableNode {
         x: 200,
         y: 200,
         color: -13487416,
-        inputs: [],
+        inputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "Float",
+                type: "VALUE",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: 0.0,
+                max: 100.0
+            }
+        ],
         outputs: [
             {
                 id: 0,
                 node_id: 0,
-                name: "",
+                name: "Float",
                 type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0.0
             }
         ],
-        buttons: [
-            {
-                name: "value",
-                type: "VALUE",
-                default_value: 0.0,
-                min: 0.0,
-                max: 100.0,
-                output: 0
-            }
-        ]
+        buttons: []
     }
 
     public static var int: TNode = {
@@ -76,7 +77,7 @@ class VariableNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "value",
+                name: "Int",
                 type: "INT",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
@@ -87,7 +88,7 @@ class VariableNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "value",
+                name: "Int",
                 type: "INT",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0
@@ -103,25 +104,27 @@ class VariableNode {
         x: 200,
         y: 200,
         color: -13487416,
-        inputs: [],
+        inputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "Bool",
+                type: "BOOLEAN",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: ""
+            }
+        ],
         outputs: [
             {
                 id: 0,
                 node_id: 0,
-                name: "",
-                type: "BOOL",
+                name: "Bool",
+                type: "BOOLEAN",
                 color: Color.fromBytes(180, 180, 180),
-                default_value: 0.0
+                default_value: ""
             }
         ],
-        buttons: [
-            {
-                name: "bool",
-                type: "BOOL",
-                default_value: false,
-                output: 0
-            }
-        ]
+        buttons: []
     }
 
 }
