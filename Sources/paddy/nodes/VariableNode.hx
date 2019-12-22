@@ -11,34 +11,37 @@ class VariableNode {
         type: "StringNode",
         x: 200,
         y: 200,
-        inputs: [],
-        outputs: [
+        color: -13487416,
+        inputs: [
             {
                 id: 0,
                 node_id: 0,
-                name: "String",
+                name: "value",
                 type: "STRING",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: ""
             }
         ],
-        buttons: [
+        outputs: [
             {
+                id: 0,
+                node_id: 0,
                 name: "value",
                 type: "STRING",
-                default_value: "",
-                output: 0
+                color: Color.fromBytes(180, 180, 180),
+                default_value: ""
             }
         ],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 
     public static var float: TNode = {
         id: 0,
         name: "Float",
-        type: "VALUE",
+        type: "FloatNode",
         x: 200,
         y: 200,
+        color: -13487416,
         inputs: [],
         outputs: [
             {
@@ -52,23 +55,54 @@ class VariableNode {
         ],
         buttons: [
             {
-                name: "Float",
+                name: "value",
                 type: "VALUE",
                 default_value: 0.0,
                 min: 0.0,
                 max: 100.0,
                 output: 0
             }
+        ]
+    }
+
+    public static var int: TNode = {
+        id: 0,
+        name: "Int",
+        type: "IntegerNode",
+        x: 200,
+        y: 200,
+        color: -13487416,
+        inputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "value",
+                type: "INT",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: 0,
+                max: 100
+            }
         ],
-        color: Color.fromBytes(50, 50, 200)
+        outputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "value",
+                type: "INT",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: 0
+            }
+        ],
+        buttons: []
     }
 
     public static var boolean: TNode = {
         id: 0,
         name: "Boolean",
-        type: "BOOL",
+        type: "BoolNode",
         x: 200,
         y: 200,
+        color: -13487416,
         inputs: [],
         outputs: [
             {
@@ -82,13 +116,12 @@ class VariableNode {
         ],
         buttons: [
             {
-                name: "Boolean",
+                name: "bool",
                 type: "BOOL",
                 default_value: false,
                 output: 0
             }
-        ],
-        color: Color.fromBytes(50, 50, 200)
+        ]
     }
 
 }

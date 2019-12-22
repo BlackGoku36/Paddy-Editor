@@ -8,9 +8,10 @@ class MathNode {
     public static var maths: TNode = {
         id: 0,
         name: "Maths",
-        type: "VALUE",
+        type: "MathNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -45,16 +46,16 @@ class MathNode {
                 type: "ENUM",
                 data: ["Addition", "Substraction", "Multiplication", "Division"]
             }
-        ],
-        color: Color.fromBytes(180, 70, 70)
+        ]
     }
 
     public static var radtodeg: TNode = {
         id: 0,
         name: "Radian to Degre",
-        type: "VALUE",
+        type: "RadToDegNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -75,16 +76,16 @@ class MathNode {
                 default_value: 0.0
             }
         ],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 
     public static var degtorad: TNode = {
         id: 0,
         name: "Degree to Radian",
-        type: "VALUE",
+        type: "DegToRadNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -105,16 +106,16 @@ class MathNode {
                 default_value: 0.0
             }
         ],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 
     public static var randf: TNode = {
         id: 0,
         name: "Random (Float)",
-        type: "VALUE",
+        type: "RandFNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [],
         outputs: [
             {
@@ -126,28 +127,46 @@ class MathNode {
                 default_value: 0.0
             }
         ],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 
     public static var randi: TNode = {
         id: 0,
         name: "Random (Int)",
-        type: "VALUE",
+        type: "RandINode",
         x: 200,
         y: 200,
-        inputs: [],
+        color: -4962746,
+        inputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "value",
+                type: "INT",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: 0,
+                max: 100
+            },
+            {
+                id: 1,
+                node_id: 0,
+                name: "value",
+                type: "INT",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: 0,
+                max:100
+            }
+        ],
         outputs: [
             {
                 id: 0,
                 node_id: 0,
                 name: "Int",
-                type: "VALUE",
+                type: "Value",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0
             }
         ],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 }

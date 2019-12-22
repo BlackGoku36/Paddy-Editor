@@ -1,5 +1,6 @@
 package paddy.ui;
 
+import kha.Color;
 import paddy.data.Data.NodeData;
 import paddy.nodes.LogicNode;
 import paddy.nodes.MathNode;
@@ -26,9 +27,7 @@ class UINodes {
 		if(selectedNode == null) return;
 
 		if(ui.window(nodeHandle, 200, 60, 150, 540)){
-			if(ui.button("Export")){
-				Krom.fileSaveBytes("nodes.json", haxe.io.Bytes.ofString(haxe.Json.stringify(selectedNode.nodeCanvas)).getData());
-			}
+			// trace(Color.fromBytes(50, 50, 200));
 
 			if(ui.panel(Id.handle(), "Logic")){
 				if(ui.button("Gate")) selectedNode.nodeCanvas.nodes.push(NodeCreator.createNode(LogicNode.gate, selectedNode.nodes, selectedNode.nodeCanvas));
@@ -41,6 +40,7 @@ class UINodes {
 			if(ui.panel(Id.handle(), "Variable")){
 				if(ui.button("String")) selectedNode.nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.string, selectedNode.nodes, selectedNode.nodeCanvas));
 				if(ui.button("Float")) selectedNode.nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.float, selectedNode.nodes, selectedNode.nodeCanvas));
+				if(ui.button("Int")) selectedNode.nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.int, selectedNode.nodes, selectedNode.nodeCanvas));
 				// ui.button("Array");
 				if(ui.button("Boolean")) selectedNode.nodeCanvas.nodes.push(NodeCreator.createNode(VariableNode.boolean, selectedNode.nodes, selectedNode.nodeCanvas));
 			}
@@ -59,6 +59,12 @@ class UINodes {
 			}
 			for (value in paddy.Plugin.plugins) if (value.nodeMenuUI != null) value.nodeMenuUI(ui);
 		}
+	}
+
+	public static function getNodesArrayNames() {
+		var names = [];
+		for (nodes in nodesArray) names.push(nodes.name);
+		return names;
 	}
 
 }

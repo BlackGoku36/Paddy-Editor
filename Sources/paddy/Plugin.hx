@@ -63,7 +63,7 @@ class UIBridge {
 @:expose("kha")
 class KhaBridge {
 	public static var Assets = kha.Assets;
-	public static var Krom = Krom;
+	public static var TKrom = Krom;
 }
 
 @:expose("std")

@@ -8,9 +8,10 @@ class StdNode {
     public static var parseInt: TNode = {
         id: 0,
         name: "Parse Int",
-        type: "STRING",
+        type: "ParseIntNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -31,16 +32,16 @@ class StdNode {
                 default_value: ""
             }
         ],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 
     public static var parseFloat: TNode = {
         id: 0,
         name: "Parse Float",
-        type: "STRING",
+        type: "ParseFloatNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -61,16 +62,16 @@ class StdNode {
                 default_value: ""
             }
         ],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 
     public static var floatToInt: TNode = {
         id: 0,
         name: "Float to Int",
-        type: "VALUE",
+        type: "FloatToIntNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -91,8 +92,7 @@ class StdNode {
                 default_value: ""
             }
         ],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        buttons: []
     }
 
     public static var print: TNode = {
@@ -101,6 +101,7 @@ class StdNode {
         type: "PrintNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -113,15 +114,23 @@ class StdNode {
             {
                 id: 1,
                 node_id: 0,
-                name: "Value",
+                name: "value",
                 type: "STRING",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: ""
             }
         ],
-        outputs: [],
-        buttons: [],
-        color: Color.fromBytes(50, 50, 200)
+        outputs: [
+            {
+                id: 0,
+                node_id: 0,
+                name: "Out",
+                type: "ACTION",
+                color: Color.fromBytes(180, 180, 180),
+                default_value: ""
+            }
+        ],
+        buttons: []
     }
 
 }

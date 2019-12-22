@@ -73,7 +73,8 @@ class App {
 			fonts:  paddy.Assets.fontsPaths,
 			sounds: paddy.Assets.soundsPaths,
 			blobs:  paddy.Assets.blobsPaths
-		}
+		},
+		scripts: []
 	}
 
 	static var assetPath = "";

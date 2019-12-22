@@ -8,9 +8,10 @@ class LogicNode {
     public static var gate: TNode = {
         id: 0,
         name: "Gate",
-        type: "BOOLEAN",
+        type: "GateNode",
         x: 200,
         y: 200,
+        color: -4962746,
         inputs: [
             {
                 id: 0,
@@ -67,7 +68,6 @@ class LogicNode {
                     "Greater", "Greater Than"
                     ]
             }
-        ],
-        color: Color.fromBytes(180, 70, 70)
+        ]
     }
 }
