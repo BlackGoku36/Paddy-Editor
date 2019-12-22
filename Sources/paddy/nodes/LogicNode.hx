@@ -58,15 +58,15 @@ class LogicNode {
         ],
         buttons: [
             {
-                name: "Operations",
+                name: "operations",
                 type: "ENUM",
                 data: [
                     "OR",
                     "AND",
                     "Equal",
-                    "Less", "Less Than",
-                    "Greater", "Greater Than"
-                    ]
+                    "Less", "Less Equal",
+                    "Greater", "Greater Equal"
+                ]
             }
         ]
     }
