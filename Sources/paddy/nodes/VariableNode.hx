@@ -78,7 +78,7 @@ class VariableNode {
                 id: 0,
                 node_id: 0,
                 name: "Int",
-                type: "INT",
+                type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
                 max: 100,
@@ -90,7 +90,7 @@ class VariableNode {
                 id: 0,
                 node_id: 0,
                 name: "Int",
-                type: "INT",
+                type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0
             }

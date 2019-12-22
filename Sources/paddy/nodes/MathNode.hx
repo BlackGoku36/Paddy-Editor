@@ -126,7 +126,7 @@ class MathNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "Value",
+                name: "Float",
                 type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0.0,
@@ -135,7 +135,7 @@ class MathNode {
             {
                 id: 1,
                 node_id: 0,
-                name: "Value",
+                name: "Float",
                 type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0.0,
@@ -166,8 +166,8 @@ class MathNode {
             {
                 id: 0,
                 node_id: 0,
-                name: "Value",
-                type: "INT",
+                name: "Int",
+                type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
                 max: 100,
@@ -176,8 +176,8 @@ class MathNode {
             {
                 id: 1,
                 node_id: 0,
-                name: "Value",
-                type: "INT",
+                name: "Int",
+                type: "VALUE",
                 color: Color.fromBytes(180, 180, 180),
                 default_value: 0,
                 max: 100,

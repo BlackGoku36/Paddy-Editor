@@ -5,6 +5,7 @@ import zui.Themes.TTheme;
 class Themes {
 
 	public static var dark: TTheme = {
+		NAME: "dark",
 		FONT_SIZE: 13,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,
@@ -37,6 +38,7 @@ class Themes {
 	};
 
 	public static var light: TTheme = {
+		NAME: "light",
 		FONT_SIZE: 13,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,
