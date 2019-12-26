@@ -14,7 +14,6 @@ class Export{
 		if(App.paddydata.name =="") App.paddydata.name = "PaddyProject";
 		if(App.paddydata.scene =="") App.paddydata.scene = path+"/"+"scene.json";
 		if(App.paddydata.window =="") App.paddydata.window = path+"/"+"window.json";
-		#if kha_krom
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
@@ -24,56 +23,43 @@ class Export{
 		copyAssets('$path/Assets');
 		exportNodes('$path/Assets');
 		App.projectPath = path;
-		#end
 	}
 
 	public static function copyAssets(path:String) {
 		for (imagepath in Assets.imagesPaths){
 			var imageNameA = imagepath.split("/");
 			var imageName = imageNameA[imageNameA.length - 1];
-			#if kha_krom
 			Krom.sysCommand('cp $imagepath $path/$imageName');
-			#end
 		}
 	}
 
 	public static function exportScene(path:String = "") {
-		#if kha_krom
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+App.scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.scene)).getData());
-		#end
 	}
 
 	public static function exportWindow(path:String = "") {
-		#if kha_krom
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+"window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.window)).getData());
-		#end
 	}
 
 	public static function exportNodes(path:String = "") {
-		#if kha_krom
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		for(nodes in UINodes.nodesArray){
 			var name = nodes.name;
 			Krom.fileSaveBytes(newPath+'LN$name.json', haxe.io.Bytes.ofString(haxe.Json.stringify(nodes.nodeCanvas)).getData());
 		}
-		#end
 	}
 
 	public static function exportJsonFile(name:String, data:String) {
-		#if kha_krom
 		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(data).getData());
-		#end
 	}
 
 	public static function exportFile(name:String, data:String) {
-		#if kha_krom
 		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(data).getData());
-		#end
 	}
 
 	static function adjustAssetsPath(newPath:String): AssetData{
