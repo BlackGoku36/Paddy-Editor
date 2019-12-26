@@ -1,5 +1,6 @@
 package paddy.ui;
 
+import paddy.data.Data.ObjectData;
 import zui.Id;
 import zui.Zui;
 
@@ -9,7 +10,13 @@ import paddy.data.Themes;
 @:access(zui.Zui)
 class UIProperties {
 
+	public static var propsW = 200;
+	public static var propsH = 600;
+
+	public static var propsHandle = Id.handle();
+
 	public static var propTabHandle = Id.handle();
+
 	public static var propPanelWinH = Id.handle({selected:true});
 	public static var propPanelObjH = Id.handle({selected:true});
 	public static var propPanelGridH = Id.handle({selected:true});
@@ -18,12 +25,14 @@ class UIProperties {
 	public static var themesName = ["Light", "Dark"];
 	public static var tthemes = [Themes.light, Themes.dark];
 
-	public static function render(ui:Zui, idHandle:Handle, x:Int, y:Int, w:Int, h:Int) {
+	public static var nodeSlots = [];
+
+	public static function render(ui:Zui) {
 		var window = App.window;
 
 		var selectedObj = App.selectedObj;
 
-		if(ui.window(idHandle, x, y, w, h)){
+		if(ui.window(propsHandle, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH)){
 			if(ui.tab(propTabHandle, "Properties")){
 				if(ui.panel(propPanelWinH, "Window")){
 					ui.indent();
@@ -90,6 +99,21 @@ class UIProperties {
 						if (handlerot.value >= 360) handlerot.value = 0;
 						obj.rotation = paddy.util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
 
+						if(ui.panel(Id.handle(), "Nodes")){
+							if(UINodes.nodesArray.length != 0){
+								if(ui.button("Add")) obj.scripts.push({name: " ", scriptRef: " "});
+								for (slot in 0...obj.scripts.length){
+									var nodesHandle = Id.handle().nest(slot, {position: 0});
+									ui.combo(nodesHandle, UINodes.getNodesArrayNames(), Right);
+									obj.scripts[slot] = {
+										name: UINodes.getNodesArrayNames()[nodesHandle.position],
+										scriptRef: "LN"+UINodes.getNodesArrayNames()[nodesHandle.position]+".json"
+									}
+								}
+							}else{
+								ui.text("Create nodes first!");
+							}
+						}
 						for (value in paddy.Plugin.plugins) if (value.propObjPanelUI != null) value.propObjPanelUI(ui);
 
 						ui.unindent();
@@ -139,8 +163,8 @@ class UIProperties {
 					Plugin.disable(file2);
 				}
 			}
+			for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
 		}
 
-		for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
 	}
 }

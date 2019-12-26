@@ -57,7 +57,7 @@ class UIMenu {
 			g.end();
 
 			ui.beginRegion(g, 5, 32, 116);
-	
+
 			if (ui.button("New")) {
 				if(App.projectPath!="") App.projectPath = "";
 				App.paddydata = { name: "", window: "", scene: "" }

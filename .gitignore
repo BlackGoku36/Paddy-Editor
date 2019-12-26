@@ -2,5 +2,7 @@ build
 .DS_Store
 scene.json
 window.json
+nodes.json
 rice_project
 .vscode
+Assets/rice.js

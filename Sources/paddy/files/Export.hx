@@ -1,5 +1,6 @@
 package paddy.files;
 
+import paddy.ui.UINodes;
 import paddy.data.Data.AssetData;
 
 class Export{
@@ -45,6 +46,17 @@ class Export{
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+"window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.window)).getData());
+		#end
+	}
+
+	public static function exportNodes(path:String = "") {
+		#if kha_krom
+		var newPath = path;
+		if(path!="") newPath = path+"/";
+		for(nodes in UINodes.nodesArray){
+			var name = nodes.name;
+			Krom.fileSaveBytes(newPath+'LN$name.json', haxe.io.Bytes.ofString(haxe.Json.stringify(nodes.nodeCanvas)).getData());
+		}
 		#end
 	}
 

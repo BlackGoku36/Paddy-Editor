@@ -14,10 +14,10 @@ class Imports {
 			importScene(parsed.scene);
 			App.projectPath = path.substring(0, path.length - 10);
 			App.assetHandle.text = path.substring(0, path.length - 10);
-			App.propWinH.redraws = 2;
-			App.sceneWinH.redraws = 2;
+			paddy.ui.UIProperties.propsHandle.redraws = 2;
+			paddy.ui.UIOutliner.outlinerHandle.redraws = 2;
 			App.assetsWinH.redraws = 2;
-			App.editorWinH.redraws = 2;
+			paddy.ui.UIEditor.editorHandle.redraws = 2;
 		});
 	}
 

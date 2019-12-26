@@ -13,8 +13,9 @@ class Plugin {
 	public var editorTabUI: zui.Zui->Void = null;
 	public var editorGridPanelUI: zui.Zui->Void = null;
 	public var editorRotPanelUI: zui.Zui->Void = null;
+	public var nodeMenuUI: zui.Zui->Void = null;
 	public var assetWinUI: zui.Zui->Void = null;
-	public var sceneWinUI: zui.Zui->Void = null;
+	public var outlinerWinUI: zui.Zui->Void = null;
 	public var update:Void->Void = null;
 	public var onRemove:Void->Void = null;
 
@@ -47,27 +48,24 @@ class PaddyBridge {
 	public static var Assets = paddy.Assets;
 	public static var UtilMath = paddy.util.Math;
 	public static var Export = paddy.files.Export;
+	public static var NodeCreator = paddy.nodes.NodeCreator;
+	public static var UIAssets = paddy.ui.UIAssets;
+	public static var UIProperties = paddy.ui.UIProperties;
+	public static var UIOutliner = paddy.ui.UIOutliner;
+	public static var UINodes = paddy.ui.UINodes;
 }
 
-@:expose("ui")
+@:expose("zui")
 class UIBridge {
 	public static var UI = zui.Zui;
 	public static var Handle = zui.Zui.Handle;
-	public static var UIAssets = paddy.ui.UIAssets;
-	public static var UIProperties = paddy.ui.UIProperties;
 }
 
 @:expose("kha")
 class KhaBridge {
 	public static var Assets = kha.Assets;
+	public static var TKrom = Krom;
 }
-
-#if kha_krom
-@:expose("krom")
-class KromBridge {
-	public static var Kromx = Krom;
-}
-#end
 
 @:expose("std")
 class HaxeBridge {
