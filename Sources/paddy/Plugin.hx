@@ -28,6 +28,7 @@ class Plugin {
 
 	public static function enable(string:String) {
 		kha.Assets.loadBlobFromPath("plugins/"+string+".js", function (blob){
+			pluginName = string;
 			#if js
 			untyped __js__("(1, eval)({0})", blob.toString());
 			#end

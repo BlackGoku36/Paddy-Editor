@@ -27,7 +27,6 @@ class UINodes {
 		if(selectedNode == null) return;
 
 		if(ui.window(nodeHandle, 200, 60, 150, 540)){
-			// trace(Color.fromBytes(50, 50, 200));
 
 			if(ui.panel(Id.handle(), "Logic")){
 				if(ui.button("Gate")) selectedNode.nodeCanvas.nodes.push(NodeCreator.createNode(LogicNode.gate, selectedNode.nodes, selectedNode.nodeCanvas));

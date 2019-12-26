@@ -156,11 +156,12 @@ class UIProperties {
 					if(Plugin.plugins.exists(file)) return;
 					Plugin.enable(file);
 				}
-				ui.row([3/5, 2/5]);
-				var file2 = ui.textInput(Id.handle(), "Name");
-				if(ui.button("Remove") && file2 != ""){
-					if(!Plugin.plugins.exists(file2)) return;
-					Plugin.disable(file2);
+				for(name => value in Plugin.plugins){
+					ui.row([3/5, 2/5]);
+					ui.text(name);
+					if(ui.button("X")){
+						Plugin.disable(name);
+					}
 				}
 			}
 			for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
