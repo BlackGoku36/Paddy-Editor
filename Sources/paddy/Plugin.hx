@@ -15,7 +15,7 @@ class Plugin {
 	public var editorRotPanelUI: zui.Zui->Void = null;
 	public var nodeMenuUI: zui.Zui->Void = null;
 	public var assetWinUI: zui.Zui->Void = null;
-	public var sceneWinUI: zui.Zui->Void = null;
+	public var outlinerWinUI: zui.Zui->Void = null;
 	public var update:Void->Void = null;
 	public var onRemove:Void->Void = null;
 
@@ -51,6 +51,7 @@ class PaddyBridge {
 	public static var NodeCreator = paddy.nodes.NodeCreator;
 	public static var UIAssets = paddy.ui.UIAssets;
 	public static var UIProperties = paddy.ui.UIProperties;
+	public static var UIOutliner = paddy.ui.UIOutliner;
 	public static var UINodes = paddy.ui.UINodes;
 }
 

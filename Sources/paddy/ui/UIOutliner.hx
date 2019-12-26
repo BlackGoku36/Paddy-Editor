@@ -109,7 +109,7 @@ class UIOutliner {
 				}
 			}
 
-			for (value in paddy.Plugin.plugins) if (value.sceneWinUI != null) value.sceneWinUI(ui);
+			for (value in paddy.Plugin.plugins) if (value.outlinerWinUI != null) value.outlinerWinUI(ui);
 
 		}
     }

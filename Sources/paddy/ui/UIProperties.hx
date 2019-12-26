@@ -163,8 +163,8 @@ class UIProperties {
 					Plugin.disable(file2);
 				}
 			}
+			for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
 		}
 
-		for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
 	}
 }

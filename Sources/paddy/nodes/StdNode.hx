@@ -108,7 +108,7 @@ class StdNode {
                 node_id: 0,
                 name: "In",
                 type: "ACTION",
-                color: Color.fromBytes(180, 180, 180),
+                color: 0xffaa4444,
                 default_value: ""
             },
             {
@@ -116,7 +116,7 @@ class StdNode {
                 node_id: 0,
                 name: "Value",
                 type: "STRING",
-                color: Color.fromBytes(180, 180, 180),
+                color: 0xff44aa44,
                 default_value: ""
             }
         ],
@@ -126,7 +126,7 @@ class StdNode {
                 node_id: 0,
                 name: "Out",
                 type: "ACTION",
-                color: Color.fromBytes(180, 180, 180),
+                color: 0xffaa4444,
                 default_value: ""
             }
         ],
