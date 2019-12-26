@@ -46,8 +46,6 @@ class App {
 	public static var fileW = 200;
 	public static var fileH = 100;
 
-	var buildMode = 0;
-
 	public static var assetsWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
 
@@ -84,6 +82,10 @@ class App {
 	public static var fileBrowserPath = "";
 
 	public static var selectedImage = null;
+
+	public static var buildOptions = ["Build"];
+	public static var buildMode = 0;
+	public static var modeHandle = Id.handle({position: 0});
 
 	public function new() {
 		kha.Assets.loadEverything(function (){
@@ -182,13 +184,12 @@ class App {
 				if(buildMode == 0){
 					Export.exportScene();
 					Export.exportWindow();
-				}else if(buildMode == 1){
+				}else{
 					for (plug in Plugin.plugins) plug.executeRunUI();
 				}
 			}
-			var mode = Id.handle({position: 0});
-			ui.combo(mode, ["Build", "Play"], Right);
-			if (mode.changed) buildMode = mode.position;
+			ui.combo(modeHandle, buildOptions, Right);
+			if (modeHandle.changed) buildMode = modeHandle.position;
 		}
 
 		UIOutliner.render(ui);
