@@ -1,5 +1,6 @@
 package paddy.files;
 
+import paddy.data.Data.ScriptData;
 import paddy.ui.UINodes;
 import paddy.data.Data.AssetData;
 
@@ -8,6 +9,8 @@ class Export{
 	public static function exportPaddy(path:String = "") {
 		adjustObjectSpritePath(path);
 		App.scene.assets = adjustAssetsPath(path);
+		adjustScriptsPath(path, App.scene.scripts);
+		for(obj in App.scene.objects) adjustScriptsPath(path, obj.scripts);
 		if(App.paddydata.name =="") App.paddydata.name = "PaddyProject";
 		if(App.paddydata.scene =="") App.paddydata.scene = path+"/"+"scene.json";
 		if(App.paddydata.window =="") App.paddydata.window = path+"/"+"window.json";
@@ -15,10 +18,11 @@ class Export{
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
-		exportScene(path);
 		exportWindow(path);
+		exportScene(path);
 		Krom.sysCommand('mkdir $path/Assets');
 		copyAssets('$path/Assets');
+		exportNodes('$path/Assets');
 		App.projectPath = path;
 		#end
 	}
@@ -100,6 +104,17 @@ class Export{
 				var name = ref.split("/");
 				var newName = name[name.length-1];
 				object.spriteRef = '$newPath/Assets/$newName';
+			}
+		}
+	}
+
+	static function adjustScriptsPath(newPath:String, scripts:Array<ScriptData>) {
+		if(scripts!=null && scripts.length != 0){
+			for(script in scripts){
+				var ref = script.scriptRef;
+				var name = ref.split("/");
+				var newName = name[name.length-1];
+				script.scriptRef = '$newPath/Assets/$newName';
 			}
 		}
 	}

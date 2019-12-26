@@ -1,5 +1,8 @@
 package paddy.files;
 
+import paddy.data.Data;
+import zui.Nodes;
+
 class Imports {
 
 	public static function importPaddy(path:String) {
@@ -21,11 +24,14 @@ class Imports {
 		});
 	}
 
+
 	public static function importScene(path:String) {
 		kha.Assets.loadBlobFromPath(path, function(blob){
-			var parsed:paddy.data.Data.SceneData = haxe.Json.parse(blob.toString());
-			App.scene = parsed;
-			importObjectSprites(parsed.assets.images);
+			var scene:paddy.data.Data.SceneData = haxe.Json.parse(blob.toString());
+			App.scene = scene;
+			importObjectSprites(scene.assets.images);
+			if(scene.scripts.length != 0) importNodesFromScriptData(scene.scripts);
+			for(obj in scene.objects) if(obj.scripts.length != 0) importNodesFromScriptData(obj.scripts);			
 		});
 	}
 
@@ -36,9 +42,22 @@ class Imports {
 		});
 	}
 
-	public static function importObjectSprites(paths:Array<String>) {
-		for(path in paths){
-			Assets.loadImage(path);
+	public static function importNodesFromScriptData(scripts: Array<ScriptData>) {
+		for(script in scripts){
+			kha.Assets.loadBlobFromPath(script.scriptRef, function(blob){
+				trace(blob.toString());
+				var nodeC:TNodeCanvas = haxe.Json.parse(blob.toString());
+				var nodeData:NodeData = {
+					name: Path.getNameFromPath(script.scriptRef).split(".")[0],
+					nodes: new Nodes(),
+					nodeCanvas: nodeC
+				};
+				paddy.ui.UINodes.nodesArray.push(nodeData);
+			});
 		}
+	}
+
+	public static function importObjectSprites(paths:Array<String>) {
+		for(path in paths) Assets.loadImage(path);
 	}
 }
