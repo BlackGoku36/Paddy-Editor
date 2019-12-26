@@ -6,6 +6,12 @@ import paddy.data.Data.AssetData;
 
 class Export{
 
+	#if kha_windows
+	static var copycmd = "copy";
+	#else
+	static var copycmd = "cp";
+	#end
+
 	public static function exportPaddy(path:String = "") {
 		adjustObjectSpritePath(path);
 		App.scene.assets = adjustAssetsPath(path);
@@ -29,7 +35,7 @@ class Export{
 		for (imagepath in Assets.imagesPaths){
 			var imageNameA = imagepath.split("/");
 			var imageName = imageNameA[imageNameA.length - 1];
-			Krom.sysCommand('cp $imagepath $path/$imageName');
+			Krom.sysCommand('$copycmd $imagepath $path/$imageName');
 		}
 	}
 
