@@ -29,6 +29,7 @@ class Export{
 		copyAssets('$path/Assets');
 		exportNodes('$path/Assets');
 		App.projectPath = path;
+		paddy.Paddy.reloadUI();
 	}
 
 	public static function copyAssets(path:String) {

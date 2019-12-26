@@ -12,7 +12,6 @@ import kha.Framebuffer;
 import paddy.ui.UIAssets;
 import paddy.ui.UIProperties;
 import paddy.data.Data;
-import paddy.data.PaddyData;
 import paddy.files.Export;
 
 @:access(zui.Zui)
@@ -49,7 +48,7 @@ class App {
 	public static var assetsWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
 
-	public static var paddydata: PData = {
+	public static var paddydata: paddy.Paddy.PaddyData = {
 		name: "",
 		window: "",
 		scene: "",
@@ -83,9 +82,10 @@ class App {
 
 	public static var selectedImage = null;
 
+	public static var modeHandle = Id.handle();
 	public static var buildOptions = ["Build"];
 	public static var buildMode = 0;
-	public static var modeHandle = Id.handle({position: 0});
+	public static var modeComboHandle = Id.handle({position: 0});
 
 	public function new() {
 		kha.Assets.loadEverything(function (){
@@ -188,8 +188,8 @@ class App {
 					for (plug in Plugin.plugins) plug.executeRunUI();
 				}
 			}
-			ui.combo(modeHandle, buildOptions, Right);
-			if (modeHandle.changed) buildMode = modeHandle.position;
+			ui.combo(modeComboHandle, buildOptions, Right);
+			if (modeComboHandle.changed) buildMode = modeComboHandle.position;
 		}
 
 		UIOutliner.render(ui);

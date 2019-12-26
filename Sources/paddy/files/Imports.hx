@@ -8,7 +8,7 @@ class Imports {
 	public static function importPaddy(path:String) {
 		kha.Assets.loadBlobFromPath(path, function(blob){
 			if(!StringTools.endsWith(path, "paddy.json")) return;
-			var parsed: paddy.data.PaddyData.PData = haxe.Json.parse(blob.toString());
+			var parsed: paddy.Paddy.PaddyData = haxe.Json.parse(blob.toString());
 			App.paddydata = parsed;
 			App.paddydata.name = parsed.name;
 			App.paddydata.scene = parsed.scene;
@@ -17,10 +17,7 @@ class Imports {
 			importScene(parsed.scene);
 			App.projectPath = path.substring(0, path.length - 10);
 			App.assetHandle.text = path.substring(0, path.length - 10);
-			paddy.ui.UIProperties.propsHandle.redraws = 2;
-			paddy.ui.UIOutliner.outlinerHandle.redraws = 2;
-			App.assetsWinH.redraws = 2;
-			paddy.ui.UIEditor.editorHandle.redraws = 2;
+			paddy.Paddy.reloadUI();
 		});
 	}
 

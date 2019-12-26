@@ -4,7 +4,6 @@ import paddy.data.Data.ObjectData;
 import zui.Id;
 import zui.Zui;
 
-import paddy.data.PaddyData;
 import paddy.data.Themes;
 
 @:access(zui.Zui)
@@ -126,7 +125,10 @@ class UIProperties {
 					ui.indent();
 						var mode = Id.handle({position: 1});
 						ui.combo(mode, themesName, Right);
-						if(mode.changed) PaddyData.changeTheme(ui, tthemes[mode.position]);
+						if(mode.changed){
+							paddy.Paddy.changeTheme(ui, tthemes[mode.position]);
+							paddy.Paddy.reloadUI();
+						}
 					ui.unindent();
 				}
 				if(ui.panel(propPanelGridH, "Grid")){

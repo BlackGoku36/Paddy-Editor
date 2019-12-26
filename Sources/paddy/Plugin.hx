@@ -33,12 +33,14 @@ class Plugin {
 			untyped __js__("(1, eval)({0})", blob.toString());
 			#end
 		});
+		paddy.Paddy.reloadUI();
 	}
 
 	public static function disable(string:String) {
 		var p = plugins.get(string);
 		if (p != null && p.onRemove != null) p.onRemove();
 		plugins.remove(string);
+		paddy.Paddy.reloadUI();
 	}
 }
 

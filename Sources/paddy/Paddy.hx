@@ -1,15 +1,25 @@
-package paddy.data;
+package paddy;
 
 import zui.Themes;
 
-typedef PData = {
+typedef PaddyData = {
 	var name: String;
 	var window: String;
 	var scene: String;
 	var ?theme: zui.Themes.TTheme;
 }
 
-class PaddyData {
+class Paddy {
+
+	public static function reloadUI(){
+		App.assetsWinH.redraws = 2;
+		App.modeHandle.redraws = 2;
+		paddy.ui.UINodes.nodeHandle.redraws = 2;
+		paddy.ui.UIAssets.assetHandle.redraws = 2;
+		paddy.ui.UIEditor.editorHandle.redraws = 2;
+		paddy.ui.UIProperties.propsHandle.redraws = 2;
+		paddy.ui.UIOutliner.outlinerHandle.redraws = 2;
+	}
 
 	public static function changeTheme(ui:zui.Zui, theme:TTheme){
 		ui.t.FONT_SIZE = theme.FONT_SIZE;
