@@ -98,6 +98,8 @@ class UIProperties {
 						if (handlerot.value >= 360) handlerot.value = 0;
 						obj.rotation = paddy.util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
 
+						obj.isSprite = ui.check(Id.handle().nest(id, {selected: false}), "Is Sprite");
+
 						if(ui.panel(Id.handle(), "Nodes")){
 							if(UINodes.nodesArray.length != 0){
 								if(ui.button("Add")) obj.scripts.push({name: " ", scriptRef: " "});
