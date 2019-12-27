@@ -7,7 +7,7 @@ class Themes {
 
 	public static var dark: TTheme = {
 		NAME: "dark",
-		FONT_SIZE: 15,
+		FONT_SIZE: 14,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,
 		ELEMENT_OFFSET: 4,
@@ -40,7 +40,7 @@ class Themes {
 
 	public static var light: TTheme = {
 		NAME: "light",
-		FONT_SIZE: 15,
+		FONT_SIZE: 14,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,
 		ELEMENT_OFFSET: 4,

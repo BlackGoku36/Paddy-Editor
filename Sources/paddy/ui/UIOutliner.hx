@@ -19,11 +19,11 @@ class UIOutliner {
         if(ui.window(outlinerHandle, 0, 30, Std.int(outlinerW*ui.SCALE()), outlinerH)){
 			if(ui.tab(outlinerTab, "Scene")){
 				ui.row([3/4, 1/4]);
-				ui.textInput(Id.handle(), "Search");
+				var name = ui.textInput(Id.handle({text:"Object"}), "Name");
 				if(ui.button("+")){
 					var object: ObjectData = {
 						id: getObjectId(App.scene),
-						name: "object"+getObjectId(App.scene),
+						name: name,
 						x: 0, y: 0,
 						width: 100, height: 100,
 						rotation: 0,
