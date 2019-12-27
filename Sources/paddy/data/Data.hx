@@ -2,7 +2,6 @@ package paddy.data;
 
 import zui.Nodes;
 import zui.Nodes.TNodeCanvas;
-import kha.math.FastVector2;
 
 typedef WindowData = {
 	var name: String;
@@ -15,16 +14,23 @@ typedef WindowData = {
 typedef SceneData = {
 	var name: String;
 	var objects: Array<ObjectData>;
-	var assets: AssetData;
+	var assets: Array<AssetData>;
 	var ?scripts: Array<ScriptData>;
 	var ?canvasRef: String;
 }
 
 typedef AssetData = {
-	var images: Array<String>;
-	var ?fonts: Array<String>;
-	var ?sounds: Array<String>;
-	var ?blobs: Array<String>;
+	var name:String;
+	var type:AssetType;
+	var value: Dynamic;
+	var path:String;
+}
+
+@:enum abstract AssetType(Int) from Int to Int {
+	var Image = 0;
+	var Font = 0;
+	var Sound = 1;
+	var Blob = 1;
 }
 
 typedef ObjectData = {

@@ -13,8 +13,10 @@ class Export{
 	#end
 
 	public static function exportPaddy(path:String = "") {
+		Krom.sysCommand('mkdir $path/Assets');
+		copyAssets('$path/Assets/');
 		adjustObjectSpritePath(path);
-		App.scene.assets = adjustAssetsPath(path);
+		adjustAssetsPath(path);
 		adjustScriptsPath(path, App.scene.scripts);
 		for(obj in App.scene.objects) adjustScriptsPath(path, obj.scripts);
 		if(App.paddydata.name =="") App.paddydata.name = "PaddyProject";
@@ -24,19 +26,16 @@ class Export{
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
 		exportWindow(path);
+		App.scene.assets = Assets.assets;
 		exportScene(path);
-		Krom.sysCommand('mkdir $path/Assets');
-		copyAssets('$path/Assets');
 		exportNodes('$path/Assets');
 		App.projectPath = path;
 		paddy.Paddy.reloadUI();
 	}
 
 	public static function copyAssets(path:String) {
-		for (imagepath in Assets.imagesPaths){
-			var imageNameA = imagepath.split("/");
-			var imageName = imageNameA[imageNameA.length - 1];
-			Krom.sysCommand('$copycmd $imagepath $path/$imageName');
+		for(asset in Assets.assets){
+			Krom.sysCommand('$copycmd ' + asset.path + ' $path');
 		}
 	}
 
@@ -69,25 +68,8 @@ class Export{
 		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(data).getData());
 	}
 
-	static function adjustAssetsPath(newPath:String): AssetData{
-
-		var adjustedImagesPath:Array<String> = [];
-		var adjustedFontsPath:Array<String> = [];
-		var adjustedSoundsPath:Array<String> = [];
-		var adjustedBlobsPath:Array<String> = [];
-
-		for (image in Assets.imagesPaths) adjustedImagesPath.push('$newPath/Assets/' + Path.getNameFromPath(image));
-		for (font in Assets.fontsPaths) adjustedFontsPath.push('$newPath/Assets/' + Path.getNameFromPath(font));
-		for (sound in Assets.soundsPaths) adjustedSoundsPath.push('$newPath/Assets/' + Path.getNameFromPath(sound));
-		for (blob in Assets.blobsPaths) adjustedBlobsPath.push('$newPath/Assets/' + Path.getNameFromPath(blob));
-
-		var adjustedAssetsPath:AssetData = {
-			images: adjustedImagesPath,
-			fonts: adjustedFontsPath,
-			sounds: adjustedSoundsPath,
-			blobs: adjustedBlobsPath
-		}
-		return adjustedAssetsPath;
+	static function adjustAssetsPath(newPath:String){
+		for(asset in Assets.assets) asset.path = '$newPath/Assets/' + asset.name;
 	}
 
 	static function adjustObjectSpritePath(newPath:String) {
@@ -96,7 +78,7 @@ class Export{
 				var ref = object.spriteRef;
 				var name = ref.split("/");
 				var newName = name[name.length-1];
-				object.spriteRef = '$newPath/Assets/$newName';
+				object.spriteRef = newName;
 			}
 		}
 	}

@@ -26,7 +26,7 @@ class Imports {
 		kha.Assets.loadBlobFromPath(path, function(blob){
 			var scene:paddy.data.Data.SceneData = haxe.Json.parse(blob.toString());
 			App.scene = scene;
-			importObjectSprites(scene.assets.images);
+			importObjectSprites(scene.assets);
 			if(scene.scripts.length != 0) importNodesFromScriptData(scene.scripts);
 			for(obj in scene.objects) if(obj.scripts.length != 0) importNodesFromScriptData(obj.scripts);			
 		});
@@ -54,7 +54,9 @@ class Imports {
 		}
 	}
 
-	public static function importObjectSprites(paths:Array<String>) {
-		for(path in paths) Assets.loadImage(path);
+	public static function importObjectSprites(paths:Array<AssetData>) {
+		for(path in paths){
+			if(path.type == Image) Assets.loadAssetFromPath(path.path, Image);
+		}
 	}
 }

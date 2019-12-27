@@ -65,12 +65,7 @@ class App {
 	public static var scene: SceneData = {
 		name: "scene",
 		objects: [],
-		assets: {
-			images: paddy.Assets.imagesPaths,
-			fonts:  paddy.Assets.fontsPaths,
-			sounds: paddy.Assets.soundsPaths,
-			blobs:  paddy.Assets.blobsPaths
-		},
+		assets: [],
 		scripts: []
 	}
 
@@ -153,7 +148,8 @@ class App {
 			g.drawRect(coffX, coffY, window.width/2, window.height/2);
 
 			for (object in scene.objects){
-				var sprite = Assets.getImage(object.spriteRef);
+				var sprite = Assets.getAsset(object.spriteRef, Image);
+				// var sprite = Assets.getImage(object.spriteRef);
 				if(sprite != null && object.visible) {
 					g.pushRotation(object.rotation, coffX + object.x+(object.width/4), coffY + object.y+(object.height/4));
 					g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width/2, object.height/2);
@@ -213,10 +209,10 @@ class App {
 					var isFont = StringTools.endsWith(assetPath, ".ttf");
 					var isSound = StringTools.endsWith(assetPath, ".ogg");
 
-					if(isImage) Assets.loadImage(assetPath);
-					else if(isFont) Assets.loadFont(assetPath);
-					else if(isSound) Assets.loadSound(assetPath);
-					else Assets.loadBlob(assetPath);
+					if(isImage) Assets.loadAssetFromPath(assetPath, Image);
+					else if(isFont) Assets.loadAssetFromPath(assetPath, Font);
+					else if(isSound) Assets.loadAssetFromPath(assetPath, Sound);
+					else Assets.loadAssetFromPath(assetPath, Blob);
 				}
 				assetPath = Ext.fileBrowser(ui, assetHandle);
 			}
@@ -230,10 +226,11 @@ class App {
 
 		g.begin(false);
 		if (selectedImage != null) {
-			var w = Math.min(128, Assets.getImage(selectedImage).width);
-			var ratio = w / Assets.getImage(selectedImage).width;
-			var h = Assets.getImage(selectedImage).height * ratio;
-			g.drawScaledImage(Assets.getImage(selectedImage), ui.inputX, ui.inputY, w, h);
+			var img = Assets.getAsset(selectedImage, Image);
+			var w = Math.min(128, img.width);
+			var ratio = w / img.width;
+			var h = img.height * ratio;
+			g.drawScaledImage(img, ui.inputX, ui.inputY, w, h);
 		}
 		g.end();
 

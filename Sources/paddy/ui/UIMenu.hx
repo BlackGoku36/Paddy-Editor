@@ -61,20 +61,8 @@ class UIMenu {
 			if (ui.button("New")) {
 				if(App.projectPath!="") App.projectPath = "";
 				App.paddydata = { name: "", window: "", scene: "" }
-				App.scene = { name: "scene", objects: [], assets: {
-					images: paddy.Assets.imagesPaths,
-					fonts:  paddy.Assets.fontsPaths,
-					sounds: paddy.Assets.soundsPaths,
-					blobs:  paddy.Assets.blobsPaths}}
+				App.scene = { name: "scene", objects: [], assets: []}
 				App.window = { name: "Window", width: 1440, height: 900, windowMode: 0, clearColor: [0, 0, 0, 255] }
-				Assets.images.resize(0);
-				Assets.imagesPaths.resize(0);
-				Assets.fonts.resize(0);
-				Assets.fontsPaths.resize(0);
-				Assets.sounds.resize(0);
-				Assets.soundsPaths.resize(0);
-				Assets.blobs.resize(0);
-				Assets.blobsPaths.resize(0);
 			}
 
 			if(ui.button("Open")){

@@ -17,44 +17,44 @@ class UIAssets {
 			if(ui.tab(assetTabH, "Assets")){
 				if(ui.panel(Id.handle(), "Images")){
 					ui.indent();
-					for (image in Assets.images) for (path => value in image){
+					for(asset in Assets.assets) if(asset.type == Image){
 						ui.row([1/5, 4/5]);
-						var state = ui.image(value, 0xffffffff, 50, 0, 0, value.width, value.height);
-						ui.text(Path.getNameFromPath(path), Center);
-						if(state == 2) App.selectedImage = path;
-						ui._y += Std.int(value.height/50*ui.SCALE()+25);
+						var state = ui.image(asset.value, 0xffffffff, 50, 0, 0, asset.value.width, asset.value.height);
+						ui.text(Path.getNameFromPath(asset.path), Center);
+						if(state == 2) App.selectedImage = asset.name;
+						ui._y += Std.int(asset.value.height/50*ui.SCALE()+25);
 					}
 					ui.unindent();
 				}
 				if(ui.panel(Id.handle(), "Sounds")){
 					ui.indent();
-					for (sound in Assets.sounds) for (path => value in sound){
+					for(asset in Assets.assets) if(asset.type == Sound){
 						ui.row([1/5, 4/5]);
-						var image = kha.Assets.images.get(path);
+						var image = kha.Assets.images.get(asset.path);
 						ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
-						ui.text(Path.getNameFromPath(path), Center);
+						ui.text(Path.getNameFromPath(asset.path), Center);
 						ui._y += Std.int(image.height/50*ui.SCALE()+25);
 					}
 					ui.unindent();
 				}
 				if(ui.panel(Id.handle(), "Fonts")){
 					ui.indent();
-					for (font in Assets.fonts) for (path => value in font){
+					for(asset in Assets.assets) if(asset.type == Font){
 						ui.row([1/5, 4/5]);
-						var image = kha.Assets.images.get(path);
+						var image = kha.Assets.images.get(asset.path);
 						ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
-						ui.text(Path.getNameFromPath(path), Center);
+						ui.text(Path.getNameFromPath(asset.path), Center);
 						ui._y += Std.int(image.height/50*ui.SCALE()+25);
 					}
 					ui.unindent();
 				}
 				if(ui.panel(Id.handle(), "Codes")){
 					ui.indent();
-					for (blob in Assets.blobs) for (path => value in blob){
+					for(asset in Assets.assets) if(asset.type == Blob){
 						ui.row([1/5, 4/5]);
-						var image = kha.Assets.images.get(getTextImageTypeFromExt(path));
+						var image = kha.Assets.images.get(getTextImageTypeFromExt(asset.path));
 						ui.image(image, 0xffffffff, 50, 0, 0, image.width, image.height);
-						ui.text(Path.getNameFromPath(path), Center);
+						ui.text(Path.getNameFromPath(asset.path), Center);
 						ui._y += Std.int(image.height/50*ui.SCALE()+25);
 					}
 					ui.unindent();

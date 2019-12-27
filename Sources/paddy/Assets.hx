@@ -1,73 +1,67 @@
 package paddy;
 
+import paddy.data.Data.AssetType;
+import paddy.data.Data.AssetData;
 import paddy.files.Path;
 
 class Assets {
 
-	public static var images: Array<Map<String, kha.Image>> = [];
-	public static var imagesPaths: Array<String> = [];
-	public static var fonts: Array<Map<String, kha.Font>> = [];
-	public static var fontsPaths: Array<String> = [];
-	public static var sounds: Array<Map<String, kha.Sound>> = [];
-	public static var soundsPaths: Array<String> = [];
-	public static var blobs: Array<Map<String, kha.Blob>> = [];
-	public static var blobsPaths: Array<String> = [];
+	public static var assets: Array<AssetData> = [];
 
-	public static function getImage(imageRef:String) {
-		var newImage:kha.Image = null;
-		for (image in images) if(image.exists(imageRef)) newImage = image.get(imageRef);
-		return newImage;
+	public static function getAssetNamesOfType(type:AssetType): Array<String> {
+		var names:Array<String> = [];
+		for(asset in assets) if(asset.type == type) names.push(asset.name);
+		return names;
 	}
 
-	public static function getFont(fontRef:String) {
-		var newFont:kha.Font = null;
-		for (font in fonts){
-			if(font.exists(fontRef)) newFont = font.get(fontRef);
+	public static function getAsset(name:String, type:AssetType) {
+		var value:Dynamic = null;
+		for(asset in assets){
+			if(asset.type == type && asset.name == name){
+				value = asset.value;
+			}
 		}
-		return newFont;
+		return value;
 	}
 
-	public static function getSound(soundRef:String) {
-		var newSound:kha.Sound = null;
-		for (sound in sounds) if(sound.exists(soundRef)) newSound = sound.get(soundRef);
-		return newSound;
-	}
-
-	public static function getBlob(blobRef:String) {
-		var newBlob:kha.Blob = null;
-		for (blob in blobs) if(blob.exists(blobRef)) newBlob = blob.get(blobRef);
-		return newBlob;
-	}
-
-	public static function loadImage(path:String){
-		kha.Assets.loadImageFromPath(path, true, function (img){
-			for (image in images) if(image.exists(path)) return;
-			images.push([path => img]);
-			imagesPaths.push(path);
-		});
-	}
-
-	public static function loadFont(path:String){
-		kha.Assets.loadFontFromPath(path, function (fnt){
-			for (font in fonts) if(font.exists(path)) return;
-			fonts.push([path => fnt]);
-			fontsPaths.push(path);
-		});
-	}
-
-	public static function loadSound(path:String){
-		kha.Assets.loadSoundFromPath(path, function (snd){
-			for (sound in sounds) if(sound.exists(path)) return;
-			sounds.push([path => snd]);
-			fontsPaths.push(path);
-		});
-	}
-
-	public static function loadBlob(path:String){
-		kha.Assets.loadBlobFromPath(path, function (blb){
-			for (blob in blobs) if(blob.exists(path)) return;
-			blobs.push([path => blb]);
-			blobsPaths.push(path);
-		});
+	public static function loadAssetFromPath(path:String, type:AssetType) {
+		switch (type){
+			case Image:
+				kha.Assets.loadImageFromPath(path, true, function(image){
+					assets.push({
+						name: Path.getNameFromPath(path),
+						type: Image,
+						value: image,
+						path: path
+					});
+				});
+			case Font:
+				kha.Assets.loadFontFromPath(path, function(font){
+					assets.push({
+						name: Path.getNameFromPath(path),
+						type: Font,
+						value: font,
+						path: path
+					});
+				});
+			case Sound:
+				kha.Assets.loadSoundFromPath(path, function(sound){
+					assets.push({
+						name: Path.getNameFromPath(path),
+						type: Sound,
+						value: sound,
+						path: path
+					});
+				});
+			case Blob:
+				kha.Assets.loadBlobFromPath(path, function(blob){
+					assets.push({
+						name: Path.getNameFromPath(path),
+						type: Blob,
+						value: blob,
+						path: path
+					});
+				});
+		}
 	}
 }
