@@ -1,12 +1,13 @@
 package paddy.data;
 
+import kha.Color;
 import zui.Themes.TTheme;
 
 class Themes {
 
 	public static var dark: TTheme = {
 		NAME: "dark",
-		FONT_SIZE: 13,
+		FONT_SIZE: 15,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,
 		ELEMENT_OFFSET: 4,
@@ -39,7 +40,7 @@ class Themes {
 
 	public static var light: TTheme = {
 		NAME: "light",
-		FONT_SIZE: 13,
+		FONT_SIZE: 15,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,
 		ELEMENT_OFFSET: 4,
@@ -54,19 +55,19 @@ class Themes {
 		FILL_BUTTON_BG: true,
 		FILL_ACCENT_BG: false,
 
-		WINDOW_BG_COL: 0xffefefef,
-		WINDOW_TINT_COL: 0xff222222,
-		ACCENT_COL: 0xffeeeeee,
-		ACCENT_HOVER_COL: 0xffbbbbbb,
-		ACCENT_SELECT_COL: 0xffaaaaaa,
-		BUTTON_COL: 0xffcccccc,
-		BUTTON_TEXT_COL: 0xff222222,
-		BUTTON_HOVER_COL: 0xffb3b3b3,
-		BUTTON_PRESSED_COL: 0xffb1b1b1,
-		TEXT_COL: 0xff999999,
-		LABEL_COL: 0xffaaaaaa,
-		SEPARATOR_COL: 0xff999999,
-		HIGHLIGHT_COL: 0xff205d9c,
-		CONTEXT_COL: 0xffaaaaaa,
+		WINDOW_BG_COL: Color.fromBytes(240, 240, 240),
+		WINDOW_TINT_COL: 0xffffffff,
+		ACCENT_COL: Color.fromBytes(33, 231, 182),
+		ACCENT_HOVER_COL: Color.fromBytes(23, 221, 172),
+		ACCENT_SELECT_COL: Color.fromBytes(13, 211, 162),
+		BUTTON_COL: Color.fromBytes(33, 231, 182),
+		BUTTON_TEXT_COL: Color.White,
+		BUTTON_HOVER_COL: Color.fromBytes(23, 221, 172),
+		BUTTON_PRESSED_COL: Color.fromBytes(13, 211, 162),
+		TEXT_COL: Color.fromBytes(33, 231, 182),
+		LABEL_COL: Color.fromBytes(30, 228, 179),
+		SEPARATOR_COL: Color.fromBytes(220, 220, 220),
+		HIGHLIGHT_COL: Color.fromBytes(33, 231, 182),
+		CONTEXT_COL: Color.Black,
 	};
 }
