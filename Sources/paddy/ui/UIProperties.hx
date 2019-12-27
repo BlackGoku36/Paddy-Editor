@@ -21,7 +21,7 @@ class UIProperties {
 	public static var propPanelGridH = Id.handle({selected:true});
 	public static var propPanelRotH = Id.handle({selected:true});
 
-	public static var themesName = ["Light", "Dark"];
+	public static var themesName = ["-!-Light-!-", "Dark"];
 	public static var tthemes = [Themes.light, Themes.dark];
 
 	public static var nodeSlots = [];
