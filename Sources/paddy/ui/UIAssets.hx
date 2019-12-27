@@ -69,7 +69,7 @@ class UIAssets {
 					var save = Krom.getFilesLocation() + "/temp.txt";
 					Krom.sysCommand('$input > $save');
 					var file = haxe.io.Bytes.ofData(Krom.loadBlob(save)).toString();
-					lines.push(file);
+					if(file!="") lines.push(file);
 				}
 				if(ui.button("Reset")) lines.resize(0);
 				for(line in lines) ui.text(line);
