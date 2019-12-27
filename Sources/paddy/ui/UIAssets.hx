@@ -12,6 +12,8 @@ class UIAssets {
 	public static var assetHandle = Id.handle();
 	public static var assetTabH = Id.handle();
 
+	static var lines:Array<String> = [];
+
 	public static function render(ui:Zui) {
 		if(ui.window(assetHandle, App.fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-App.fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20)){
 			if(ui.tab(assetTabH, "Assets")){
@@ -60,7 +62,18 @@ class UIAssets {
 					ui.unindent();
 				}
 			}
-			if(ui.tab(assetTabH, "Terminal")){}
+			if(ui.tab(assetTabH, ">_")){
+				ui.row([8/10, 1/10, 1/10]);
+				var input = ui.textInput(Id.handle(), "Terminal");
+				if(ui.button("Enter")){
+					var save = Krom.getFilesLocation() + "/temp.txt";
+					Krom.sysCommand('$input > $save');
+					var file = haxe.io.Bytes.ofData(Krom.loadBlob(save)).toString();
+					lines.push(file);
+				}
+				if(ui.button("Reset")) lines.resize(0);
+				for(line in lines) ui.text(line);
+			}
 
 			for (value in paddy.Plugin.plugins) if (value.assetWinUI != null) value.assetWinUI(ui);
 
