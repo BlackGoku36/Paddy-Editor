@@ -1,10 +1,12 @@
 package paddy.ui;
 
-import paddy.files.Path;
+//Zui
 import zui.Id;
 import zui.Zui;
 
+// Editor
 import paddy.Assets;
+import paddy.files.Path;
 
 @:access(zui.Zui)
 class UIAssets {

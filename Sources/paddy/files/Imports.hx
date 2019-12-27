@@ -1,7 +1,10 @@
 package paddy.files;
 
-import paddy.data.Data;
+// Zui
 import zui.Nodes;
+
+// Editor
+import paddy.data.Data;
 
 class Imports {
 

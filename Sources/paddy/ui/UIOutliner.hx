@@ -1,9 +1,11 @@
 package paddy.ui;
 
-import zui.Nodes;
+// Zui
 import zui.Id;
 import zui.Zui;
+import zui.Nodes;
 
+// Editor
 import paddy.data.Data;
 
 @:access(zui.Zui)

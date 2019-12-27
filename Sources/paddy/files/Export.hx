@@ -1,8 +1,9 @@
 package paddy.files;
 
-import paddy.data.Data.ScriptData;
+// Editor
 import paddy.ui.UINodes;
 import paddy.data.Data.AssetData;
+import paddy.data.Data.ScriptData;
 
 class Export{
 

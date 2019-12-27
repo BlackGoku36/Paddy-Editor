@@ -1,18 +1,22 @@
 package paddy;
 
-import paddy.ui.UIOutliner;
-import paddy.ui.UINodes;
-import paddy.ui.UIMenu;
-import paddy.ui.UIEditor;
+// Kha
+import kha.Framebuffer;
+
+// Zui
 import zui.Ext;
 import zui.Id;
 import zui.Zui;
-import kha.Framebuffer;
 
-import paddy.ui.UIAssets;
-import paddy.ui.UIProperties;
+// Editor
 import paddy.data.Data;
+import paddy.ui.UIMenu;
+import paddy.ui.UINodes;
+import paddy.ui.UIAssets;
+import paddy.ui.UIEditor;
 import paddy.files.Export;
+import paddy.ui.UIOutliner;
+import paddy.ui.UIProperties;
 
 @:access(zui.Zui)
 class App {

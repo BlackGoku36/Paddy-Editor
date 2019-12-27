@@ -1,10 +1,13 @@
 package paddy.ui;
 
-import paddy.files.Export;
-import paddy.files.Imports;
+// Zui
 import zui.Zui;
 import zui.Id;
 import zui.Ext;
+
+// Editor
+import paddy.files.Export;
+import paddy.files.Imports;
 
 enum MenuType {
 	File;
@@ -42,7 +45,7 @@ class UIMenu {
 			if (ui.button("File")) {
 				menu = File;
 			}
-			ui.button("Editor");
+			// ui.button("Editor");
 		}
 		if(ui.inputStarted) menu == null;
 		ui.end(false);

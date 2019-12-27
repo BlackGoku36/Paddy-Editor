@@ -1,10 +1,11 @@
 package paddy.ui;
 
-import paddy.data.Data.ObjectData;
 import zui.Id;
 import zui.Zui;
 
+// Editor
 import paddy.data.Themes;
+import paddy.data.Data.ObjectData;
 
 @:access(zui.Zui)
 class UIProperties {

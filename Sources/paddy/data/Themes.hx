@@ -1,6 +1,9 @@
 package paddy.data;
 
+// Kha
 import kha.Color;
+
+// Zui
 import zui.Themes.TTheme;
 
 class Themes {

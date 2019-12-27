@@ -1,8 +1,9 @@
 package paddy;
 
+// Editor
+import paddy.files.Path;
 import paddy.data.Data.AssetType;
 import paddy.data.Data.AssetData;
-import paddy.files.Path;
 
 class Assets {
 

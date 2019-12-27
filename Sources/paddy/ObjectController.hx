@@ -1,10 +1,13 @@
 package paddy;
 
-import zui.Zui;
+// Kha
 import kha.input.KeyCode;
 import kha.math.FastVector2;
 import kha.graphics2.Graphics;
 using kha.graphics2.GraphicsExtension;
+
+// Zui
+import zui.Zui;
 
 class ObjectController{
 

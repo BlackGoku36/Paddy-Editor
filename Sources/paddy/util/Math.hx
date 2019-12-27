@@ -1,7 +1,11 @@
 package paddy.util;
 
-import zui.Zui;
+// Kha
 import kha.math.FastVector2;
+
+// Zui
+import zui.Zui;
+
 
 class Math {
 	public static inline function toDegrees(radians:Float):Float { return radians * 57.29578; }
