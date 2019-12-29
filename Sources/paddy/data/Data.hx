@@ -23,7 +23,7 @@ typedef SceneData = {
 typedef AssetData = {
 	var name:String;
 	var type:AssetType;
-	var value: Dynamic;
+	var ?value: Dynamic;
 	var path:String;
 }
 
