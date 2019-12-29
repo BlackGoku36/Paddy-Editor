@@ -29,9 +29,9 @@ typedef AssetData = {
 
 @:enum abstract AssetType(Int) from Int to Int {
 	var Image = 0;
-	var Font = 0;
-	var Sound = 1;
-	var Blob = 1;
+	var Font = 1;
+	var Sound = 2;
+	var Blob = 3;
 }
 
 typedef ObjectData = {
