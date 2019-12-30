@@ -61,8 +61,8 @@ class Export{
 		}
 	}
 
-	public static function exportJsonFile(name:String, data:String) {
-		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(data).getData());
+	public static function exportJsonFile(name:String, data:Dynamic) {
+		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(haxe.Json.stringify(data)).getData());
 	}
 
 	public static function exportFile(name:String, data:String) {
