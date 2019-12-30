@@ -23,6 +23,7 @@ class Paddy {
 	}
 
 	public static function changeTheme(ui:zui.Zui, theme:TTheme){
+		ui.t.NAME = theme.NAME;
 		ui.t.FONT_SIZE = theme.FONT_SIZE;
 		ui.t.ELEMENT_W = theme.ELEMENT_W;
 		ui.t.ELEMENT_H = theme.ELEMENT_H;

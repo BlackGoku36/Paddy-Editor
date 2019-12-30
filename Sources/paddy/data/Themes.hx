@@ -8,8 +8,8 @@ import zui.Themes.TTheme;
 
 class Themes {
 
-	public static var dark: TTheme = {
-		NAME: "dark",
+	public static var darkTheme: TTheme = {
+		NAME: "Dark Theme",
 		FONT_SIZE: 14,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,
@@ -41,8 +41,8 @@ class Themes {
 		CONTEXT_COL: 0xff222222,
 	};
 
-	public static var light: TTheme = {
-		NAME: "light",
+	public static var lightTheme: TTheme = {
+		NAME: "Light Theme",
 		FONT_SIZE: 14,
 		ELEMENT_W: 100,
 		ELEMENT_H: 24,

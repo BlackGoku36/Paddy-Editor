@@ -23,7 +23,7 @@ class UIProperties {
 	public static var propPanelRotH = Id.handle({selected:true});
 
 	public static var themesName = ["-!-Light-!-", "Dark"];
-	public static var tthemes = [Themes.light, Themes.dark];
+	public static var tthemes:Array<zui.Themes.TTheme> = [Themes.lightTheme, Themes.darkTheme];
 
 	public static var nodeSlots = [];
 
