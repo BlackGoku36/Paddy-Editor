@@ -37,8 +37,8 @@ class Imports {
 
 	public static function importWindow(path:String) {
 		kha.Assets.loadBlobFromPath(App.projectPath + path, function(blob){
-			var parsed:paddy.data.Data.WindowData = haxe.Json.parse(blob.toString());
-			App.window = parsed;
+			var window:paddy.data.Data.WindowData = haxe.Json.parse(blob.toString());
+			App.window = window;
 		});
 	}
 

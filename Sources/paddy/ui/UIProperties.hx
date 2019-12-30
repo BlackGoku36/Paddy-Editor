@@ -41,10 +41,16 @@ class UIProperties {
 					window.name = ui.textInput(Id.handle({text: window.name}), Right);
 					ui.row([1/4, 3/4]);
 					ui.text("Width");
-					window.width = Std.parseInt(ui.textInput(Id.handle({text: window.width+""}), Right));
+					var handlew = Id.handle({text: window.width+""});
+					handlew.text = window.width + "";
+					var strw = ui.textInput(handlew, Right);
+					window.width = Std.parseInt(strw);
 					ui.row([1/4, 3/4]);
 					ui.text("Height");
-					window.height = Std.parseInt(ui.textInput(Id.handle({text: window.height+""}), Right));
+					var handleh = Id.handle({text: window.height+""});
+					handleh.text = window.height + "";
+					var strh = ui.textInput(handleh, Right);
+					window.height = Std.parseInt(strh);
 					ui.row([1/4, 3/4]);
 					ui.text("Mode");
 					var windowHandle = Id.handle({position: 0});
@@ -99,7 +105,7 @@ class UIProperties {
 						if (handlerot.value >= 360) handlerot.value = 0;
 						obj.rotation = paddy.util.Math.toRadians(ui.slider(handlerot, "", 0.0, 360.0));
 
-						obj.isSprite = ui.check(Id.handle().nest(id, {selected: false}), "Is Sprite");
+						obj.animate = ui.check(Id.handle().nest(id, {selected: false}), "Animate");
 
 						if(ui.panel(Id.handle(), "Nodes")){
 							if(UINodes.nodesArray.length != 0){
