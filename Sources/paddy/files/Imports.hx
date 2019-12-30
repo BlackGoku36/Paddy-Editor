@@ -16,17 +16,17 @@ class Imports {
 			App.paddydata.name = parsed.name;
 			App.paddydata.scene = parsed.scene;
 			App.paddydata.window = parsed.window;
-			importWindow(parsed.window);
-			importScene(parsed.scene);
 			App.projectPath = path.substring(0, path.length - 10);
 			App.assetHandle.text = path.substring(0, path.length - 10);
+			importWindow(parsed.window);
+			importScene(parsed.scene);
 			paddy.Paddy.reloadUI();
 		});
 	}
 
 
 	public static function importScene(path:String) {
-		kha.Assets.loadBlobFromPath(path, function(blob){
+		kha.Assets.loadBlobFromPath(App.projectPath + path, function(blob){
 			var scene:paddy.data.Data.SceneData = haxe.Json.parse(blob.toString());
 			App.scene = scene;
 			importObjectSprites(scene.assets);
@@ -36,7 +36,7 @@ class Imports {
 	}
 
 	public static function importWindow(path:String) {
-		kha.Assets.loadBlobFromPath(path, function(blob){
+		kha.Assets.loadBlobFromPath(App.projectPath + path, function(blob){
 			var parsed:paddy.data.Data.WindowData = haxe.Json.parse(blob.toString());
 			App.window = parsed;
 		});
@@ -44,11 +44,10 @@ class Imports {
 
 	public static function importNodesFromScriptData(scripts: Array<ScriptData>) {
 		for(script in scripts){
-			kha.Assets.loadBlobFromPath(script.scriptRef, function(blob){
-				trace(blob.toString());
+			kha.Assets.loadBlobFromPath(App.projectPath+script.scriptRef, function(blob){
 				var nodeC:TNodeCanvas = haxe.Json.parse(blob.toString());
 				var nodeData:NodeData = {
-					name: Path.getNameFromPath(script.scriptRef).split(".")[0],
+					name: Path.getNameFromPath(App.projectPath+script.scriptRef).split(".")[0],
 					nodes: new Nodes(),
 					nodeCanvas: nodeC
 				};
@@ -59,7 +58,7 @@ class Imports {
 
 	public static function importObjectSprites(paths:Array<AssetData>) {
 		for(path in paths){
-			if(path.type == Image) Assets.loadAssetFromPath(path.path, Image);
+			if(path.type == Image) Assets.loadAssetFromPath(App.projectPath + path.path, Image);
 		}
 	}
 }

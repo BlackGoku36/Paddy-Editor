@@ -21,8 +21,8 @@ class Export{
 		adjustScriptsPath(path, App.scene.scripts);
 		for(obj in App.scene.objects) adjustScriptsPath(path, obj.scripts);
 		if(App.paddydata.name =="") App.paddydata.name = "PaddyProject";
-		if(App.paddydata.scene =="") App.paddydata.scene = path+"/"+"scene.json";
-		if(App.paddydata.window =="") App.paddydata.window = path+"/"+"window.json";
+		if(App.paddydata.scene =="") App.paddydata.scene = "scene.json";
+		if(App.paddydata.window =="") App.paddydata.window = "window.json";
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
@@ -70,7 +70,7 @@ class Export{
 	}
 
 	static function adjustAssetsPath(newPath:String){
-		for(asset in Assets.assets) asset.path = '$newPath/Assets/' + asset.name;
+		for(asset in Assets.assets) asset.path = 'Assets/' + asset.name;
 	}
 
 	static function adjustObjectSpritePath(newPath:String) {
@@ -90,7 +90,7 @@ class Export{
 				var ref = script.scriptRef;
 				var name = ref.split("/");
 				var newName = name[name.length-1];
-				script.scriptRef = '$newPath/Assets/$newName';
+				script.scriptRef = 'Assets/$newName';
 			}
 		}
 	}
