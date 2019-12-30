@@ -41,8 +41,8 @@ class ObjectController{
 			// Resize rects
 			var ex = selectedObj.x;
 			var ey = selectedObj.y;
-			var ew = selectedObj.width/2;
-			var eh = selectedObj.height/2;
+			var ew = selectedObj.width;
+			var eh = selectedObj.height;
 			// object center
 			var cx = coffX + ex + ew / 2;
 			var cy = coffY + ey + eh / 2;
@@ -134,8 +134,8 @@ class ObjectController{
 			var obj = selectedObj;
 			var ex = selectedObj.x;
 			var ey = selectedObj.y;
-			var ew = selectedObj.width/2;
-			var eh = selectedObj.height/2;
+			var ew = selectedObj.width;
+			var eh = selectedObj.height;
 			var rotatedInput:FastVector2 = paddy.util.Math.rotatePoint(ui.inputX, ui.inputY, coffX + ex + ew / 2, coffY + ey + eh / 2, -obj.rotation);
 
 			if (ui.inputStarted && ui.inputDown) {

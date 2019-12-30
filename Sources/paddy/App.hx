@@ -149,15 +149,15 @@ class App {
 
 		if(UIEditor.editorMode == 0){
 			// Draw window in editor
-			g.drawRect(coffX, coffY, window.width/2, window.height/2);
+			g.drawRect(coffX, coffY, window.width, window.height);
 
 			for (object in scene.objects){
 				var sprite = Assets.getAsset(object.spriteRef, Image);
 				// var sprite = Assets.getImage(object.spriteRef);
 				if(sprite != null && object.visible) {
-					g.pushRotation(object.rotation, coffX + object.x+(object.width/4), coffY + object.y+(object.height/4));
-					if(object.isSprite) g.drawScaledSubImage(sprite, Std.int(0 * object.width/2) % sprite.width, Math.floor(0 * object.width/2 / sprite.width) * object.height/2, object.width/2, object.height/2, coffX + object.x, coffY + object.y, object.width/2, object.height/2);
-					else g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width/2, object.height/2);
+					g.pushRotation(object.rotation, coffX + object.x, coffY + object.y);
+					if(object.animate) g.drawScaledSubImage(sprite, 0  % sprite.width, 0, object.width, object.height, coffX + object.x, coffY + object.y, object.width, object.height);
+					else g.drawScaledImage(sprite, coffX + object.x, coffY + object.y, object.width, object.height);
 					g.popTransformation();
 				}
 			}
