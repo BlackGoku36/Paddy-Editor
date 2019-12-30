@@ -109,7 +109,7 @@ class UIProperties {
 									ui.combo(nodesHandle, UINodes.getNodesArrayNames(), Right);
 									obj.scripts[slot] = {
 										name: UINodes.getNodesArrayNames()[nodesHandle.position],
-										scriptRef: "LN"+UINodes.getNodesArrayNames()[nodesHandle.position]+".json"
+										scriptRef: UINodes.getNodesArrayNames()[nodesHandle.position]+".json"
 									}
 								}
 							}else{

@@ -57,7 +57,7 @@ class Export{
 		if(path!="") newPath = path+"/";
 		for(nodes in UINodes.nodesArray){
 			var name = nodes.name;
-			Krom.fileSaveBytes(newPath+'LN$name.json', haxe.io.Bytes.ofString(haxe.Json.stringify(nodes.nodeCanvas)).getData());
+			Krom.fileSaveBytes(newPath+'$name.json', haxe.io.Bytes.ofString(haxe.Json.stringify(nodes.nodeCanvas)).getData());
 		}
 	}
 
