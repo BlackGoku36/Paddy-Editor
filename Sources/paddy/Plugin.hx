@@ -56,6 +56,7 @@ class PaddyBridge {
 	public static var UIProperties = paddy.ui.UIProperties;
 	public static var UIOutliner = paddy.ui.UIOutliner;
 	public static var UINodes = paddy.ui.UINodes;
+	public static var UIFileBrowser = paddy.ui.UIFileBrowser;
 	public static var Path = paddy.files.Path;
 }
 
