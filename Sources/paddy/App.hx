@@ -28,6 +28,14 @@ class App {
 
 	public static var projectPath:String = "";
 
+	#if kha_windows
+	public static var platform = "windows";
+	#elseif kha_linux
+	public static var platform = "linux";
+	#else
+	public static var platform = "osx";
+	#end
+
 	var ww = kha.System.windowWidth();
 	var wh = kha.System.windowHeight();
 
