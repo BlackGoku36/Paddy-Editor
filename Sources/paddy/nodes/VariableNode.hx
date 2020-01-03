@@ -11,14 +11,14 @@ class VariableNode {
 		type: "StringNode",
 		x: 200,
 		y: 200,
-		color: -13487416,
+		color: -16067936,
 		inputs: [
 			{
 				id: 0,
 				node_id: 0,
 				name: "String",
 				type: "STRING",
-				color: Color.fromBytes(180, 180, 180),
+				color: -4934476,
 				default_value: ""
 			}
 		],
@@ -28,7 +28,7 @@ class VariableNode {
 				node_id: 0,
 				name: "String",
 				type: "STRING",
-				color: Color.fromBytes(180, 180, 180),
+				color: -4934476,
 				default_value: ""
 			}
 		],
@@ -41,14 +41,14 @@ class VariableNode {
 		type: "FloatNode",
 		x: 200,
 		y: 200,
-		color: -13487416,
+		color: -16067936,
 		inputs: [
 			{
 				id: 0,
 				node_id: 0,
 				name: "Float",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: 0.0,
 				max: 100.0
 			}
@@ -59,7 +59,7 @@ class VariableNode {
 				node_id: 0,
 				name: "Float",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: 0.0
 			}
 		],
@@ -72,14 +72,14 @@ class VariableNode {
 		type: "IntegerNode",
 		x: 200,
 		y: 200,
-		color: -13487416,
+		color: -16067936,
 		inputs: [
 			{
 				id: 0,
 				node_id: 0,
 				name: "Int",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: 0,
 				max: 100,
 				precision: 1
@@ -91,7 +91,7 @@ class VariableNode {
 				node_id: 0,
 				name: "Int",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: 0
 			}
 		],
@@ -104,14 +104,14 @@ class VariableNode {
 		type: "BoolNode",
 		x: 200,
 		y: 200,
-		color: -13487416,
+		color: -16067936,
 		inputs: [
 			{
 				id: 0,
 				node_id: 0,
 				name: "Bool",
 				type: "BOOLEAN",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10822566,
 				default_value: ""
 			}
 		],
@@ -121,7 +121,7 @@ class VariableNode {
 				node_id: 0,
 				name: "Bool",
 				type: "BOOLEAN",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10822566,
 				default_value: ""
 			}
 		],

@@ -18,7 +18,7 @@ class StdNode {
 				node_id: 0,
 				name: "String",
 				type: "STRING",
-				color: Color.fromBytes(180, 180, 180),
+				color: -4934476,
 				default_value: ""
 			}
 		],
@@ -28,7 +28,7 @@ class StdNode {
 				node_id: 0,
 				name: "Int",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: ""
 			}
 		],
@@ -48,7 +48,7 @@ class StdNode {
 				node_id: 0,
 				name: "String",
 				type: "STRING",
-				color: Color.fromBytes(180, 180, 180),
+				color: -4934476,
 				default_value: ""
 			}
 		],
@@ -58,7 +58,7 @@ class StdNode {
 				node_id: 0,
 				name: "Float",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: ""
 			}
 		],
@@ -78,7 +78,7 @@ class StdNode {
 				node_id: 0,
 				name: "Float",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: ""
 			}
 		],
@@ -88,7 +88,7 @@ class StdNode {
 				node_id: 0,
 				name: "Int",
 				type: "VALUE",
-				color: Color.fromBytes(180, 180, 180),
+				color: -10183681,
 				default_value: ""
 			}
 		],
@@ -116,7 +116,7 @@ class StdNode {
 				node_id: 0,
 				name: "Value",
 				type: "STRING",
-				color: 0xff44aa44,
+				color: -4934476,
 				default_value: ""
 			}
 		],

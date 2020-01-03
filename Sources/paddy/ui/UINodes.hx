@@ -35,11 +35,10 @@ class UINodes {
 
 			if(ui.panel(Id.handle(), "Logic")){
 				if(ui.button("Gate")) pushNodeToSelectedGroup(LogicNode.gate);
-				ui.button("Branch");
-				ui.button("Is False");
-				ui.button("Is True");
-				ui.button("Is Null");
-				ui.button("While");
+				if(ui.button("Branch")) pushNodeToSelectedGroup(LogicNode.branch);
+				if(ui.button("Is False")) pushNodeToSelectedGroup(LogicNode.isFalse);
+				if(ui.button("Is True")) pushNodeToSelectedGroup(LogicNode.isTrue);
+				if(ui.button("While")) pushNodeToSelectedGroup(LogicNode.whileN);
 			}
 			if(ui.panel(Id.handle(), "Variable")){
 				if(ui.button("String")) pushNodeToSelectedGroup(VariableNode.string);
@@ -76,3 +75,9 @@ class UINodes {
 	}
 
 }
+// Colours
+// Bool -> Green -> -10822566
+// Float/Int -> Blue -> -10183681
+// String -> Grey -> -4934476
+// Action type node -> Red -> -4962746
+// Variable type node -> Cyan -> -16067936
