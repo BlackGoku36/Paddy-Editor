@@ -70,6 +70,7 @@ class UIBridge {
 class KhaBridge {
 	public static var Assets = kha.Assets;
 	public static var TKrom = Krom;
+	public static var FastVector2 = kha.math.FastVector2;
 }
 
 @:expose("std")
