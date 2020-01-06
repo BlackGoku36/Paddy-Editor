@@ -177,11 +177,9 @@ class App {
 		g.color = 0xff323232;
 		g.fillRect(0, 30, UIOutliner.outlinerW, UIOutliner.outlinerH);
 		g.fillRect(kha.System.windowWidth()-UIProperties.propsW, 30, UIProperties.propsW, kha.System.windowHeight());
-		g.fillRect(fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
-		g.fillRect(0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20);
+		g.fillRect(fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH);
+		g.fillRect(0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH);
 		g.fillRect(0, 0, kha.System.windowWidth(), 30);
-		g.color = 0xff252525;
-		g.fillRect(0, kha.System.windowHeight()-20, kha.System.windowWidth(), 20);
 		g.color = col;
 		g.end();
 
@@ -207,7 +205,7 @@ class App {
 
 		UIProperties.render(ui);
 
-		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20)){
+		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH)){
 			if(ui.tab(Id.handle(), "File Browser")){
 				ui.row([3/5, 2/5]);
 				if(ui.button("Open Browser")){

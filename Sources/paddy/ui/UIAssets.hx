@@ -17,7 +17,7 @@ class UIAssets {
 	static var lines:Array<String> = [];
 
 	public static function render(ui:Zui) {
-		if(ui.window(assetHandle, App.fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-App.fileW, kha.System.windowHeight()-UIOutliner.outlinerH-20)){
+		if(ui.window(assetHandle, App.fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-App.fileW, kha.System.windowHeight()-UIOutliner.outlinerH)){
 			if(ui.tab(assetTabH, "Assets")){
 				if(ui.panel(Id.handle(), "Images")){
 					ui.indent();

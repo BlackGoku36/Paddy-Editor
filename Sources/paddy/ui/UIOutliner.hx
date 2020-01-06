@@ -12,7 +12,7 @@ import paddy.data.Data;
 class UIOutliner {
 
     public static var outlinerW = 200; 
-    public static var outlinerH = 600;
+    public static var outlinerH = 675;
     public static var outlinerHandle = Id.handle();
     public static var outlinerTab = Id.handle({position: 0});
     
