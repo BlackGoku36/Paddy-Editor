@@ -99,14 +99,6 @@ class LogicNode {
 			{
 				id: 0,
 				node_id: 0,
-				name: "Out",
-				type: "ACTION",
-				color: 0xffaa4444,
-				default_value: 0.0
-			},
-			{
-				id: 0,
-				node_id: 0,
 				name: "True",
 				type: "BOOL",
 				color: -10822566,
