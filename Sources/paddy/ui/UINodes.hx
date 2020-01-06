@@ -23,6 +23,7 @@ class UINodes {
 	public static var selectedNode:NodeData = null;
 
 	public static var nodeHandle = Id.handle();
+	public static var nodeTabHandle = Id.handle();
     
     public static function renderNodes(ui:Zui) {
 		if(selectedNode != null) selectedNode.nodes.nodeCanvas(ui, selectedNode.nodeCanvas);
@@ -31,35 +32,38 @@ class UINodes {
 	public static function renderNodesMenu(ui:Zui) {
 		if(selectedNode == null) return;
 
-		if(ui.window(nodeHandle, 200, 60, 150, 540)){
+		if(ui.window(nodeHandle, 200, 60, 150, 540, true)){
 
-			if(ui.panel(Id.handle(), "Logic")){
-				if(ui.button("Gate")) pushNodeToSelectedGroup(LogicNode.gate);
-				if(ui.button("Branch")) pushNodeToSelectedGroup(LogicNode.branch);
-				if(ui.button("Is False")) pushNodeToSelectedGroup(LogicNode.isFalse);
-				if(ui.button("Is True")) pushNodeToSelectedGroup(LogicNode.isTrue);
-				if(ui.button("While")) pushNodeToSelectedGroup(LogicNode.whileN);
+			if(ui.tab(nodeTabHandle, "Std")){
+				if(ui.panel(Id.handle(), "Logic")){
+					if(ui.button("Gate")) pushNodeToSelectedGroup(LogicNode.gate);
+					if(ui.button("Branch")) pushNodeToSelectedGroup(LogicNode.branch);
+					if(ui.button("Is False")) pushNodeToSelectedGroup(LogicNode.isFalse);
+					if(ui.button("Is True")) pushNodeToSelectedGroup(LogicNode.isTrue);
+					if(ui.button("While")) pushNodeToSelectedGroup(LogicNode.whileN);
+				}
+				if(ui.panel(Id.handle(), "Variable")){
+					if(ui.button("String")) pushNodeToSelectedGroup(VariableNode.string);
+					if(ui.button("Float")) pushNodeToSelectedGroup(VariableNode.float);
+					if(ui.button("Int")) pushNodeToSelectedGroup(VariableNode.int);
+					// ui.button("Array");
+					if(ui.button("Boolean")) pushNodeToSelectedGroup(VariableNode.boolean);
+				}
+				if(ui.panel(Id.handle(), "Std")){
+					if(ui.button("Print")) pushNodeToSelectedGroup(StdNode.print);
+					if(ui.button("Parse Int")) pushNodeToSelectedGroup(StdNode.parseInt);
+					if(ui.button("Parse Float")) pushNodeToSelectedGroup(StdNode.parseFloat);
+					if(ui.button("Float To Int")) pushNodeToSelectedGroup(StdNode.floatToInt);
+				}
+				if(ui.panel(Id.handle(), "Math")){
+					if(ui.button("Maths")) pushNodeToSelectedGroup(MathNode.maths);
+					if(ui.button("Rad to Deg")) pushNodeToSelectedGroup(MathNode.radtodeg);
+					if(ui.button("Deg to Rad")) pushNodeToSelectedGroup(MathNode.degtorad);
+					if(ui.button("Random (Int)")) pushNodeToSelectedGroup(MathNode.randi);
+					if(ui.button("Random (Float)")) pushNodeToSelectedGroup(MathNode.randf);
+				}
 			}
-			if(ui.panel(Id.handle(), "Variable")){
-				if(ui.button("String")) pushNodeToSelectedGroup(VariableNode.string);
-				if(ui.button("Float")) pushNodeToSelectedGroup(VariableNode.float);
-				if(ui.button("Int")) pushNodeToSelectedGroup(VariableNode.int);
-				// ui.button("Array");
-				if(ui.button("Boolean")) pushNodeToSelectedGroup(VariableNode.boolean);
-			}
-			if(ui.panel(Id.handle(), "Std")){
-				if(ui.button("Print")) pushNodeToSelectedGroup(StdNode.print);
-				if(ui.button("Parse Int")) pushNodeToSelectedGroup(StdNode.parseInt);
-				if(ui.button("Parse Float")) pushNodeToSelectedGroup(StdNode.parseFloat);
-				if(ui.button("Float To Int")) pushNodeToSelectedGroup(StdNode.floatToInt);
-			}
-			if(ui.panel(Id.handle(), "Math")){
-				if(ui.button("Maths")) pushNodeToSelectedGroup(MathNode.maths);
-				if(ui.button("Rad to Deg")) pushNodeToSelectedGroup(MathNode.radtodeg);
-				if(ui.button("Deg to Rad")) pushNodeToSelectedGroup(MathNode.degtorad);
-				if(ui.button("Random (Int)")) pushNodeToSelectedGroup(MathNode.randi);
-				if(ui.button("Random (Float)")) pushNodeToSelectedGroup(MathNode.randf);
-			}
+
 			for (value in paddy.Plugin.plugins) if (value.nodeMenuUI != null) value.nodeMenuUI(ui);
 		}
 	}
