@@ -64,7 +64,8 @@ class App {
 		name: "",
 		window: "",
 		scene: "",
-		plugins: []
+		plugins: [],
+		uiScale: 1.0
 	}
 
 	public static var window: WindowData = {

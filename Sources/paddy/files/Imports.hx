@@ -18,6 +18,7 @@ class Imports {
 			importWindow(parsed.window);
 			importScene(parsed.scene);
 			if(parsed.plugins != null) importPlugins(parsed.plugins);
+			paddy.ui.UIProperties.reScaleUI(parsed.uiScale);
 			paddy.Paddy.reloadUI();
 		});
 	}

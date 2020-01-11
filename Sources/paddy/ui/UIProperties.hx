@@ -10,6 +10,9 @@ import paddy.data.Data.ObjectData;
 @:access(zui.Zui)
 class UIProperties {
 
+	static var propUI:Zui=null;
+	static var uimodal:Zui= null;
+
 	public static var propsW = 200;
 	public static var propsH = 600;
 
@@ -28,6 +31,8 @@ class UIProperties {
 	public static var nodeSlots = [];
 
 	public static function render(ui:Zui, uiModal:Zui) {
+		propUI = ui;
+		uimodal = uiModal;
 		var window = App.window;
 
 		var selectedObj = App.selectedObj;
@@ -138,13 +143,9 @@ class UIProperties {
 							paddy.Paddy.changeTheme(ui, tthemes[mode.position]);
 							paddy.Paddy.reloadUI();
 						}
-						var scaleHandle = Id.handle();
-						var scale = ui.slider(scaleHandle, "Scale", 0.9, 2.0, true); 
-						if(scaleHandle.changed){
-							ui.setScale(scale);
-							uiModal.setScale(scale);
-							paddy.Paddy.reloadUI();
-						}
+						var scaleHandle = Id.handle({value: App.paddydata.uiScale});
+						App.paddydata.uiScale = ui.slider(scaleHandle, "Scale", 0.9, 2.0, true); 
+						if(scaleHandle.changed) reScaleUI(App.paddydata.uiScale);
 					ui.unindent();
 				}
 				if(ui.panel(propPanelGridH, "Grid")){
@@ -184,5 +185,11 @@ class UIProperties {
 			for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
 		}
 
+	}
+
+	public static function reScaleUI(factor:Float) {
+		propUI.setScale(factor);
+		uimodal.setScale(factor);
+		Paddy.reloadUI();
 	}
 }
