@@ -27,7 +27,7 @@ class UIProperties {
 
 	public static var nodeSlots = [];
 
-	public static function render(ui:Zui) {
+	public static function render(ui:Zui, uiModal:Zui) {
 		var window = App.window;
 
 		var selectedObj = App.selectedObj;
@@ -136,6 +136,13 @@ class UIProperties {
 						ui.combo(mode, themesName, Right);
 						if(mode.changed){
 							paddy.Paddy.changeTheme(ui, tthemes[mode.position]);
+							paddy.Paddy.reloadUI();
+						}
+						var scaleHandle = Id.handle();
+						var scale = ui.slider(scaleHandle, "Scale", 0.9, 2.0, true); 
+						if(scaleHandle.changed){
+							ui.setScale(scale);
+							uiModal.setScale(scale);
 							paddy.Paddy.reloadUI();
 						}
 					ui.unindent();

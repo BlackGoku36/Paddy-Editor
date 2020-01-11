@@ -204,7 +204,7 @@ class App {
 
 		UIEditor.render(ui);
 
-		UIProperties.render(ui);
+		UIProperties.render(ui, uimodal);
 
 		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH)){
 			if(ui.tab(Id.handle(), "File Browser")){
