@@ -21,6 +21,7 @@ import paddy.ui.UIProperties;
 @:access(zui.Zui)
 class App {
 
+	public static var version = "2020.1.0";
 	var ui:Zui;
 	var uimodal:Zui;
 	var objects:Array<String> = [];
