@@ -17,6 +17,7 @@ class Plugin {
 	public var assetWinUI: zui.Zui->Void = null;
 	public var outlinerWinUI: zui.Zui->Void = null;
 	public var update:Void->Void = null;
+	public var onInit:Void->Void = null;
 	public var onRemove:Void->Void = null;
 
 	public var name:String;
@@ -33,12 +34,14 @@ class Plugin {
 			untyped __js__("(1, eval)({0})", blob.toString());
 			#end
 		});
+		var plugin = plugins.get(string);
+		if (plugin != null && plugin.onInit != null) plugin.onInit();
 		paddy.Paddy.reloadUI();
 	}
 
 	public static function disable(string:String) {
-		var p = plugins.get(string);
-		if (p != null && p.onRemove != null) p.onRemove();
+		var plugin = plugins.get(string);
+		if (plugin != null && plugin.onRemove != null) plugin.onRemove();
 		plugins.remove(string);
 		paddy.Paddy.reloadUI();
 	}
