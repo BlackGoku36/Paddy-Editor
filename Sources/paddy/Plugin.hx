@@ -42,6 +42,12 @@ class Plugin {
 		plugins.remove(string);
 		paddy.Paddy.reloadUI();
 	}
+
+	public static function getNames():Array<String> {
+		var names:Array<String> = [];
+		for (name => plugin in plugins) names.push(name);
+		return names;
+	}
 }
 
 @:expose("paddy")

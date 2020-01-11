@@ -63,7 +63,7 @@ class UIMenu {
 
 			if (ui.button("New")) {
 				if(App.projectPath!="") App.projectPath = "";
-				App.paddydata = { name: "", window: "", scene: "" }
+				App.paddydata = { name: "", window: "", scene: "", plugins: [] }
 				App.scene = { name: "scene", objects: [], assets: []}
 				App.window = { name: "Window", width: 1440, height: 900, windowMode: 0, clearColor: [0, 0, 0, 255] }
 			}

@@ -163,8 +163,7 @@ class UIProperties {
 			if(ui.tab(propTabHandle, "Plugins")){
 				ui.row([3/5, 2/5]);
 				var file = ui.textInput(Id.handle(), "Name");
-				if(ui.button("Import") && file != ""){
-					if(Plugin.plugins.exists(file)) return;
+				if(ui.button("Import") && file != "" && !Plugin.plugins.exists(file)){
 					Plugin.enable(file);
 				}
 				for(name => value in Plugin.plugins){

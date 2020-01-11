@@ -23,6 +23,7 @@ class Export{
 		if(App.paddydata.name =="") App.paddydata.name = "PaddyProject";
 		if(App.paddydata.scene =="") App.paddydata.scene = "scene.json";
 		if(App.paddydata.window =="") App.paddydata.window = "window.json";
+		App.paddydata.plugins = Plugin.getNames();
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());

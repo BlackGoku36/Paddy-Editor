@@ -13,13 +13,11 @@ class Imports {
 			if(!StringTools.endsWith(path, "paddy.json")) return;
 			var parsed: paddy.Paddy.PaddyData = haxe.Json.parse(blob.toString());
 			App.paddydata = parsed;
-			App.paddydata.name = parsed.name;
-			App.paddydata.scene = parsed.scene;
-			App.paddydata.window = parsed.window;
 			App.projectPath = path.substring(0, path.length - 10);
 			App.assetHandle.text = path.substring(0, path.length - 10);
 			importWindow(parsed.window);
 			importScene(parsed.scene);
+			if(parsed.plugins != null) importPlugins(parsed.plugins);
 			paddy.Paddy.reloadUI();
 		});
 	}
@@ -60,5 +58,9 @@ class Imports {
 		for(path in paths){
 			if(path.type == Image) Assets.loadAssetFromPath(App.projectPath + path.path, Image);
 		}
+	}
+
+	static function importPlugins(names:Array<String>) {
+		for(name in names) Plugin.enable(name);
 	}
 }
