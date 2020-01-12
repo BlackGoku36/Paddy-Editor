@@ -14,6 +14,7 @@ class Main {
 			var project = new paddy.App();
 			Scheduler.addTimeTask(function () { project.update(); }, 0, 1 / 60);
 			System.notifyOnFrames(function (frames) { project.render(frames); });
+			paddy.files.Imports.importConfig();
 		});
 	}
 }

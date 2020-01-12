@@ -4,6 +4,12 @@ package paddy.data;
 import zui.Nodes;
 import zui.Nodes.TNodeCanvas;
 
+typedef ConfigData = {
+	var plugins: Array<String>;
+	var uiScale: Float;
+	var ?theme: zui.Themes.TTheme;
+}
+
 typedef WindowData = {
 	var name: String;
 	var width: Int;

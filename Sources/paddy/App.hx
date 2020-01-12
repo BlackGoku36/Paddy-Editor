@@ -61,12 +61,15 @@ class App {
 	public static var assetsWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
 
+	public static var configData: ConfigData = {
+		plugins: [],
+		uiScale: 1.0
+	}
+
 	public static var paddydata: paddy.Paddy.PaddyData = {
 		name: "",
 		window: "",
 		scene: "",
-		plugins: [],
-		uiScale: 1.0
 	}
 
 	public static var window: WindowData = {

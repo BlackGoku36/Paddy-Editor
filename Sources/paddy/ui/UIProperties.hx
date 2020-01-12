@@ -143,9 +143,9 @@ class UIProperties {
 							paddy.Paddy.changeTheme(ui, tthemes[mode.position]);
 							paddy.Paddy.reloadUI();
 						}
-						var scaleHandle = Id.handle({value: App.paddydata.uiScale});
-						App.paddydata.uiScale = ui.slider(scaleHandle, "Scale", 0.9, 2.0, true); 
-						if(scaleHandle.changed) reScaleUI(App.paddydata.uiScale);
+						var scaleHandle = Id.handle({value: App.configData.uiScale});
+						App.configData.uiScale = ui.slider(scaleHandle, "Scale", 0.9, 2.0, true); 
+						if(scaleHandle.changed) reScaleUI(App.configData.uiScale);
 					ui.unindent();
 				}
 				if(ui.panel(propPanelGridH, "Grid")){

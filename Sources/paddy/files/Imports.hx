@@ -1,6 +1,7 @@
 package paddy.files;
 
 // Zui
+import paddy.ui.UIProperties;
 import zui.Nodes;
 
 // Editor
@@ -17,10 +18,15 @@ class Imports {
 			App.assetHandle.text = path.substring(0, path.length - 10);
 			importWindow(parsed.window);
 			importScene(parsed.scene);
-			if(parsed.plugins != null) importPlugins(parsed.plugins);
-			paddy.ui.UIProperties.reScaleUI(parsed.uiScale);
 			paddy.Paddy.reloadUI();
 		});
+	}
+	
+	public static function importConfig() {
+		var parsed: paddy.data.Data.ConfigData = haxe.Json.parse(kha.Assets.blobs._config_json.toString());
+		App.configData = parsed;
+		if(App.configData.plugins != null) importPlugins(App.configData.plugins);
+		paddy.ui.UIProperties.reScaleUI(App.configData.uiScale);
 	}
 
 
