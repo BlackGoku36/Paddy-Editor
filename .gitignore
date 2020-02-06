@@ -5,4 +5,5 @@ window.json
 nodes.json
 rice_project
 .vscode
-Assets/rice.js
+Assets/plugins/rice.js
+Assets/plugins/rice_config.json
