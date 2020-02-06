@@ -1,5 +1,6 @@
 package paddy.ui;
 
+import zui.Ext;
 import zui.Id;
 import zui.Zui;
 
@@ -10,9 +11,6 @@ import paddy.data.Data.ObjectData;
 @:access(zui.Zui)
 class UIProperties {
 
-	static var propUI:Zui=null;
-	static var uimodal:Zui= null;
-
 	public static var propsW = 200;
 	public static var propsH = 600;
 
@@ -22,17 +20,10 @@ class UIProperties {
 
 	public static var propPanelWinH = Id.handle({selected:true});
 	public static var propPanelObjH = Id.handle({selected:true});
-	public static var propPanelGridH = Id.handle({selected:true});
-	public static var propPanelRotH = Id.handle({selected:true});
-
-	public static var themesName = ["-!-Light-!-", "Dark"];
-	public static var tthemes:Array<zui.Themes.TTheme> = [Themes.lightTheme, Themes.darkTheme];
 
 	public static var nodeSlots = [];
 
-	public static function render(ui:Zui, uiModal:Zui) {
-		propUI = ui;
-		uimodal = uiModal;
+	public static function render(ui:Zui) {
 		var window = App.window;
 
 		var selectedObj = App.selectedObj;
@@ -134,62 +125,7 @@ class UIProperties {
 				}
 				for (value in paddy.Plugin.plugins) if (value.propTabUI != null) value.propTabUI(ui);
 			}
-			if(ui.tab(propTabHandle, "Editor")){
-				if(ui.panel(Id.handle({selected:true}), "UI")){
-					ui.indent();
-						var mode = Id.handle({position: 1});
-						ui.combo(mode, themesName, Right);
-						if(mode.changed){
-							paddy.Paddy.changeTheme(ui, tthemes[mode.position]);
-							paddy.Paddy.reloadUI();
-						}
-						var scaleHandle = Id.handle({value: App.configData.uiScale});
-						App.configData.uiScale = ui.slider(scaleHandle, "Scale", 0.9, 2.0, true); 
-						if(scaleHandle.changed) reScaleUI(App.configData.uiScale);
-					ui.unindent();
-				}
-				if(ui.panel(propPanelGridH, "Grid")){
-					ui.indent();
-						App.gridSize = Std.parseInt(ui.textInput(Id.handle({text:App.gridSize+""}), "Size", Right));
-						App.gridSnapPos = ui.check(Id.handle({selected:true}), "Snap Pos");
-						App.gridSnapBounds = ui.check(Id.handle({selected:false}), "Snap Bounds");
-						App.gridUseRelative = ui.check(Id.handle({selected:true}), "Use Relative");
-						for (value in paddy.Plugin.plugins) if (value.editorGridPanelUI != null) value.editorGridPanelUI(ui);
-					ui.unindent();
-				}
-				if(ui.panel(propPanelRotH, "Rotation")){
-					ui.indent();
-						App.useRotationSteps = ui.check(Id.handle({selected:true}), "Use Steps");
-						if(App.useRotationSteps) App.rotationSteps = Std.parseInt(ui.textInput(Id.handle({text:App.rotationSteps+""}), "Steps", Right));
-						for (value in paddy.Plugin.plugins) if (value.editorRotPanelUI != null) value.editorRotPanelUI(ui);
-					ui.unindent();
-				}
-
-				for (value in paddy.Plugin.plugins) if (value.editorTabUI != null) value.editorTabUI(ui);
-
-			}
-			if(ui.tab(propTabHandle, "Plugins")){
-				ui.row([3/5, 2/5]);
-				var file = ui.textInput(Id.handle(), "Name");
-				if(ui.button("Import") && file != "" && !Plugin.plugins.exists(file)){
-					Plugin.enable(file);
-				}
-				for(name => value in Plugin.plugins){
-					ui.row([3/5, 2/5]);
-					ui.text(name);
-					if(ui.button("X")){
-						Plugin.disable(name);
-					}
-				}
-			}
 			for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
 		}
-
-	}
-
-	public static function reScaleUI(factor:Float) {
-		propUI.setScale(factor);
-		uimodal.setScale(factor);
-		Paddy.reloadUI();
 	}
 }

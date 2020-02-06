@@ -9,7 +9,7 @@ class UIEditor {
 	public static var editorX = 0;
 	public static var editorY = 0;
 	public static var editorW = 300;
-	public static var editorH = 600;
+	public static var editorH = 55;
 
 	public static var editorLocked:Bool = false;
 

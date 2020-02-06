@@ -21,12 +21,12 @@ class Imports {
 			paddy.Paddy.reloadUI();
 		});
 	}
-	
+
 	public static function importConfig() {
 		var parsed: paddy.data.Data.ConfigData = haxe.Json.parse(kha.Assets.blobs._config_json.toString());
 		App.configData = parsed;
 		if(App.configData.plugins != null) importPlugins(App.configData.plugins);
-		paddy.ui.UIProperties.reScaleUI(App.configData.uiScale);
+		// paddy.ui.UIProperties.reScaleUI(App.configData.uiScale);
 	}
 
 
@@ -36,8 +36,12 @@ class Imports {
 			App.scene = scene;
 			importObjectSprites(scene.assets);
 			if(scene.scripts.length != 0) importNodesFromScriptData(scene.scripts);
-			for(obj in scene.objects) if(obj.scripts.length != 0) importNodesFromScriptData(obj.scripts);			
+			for(obj in scene.objects) if(obj.scripts.length != 0) importNodesFromScriptData(obj.scripts);
 		});
+		// kha.Assets.loadBlobFromPath(App.projectPath + "scene.pdy", function(blob){
+		// 	var scene:paddy.data.Data.SceneData = org.msgpack.MsgPack.decode(blob.toBytes());
+		// 	trace(scene);
+		// });
 	}
 
 	public static function importWindow(path:String) {

@@ -1,3 +1,6 @@
 [submodule "Libraries/zui"]
 	path = Libraries/zui
 	url = https://github.com/armory3d/zui
+[submodule "Libraries/msgpack-haxe"]
+	path = Libraries/msgpack-haxe
+	url = https://github.com/aaulia/msgpack-haxe

@@ -21,7 +21,7 @@ class Themes {
 		SCROLL_W: 6,
 		TEXT_OFFSET: 8,
 		TAB_W: 12,
-		FILL_WINDOW_BG: false,
+		FILL_WINDOW_BG: true,
 		FILL_BUTTON_BG: true,
 		FILL_ACCENT_BG: false,
 
@@ -54,7 +54,7 @@ class Themes {
 		SCROLL_W: 6,
 		TEXT_OFFSET: 8,
 		TAB_W: 12,
-		FILL_WINDOW_BG: false,
+		FILL_WINDOW_BG: true,
 		FILL_BUTTON_BG: true,
 		FILL_ACCENT_BG: false,
 

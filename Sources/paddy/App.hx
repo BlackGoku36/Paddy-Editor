@@ -1,6 +1,7 @@
 package paddy;
 
 // Kha
+import zui.Popup;
 import kha.Framebuffer;
 
 // Zui
@@ -17,13 +18,14 @@ import paddy.ui.UIEditor;
 import paddy.files.Export;
 import paddy.ui.UIOutliner;
 import paddy.ui.UIProperties;
+import paddy.ui.UIPreference;
 
 @:access(zui.Zui)
 class App {
 
 	public static var version = "2020.1.0";
-	var ui:Zui;
-	var uimodal:Zui;
+	public static var ui:Zui;
+	public static var uimodal:Zui;
 	var objects:Array<String> = [];
 	var at = 0;
 
@@ -104,6 +106,8 @@ class App {
 		kha.Assets.loadEverything(function (){
 			ui = new Zui({font: kha.Assets.fonts.mainfont});
 			uimodal = new Zui({font: kha.Assets.fonts.mainfont});
+			paddy.Paddy.changeTheme(ui, paddy.data.Themes.darkTheme);
+			paddy.Paddy.changeTheme(uimodal, paddy.data.Themes.darkTheme);
 			paddy.ObjectController.ui = ui;
 		});
 		UIEditor.editorX = kha.System.windowWidth() - UIEditor.editorW - UIProperties.propsW;
@@ -144,7 +148,8 @@ class App {
 	}
 
 	public function render(frame:Array<Framebuffer>) {
-		if(grid==null)drawGrid();
+		if(ui == null) return;
+		if(grid == null) drawGrid();
 
 		var g = frame[0].g2;
 
@@ -209,7 +214,7 @@ class App {
 
 		UIEditor.render(ui);
 
-		UIProperties.render(ui, uimodal);
+		UIProperties.render(ui);
 
 		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH)){
 			if(ui.tab(Id.handle(), "File Browser")){
@@ -263,6 +268,7 @@ class App {
 
 		if(showFileBrowser) paddy.ui.UIFileBrowser.render(uimodal, g);
 		paddy.ui.UIMenu.render(uimodal, g);
+		if(UIPreference.show) paddy.ui.UIPreference.render(uimodal, g);
 	}
 
 	public function update() {

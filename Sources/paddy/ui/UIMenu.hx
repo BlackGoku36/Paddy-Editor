@@ -11,7 +11,6 @@ import paddy.files.Imports;
 
 enum MenuType {
 	File;
-	Editor;
 }
 
 @:access(zui.Zui)
@@ -20,7 +19,7 @@ class UIMenu {
 	static var modalW = 655;
 	static var modalH = 550;
 	static var modalHeaderH = 66;
-	static var modalRectW = 625; // No shadow
+	static var modalRectW = 625;
 	static var modalRectH = 545;
 
 	public static var onDone: String->Void = null;
@@ -41,9 +40,9 @@ class UIMenu {
 
 		ui.begin(g);
 		if (ui.window(Id.handle(), 3, 5, menuWidth, 25)) {
-			ui.row([1/10, 1/10, 1/10]);
+			ui.row([1/10, 1/10]);
 			if (ui.button("File")) menu = File;
-			if (ui.button("Editor")) menu = Editor;
+			if (ui.button("Preference")) UIPreference.show = true;
 		}
 		if(ui.inputStarted) menu == null;
 		ui.end(false);
@@ -82,22 +81,6 @@ class UIMenu {
 					}
 				}
 			}
-
-			ui.endRegion(false);
-		}
-		if(menu == Editor){
-			g.begin(false);
-
-			g.color = 0xff202020;
-			g.fillRect(63, 30, 120, 100);
-			outx = 63; outy = 30; outw = 120; outh = 100;
-
-			g.end();
-
-			ui.beginRegion(g, 65, 32, 116);
-
-			if (ui.button("Refresh UI")) paddy.Paddy.reloadUI();
-			if (ui.button("Export Config")) Export.exportConfig();
 
 			ui.endRegion(false);
 		}

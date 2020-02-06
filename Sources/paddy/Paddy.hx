@@ -19,6 +19,7 @@ class Paddy {
 		paddy.ui.UIEditor.editorHandle.redraws = 2;
 		paddy.ui.UIProperties.propsHandle.redraws = 2;
 		paddy.ui.UIOutliner.outlinerHandle.redraws = 2;
+		paddy.ui.UIPreference.winHandle.redraws = 2;
 	}
 
 	public static function changeTheme(ui:zui.Zui, theme:TTheme){

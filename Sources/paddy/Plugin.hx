@@ -10,7 +10,11 @@ class Plugin {
 	public var propTabUI: zui.Zui->Void = null;
 	public var propObjPanelUI: zui.Zui->Void = null;
 	public var propWinPanelUI: zui.Zui->Void = null;
+
+	@:deprecated
 	public var editorTabUI: zui.Zui->Void = null;
+
+	public var prefWinUI: zui.Zui->Void = null;
 	public var editorGridPanelUI: zui.Zui->Void = null;
 	public var editorRotPanelUI: zui.Zui->Void = null;
 	public var nodeMenuUI: zui.Zui->Void = null;

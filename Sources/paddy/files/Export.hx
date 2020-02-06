@@ -33,7 +33,7 @@ class Export{
 		App.projectPath = path;
 		paddy.Paddy.reloadUI();
 	}
-	
+
 	public static function exportConfig() {
 		App.configData.plugins = Plugin.getNames();
 		Krom.fileSaveBytes(Krom.getFilesLocation()+"/_config.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.configData)).getData());
@@ -49,6 +49,8 @@ class Export{
 		var newPath = path;
 		if(path!="") newPath = path+"/";
 		Krom.fileSaveBytes(newPath+App.scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.scene)).getData());
+		for(asset in App.scene.assets) asset.value = null;
+		// Krom.fileSaveBytes(newPath+App.scene.name+".pdy", org.msgpack.MsgPack.encode(App.scene).getData());
 	}
 
 	public static function exportWindow(path:String = "") {
