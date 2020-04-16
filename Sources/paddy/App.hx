@@ -285,7 +285,7 @@ class App {
 
 		if(selectedObj!=null) UIProperties.propsHandle.redraws = 2;
 
-		if(!UIEditor.editorLocked && !ObjectController.isManipulating && ui.inputDownR) {
+		if(!UIEditor.editorLocked && !ObjectController.isManipulating && ui.inputDownR && UIEditor.editorMode != Nodes) {
 			coffX += Std.int(ui.inputDX);
 			coffY += Std.int(ui.inputDY);
 		}
