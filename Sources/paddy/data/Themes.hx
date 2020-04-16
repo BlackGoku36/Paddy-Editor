@@ -21,9 +21,10 @@ class Themes {
 		SCROLL_W: 6,
 		TEXT_OFFSET: 8,
 		TAB_W: 12,
-		FILL_WINDOW_BG: true,
+		FILL_WINDOW_BG: false,
 		FILL_BUTTON_BG: true,
 		FILL_ACCENT_BG: false,
+		LINK_STYLE: Line,
 
 		WINDOW_BG_COL: 0xff333333,
 		WINDOW_TINT_COL: 0xffffffff,
@@ -39,6 +40,7 @@ class Themes {
 		SEPARATOR_COL: 0xff272727,
 		HIGHLIGHT_COL: 0xff205d9c,
 		CONTEXT_COL: 0xff222222,
+		PANEL_BG_COL: 0xff3b3b3b
 	};
 
 	public static var lightTheme: TTheme = {
@@ -54,9 +56,10 @@ class Themes {
 		SCROLL_W: 6,
 		TEXT_OFFSET: 8,
 		TAB_W: 12,
-		FILL_WINDOW_BG: true,
+		FILL_WINDOW_BG: false,
 		FILL_BUTTON_BG: true,
 		FILL_ACCENT_BG: false,
+		LINK_STYLE: Line,
 
 		WINDOW_BG_COL: Color.fromBytes(240, 240, 240),
 		WINDOW_TINT_COL: 0xffffffff,
@@ -72,5 +75,6 @@ class Themes {
 		SEPARATOR_COL: Color.fromBytes(220, 220, 220),
 		HIGHLIGHT_COL: Color.fromBytes(33, 231, 182),
 		CONTEXT_COL: Color.Black,
+		PANEL_BG_COL: 0xff3b3b3b
 	};
 }

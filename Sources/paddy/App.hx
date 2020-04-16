@@ -155,19 +155,8 @@ class App {
 
 		g.begin();
 		// Draw grid
-		if(UIEditor.editorMode == 0) g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
-		else {
-			var nodePanX = 0.0;
-			var nodePanY = 0.0;
-			if(UINodes.selectedNode != null) {
-				nodePanX = UINodes.selectedNode.nodes.panX * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
-				nodePanY = UINodes.selectedNode.nodes.panY * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
-			}
-			g.drawImage(grid, nodePanX, nodePanY);
-		}
-
-		if(UIEditor.editorMode == 0){
-			// Draw window in editor
+		if(UIEditor.editorMode == Game){
+			g.drawImage(grid, coffX % 40 - 40, coffY % 40 - 40);
 			g.drawRect(coffX, coffY, window.width, window.height);
 
 			for (object in scene.objects){
@@ -182,6 +171,15 @@ class App {
 			}
 
 			ObjectController.render(g);
+
+		} else {
+			var nodePanX = 0.0;
+			var nodePanY = 0.0;
+			if(UINodes.selectedNode != null) {
+				nodePanX = UINodes.selectedNode.nodes.panX * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
+				nodePanY = UINodes.selectedNode.nodes.panY * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
+			}
+			g.drawImage(grid, nodePanX, nodePanY);
 		}
 
 		var col = g.color;
@@ -242,7 +240,7 @@ class App {
 
 		UIAssets.render(ui);
 
-		if(UIEditor.editorMode == 1) UINodes.renderNodesMenu(ui);
+		if(UIEditor.editorMode == Nodes) UINodes.renderNodesMenu(ui);
 
 		ui.end();
 

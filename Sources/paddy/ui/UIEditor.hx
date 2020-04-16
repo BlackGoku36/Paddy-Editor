@@ -4,6 +4,11 @@ package paddy.ui;
 import zui.Id;
 import zui.Zui;
 
+enum EditorMode {
+	Game;
+	Nodes;
+}
+
 class UIEditor {
 
 	public static var editorX = 0;
@@ -13,15 +18,16 @@ class UIEditor {
 
 	public static var editorLocked:Bool = false;
 
-	public static var editorMode = 0;
+	public static var editorMode = Game;
 
 	public static var editorHandle = Id.handle();
 	public static var editorTabH = Id.handle();
 
 	public static function render(ui: Zui){
 		if(ui.window(editorHandle, UIOutliner.outlinerW, 30, kha.System.windowWidth()-UIProperties.propsW-UIOutliner.outlinerW, editorH)){
-			if(ui.tab(editorTabH, "2D")){
-				editorMode = 0;
+			if(ui.tab(editorTabH, "Game")){
+				editorMode = Game;
+				editorH = 55;
 				ui.row([1/20, 1/15, 1/10]);
 				ui.text("Editor");
 				editorLocked = ui.check(Id.handle({selected:false}), "Lock");
@@ -31,7 +37,8 @@ class UIEditor {
 				}
 			}
 			if(ui.tab(editorTabH, "Nodes")){
-				editorMode = 1;
+				editorMode = Nodes;
+				editorH = UIOutliner.outlinerH;
 				paddy.ui.UINodes.renderNodes(ui);
 			}
 		}
