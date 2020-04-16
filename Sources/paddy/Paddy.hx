@@ -35,6 +35,7 @@ class Paddy {
 		ui.t.SCROLL_W = theme.SCROLL_W;
 		ui.t.TEXT_OFFSET = theme.TEXT_OFFSET;
 		ui.t.TAB_W = theme.TAB_W;
+		ui.t.LINK_STYLE = theme.LINK_STYLE;
 		ui.t.FILL_WINDOW_BG = theme.FILL_WINDOW_BG;
 		ui.t.FILL_BUTTON_BG = theme.FILL_BUTTON_BG;
 		ui.t.FILL_ACCENT_BG = theme.FILL_ACCENT_BG;
