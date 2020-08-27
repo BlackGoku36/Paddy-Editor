@@ -8,7 +8,4 @@
 ![](screenshot1.png)
 <sub>Main Editor with Rice2D plugin activated</sub>
 
-![](screenshot2.png)
-<sub>Nodes Editor with Rice2D plugin activated</sub>
-
 </div>
