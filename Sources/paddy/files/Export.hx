@@ -1,9 +1,12 @@
 package paddy.files;
 
 // Editor
-import paddy.ui.UINodes;
 import paddy.data.Data.AssetData;
 import paddy.data.Data.ScriptData;
+import paddy.System;
+// import sys.io.File;
+import haxe.io.Bytes;
+import haxe.Json;
 
 class Export{
 
@@ -14,7 +17,7 @@ class Export{
 	#end
 
 	public static function exportPaddy(path:String = "") {
-		Krom.sysCommand('mkdir $path/Assets');
+		System.command('mkdir $path/Assets');
 		copyAssets('$path/Assets/');
 		adjustObjectSpritePath(path);
 		adjustAssetsPath(path);
@@ -25,55 +28,45 @@ class Export{
 		if(App.paddydata.window =="") App.paddydata.window = "window.json";
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
+		System.fileSaveBytes(newPath+"paddy.json", Bytes.ofString(Json.stringify(App.paddydata)));
 		exportWindow(path);
 		App.scene.assets = Assets.assets;
 		exportScene(path);
-		exportNodes('$path/Assets');
 		App.projectPath = path;
 		paddy.Paddy.reloadUI();
 	}
 
 	public static function exportConfig() {
 		App.configData.plugins = Plugin.getNames();
-		Krom.fileSaveBytes(Krom.getFilesLocation()+"/_config.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.configData)).getData());
+		trace(System.programPath());
+		System.fileSaveBytes(System.programPath() +"/_config.json", Bytes.ofString(Json.stringify(App.configData)));
 	}
 
 	public static function copyAssets(path:String) {
 		for(asset in Assets.assets){
-			Krom.sysCommand('$copycmd ' + asset.path + ' $path');
+			System.command('$copycmd ' + asset.path + ' $path');
 		}
 	}
 
 	public static function exportScene(path:String = "") {
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+App.scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.scene)).getData());
 		for(asset in App.scene.assets) asset.value = null;
-		// Krom.fileSaveBytes(newPath+App.scene.name+".pdy", org.msgpack.MsgPack.encode(App.scene).getData());
+		System.fileSaveBytes(newPath+App.scene.name+".json", Bytes.ofString(Json.stringify(App.scene)));
 	}
 
 	public static function exportWindow(path:String = "") {
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+"window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.window)).getData());
+		System.fileSaveBytes(newPath+"window.json", Bytes.ofString(Json.stringify(App.window)));
 	}
 
-	public static function exportNodes(path:String = "") {
-		var newPath = path;
-		if(path!="") newPath = path+"/";
-		for(nodes in UINodes.nodesArray){
-			var name = nodes.name;
-			Krom.fileSaveBytes(newPath+'$name.json', haxe.io.Bytes.ofString(haxe.Json.stringify(nodes.nodeCanvas)).getData());
-		}
+	public static function exportJsonFile(path:String, data:Dynamic) {
+		System.fileSaveBytes(path, Bytes.ofString(Json.stringify(data)));
 	}
 
-	public static function exportJsonFile(name:String, data:Dynamic) {
-		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(haxe.Json.stringify(data)).getData());
-	}
-
-	public static function exportFile(name:String, data:String) {
-		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(data).getData());
+	public static function exportFile(path:String, data:String) {
+		System.fileSaveBytes(path, Bytes.ofString(data));
 	}
 
 	static function adjustAssetsPath(newPath:String){

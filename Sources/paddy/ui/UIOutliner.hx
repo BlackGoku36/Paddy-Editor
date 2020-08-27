@@ -1,9 +1,9 @@
 package paddy.ui;
 
 // Zui
+import kha.Color;
 import zui.Id;
 import zui.Zui;
-import zui.Nodes;
 
 // Editor
 import paddy.data.Data;
@@ -11,14 +11,22 @@ import paddy.data.Data;
 @:access(zui.Zui)
 class UIOutliner {
 
-    public static var outlinerW = 200; 
-    public static var outlinerH = 675;
+	public static var outlinerW(get, null):Int;
+	static function get_outlinerW() {
+		return Std.int(kha.System.windowWidth()*0.2);
+	}
+	public static var outlinerH(get, null):Int;
+	static function get_outlinerH() {
+		return Std.int(kha.System.windowHeight()*0.7);
+	}
     public static var outlinerHandle = Id.handle();
     public static var outlinerTab = Id.handle({position: 0});
     
     public static function render(ui: Zui) {
 
-        if(ui.window(outlinerHandle, 0, 30, Std.int(outlinerW*ui.SCALE()), outlinerH)){
+        if(ui.window(outlinerHandle, 0, Std.int(UIMenu.menuHeight*ui.SCALE()), outlinerW, outlinerH-Std.int(UIMenu.menuHeight*ui.SCALE()))){
+			ui.g.color = ui.t.WINDOW_BG_COL;
+			ui.g.fillRect(0, 0, kha.System.windowWidth(), kha.System.windowHeight());
 			if(ui.tab(outlinerTab, "Scene")){
 				ui.row([3/4, 1/4]);
 				var name = ui.textInput(Id.handle({text:"Object"}), "Name");
@@ -36,78 +44,31 @@ class UIOutliner {
 					App.selectedObj = object;
 				}
 				function drawList(h:zui.Zui.Handle, objData:ObjectData) {
-					if (App.selectedObj == objData) {
-						ui.g.color = 0xff205d9c;
-						ui.g.fillRect(0, ui._y-2, ui._windowW, ui.t.ELEMENT_H+4);
-						ui.g.color = 0xffffffff;
-					}
 					var started = ui.getStarted();
 					// Select
 					if (started && !ui.inputDownR) {
 						App.selectedObj = objData;
 					}
-					ui._x += 18; // Sign offset
-					ui.row([1/7, 1/3, 1/7, 1/7, 1/7]);
+
+					ui.row([1/6, 1/3, 1/6, 1/6, 1/6]);
 					if(objData!=null){
 						objData.visible = ui.check(Id.handle().nest(objData.id, {selected: true}), "");
-						ui.text(objData.name);
-						if(ui.button("<")) moveObjectInList(1);
-						if(ui.button(">")) moveObjectInList(-1);
+						if (App.selectedObj == objData) {
+							ui.text(objData.name, Left, 0xff205d9c);
+						}else{
+							ui.text(objData.name);
+						}
+						if(ui.button("Up")) moveObjectInList(1);
+						if(ui.button("Down")) moveObjectInList(-1);
 						if(ui.button("X")){
 							App.scene.objects.remove(objData);
 							App.selectedObj = null;
 						}
 					}
-					ui._x -= 18;
 				}
 				for (i in 0...App.scene.objects.length) {
 					var objData = App.scene.objects[App.scene.objects.length - 1 - i];
 					drawList(Id.handle(), objData);
-				}
-			}
-
-			if(ui.tab(outlinerTab, "Nodes")){
-				ui.row([3/4, 1/4]);
-				var nodeName = ui.textInput(Id.handle({text: "NodeGroup"}), "Name");
-				if(ui.button("+")){
-					var nData = {
-						name: nodeName,
-						nodes: new Nodes(),
-						nodeCanvas: {
-							name: "My Nodes",
-							nodes: [],
-							links: []
-						}
-					}
-					UINodes.nodesArray.push(nData);
-					UINodes.selectedNode = nData;
-				}
-
-				function drawList(h:zui.Zui.Handle, nodeData:NodeData) {
-					if (UINodes.selectedNode == nodeData) {
-						ui.g.color = 0xff205d9c;
-						ui.g.fillRect(0, ui._y-2, ui._windowW, ui.t.ELEMENT_H+4);
-						ui.g.color = 0xffffffff;
-					}
-					var started = ui.getStarted();
-					// Select
-					if (started && !ui.inputDownR) {
-						UINodes.selectedNode = nodeData;
-					}
-					ui._x += 18; // Sign offset
-					if(nodeData!=null){
-						ui.row([3/5, 1/5]);
-						ui.text(nodeData.name);
-						if(ui.button("X")){
-							UINodes.nodesArray.remove(nodeData);
-							UINodes.selectedNode = null;
-						}
-					}
-					ui._x -= 18;
-				}
-				for (i in 0...UINodes.nodesArray.length) {
-					var nodeData = UINodes.nodesArray[UINodes.nodesArray.length - 1 - i];
-					drawList(Id.handle(), nodeData);
 				}
 			}
 

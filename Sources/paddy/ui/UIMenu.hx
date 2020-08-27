@@ -1,6 +1,7 @@
 package paddy.ui;
 
 // Zui
+import kha.System;
 import zui.Zui;
 import zui.Id;
 import zui.Ext;
@@ -32,15 +33,22 @@ class UIMenu {
 	public static var outy = 0;
 	public static var outw = 0;
 	public static var outh = 0;
+	public static var menuWidth(get, null):Int;
+	static function get_menuWidth() {
+		return System.windowWidth();
+	}
+	public static var menuHeight(get, null):Int;
+	static function get_menuHeight() {
+		return 25;
+	}
 
 	public static function render(ui:Zui, g:kha.graphics2.Graphics) {
-		var appw = kha.System.windowWidth();
-		var apph = kha.System.windowHeight();
-		var menuWidth = 600;
 
 		ui.begin(g);
-		if (ui.window(Id.handle(), 3, 5, menuWidth, 25)) {
-			ui.row([1/10, 1/10]);
+		if (ui.window(Id.handle(), 3, 5, menuWidth, Std.int(menuHeight*ui.SCALE()))) {
+			ui.g.color = ui.t.WINDOW_BG_COL;
+			ui.g.fillRect(3, 5, menuWidth, menuHeight);
+			ui.row([1/15, 1/15]);
 			if (ui.button("File")) menu = File;
 			if (ui.button("Preference")) UIPreference.show = true;
 		}

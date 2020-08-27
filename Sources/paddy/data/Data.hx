@@ -1,9 +1,5 @@
 package paddy.data;
 
-// Zui
-import zui.Nodes;
-import zui.Nodes.TNodeCanvas;
-
 typedef ConfigData = {
 	var plugins: Array<String>;
 	var uiScale: Float;
@@ -53,12 +49,6 @@ typedef ObjectData = {
 	var ?spriteRef: String;
 	var ?color: Array<Int>;
 	var ?scripts: Array<ScriptData>;
-}
-
-typedef NodeData = {
-	var name: String;
-	var nodes: Nodes;
-	var nodeCanvas: TNodeCanvas;
 }
 
 typedef ScriptData = {

@@ -194,20 +194,24 @@ class ObjectController{
 
 					if (dragRight) {
 						transformDelta.x = calculateTransformDelta(transformDelta.x, transformInitPos.x + transformInitSize.x);
-						obj.width = Std.int(transformInitSize.x + transformDelta.x);
+						var w = Std.int(transformInitSize.x + transformDelta.x);
+						obj.width = w >= 0 ? w : 0;
 					} else if (dragLeft) {
 						transformDelta.x = calculateTransformDelta(transformDelta.x, transformInitPos.x);
 						obj.x = transformInitPos.x + transformDelta.x;
-						obj.width = Std.int(transformInitSize.x - transformDelta.x);
+						var w = Std.int(transformInitSize.x - transformDelta.x);
+						obj.width = w >= 0 ? w : 0;
 					}
 					if (dragBottom) {
 						transformDelta.y = calculateTransformDelta(transformDelta.y, transformInitPos.y + transformInitSize.y);
-						obj.height = Std.int(transformInitSize.y + transformDelta.y);
+						var h = Std.int(transformInitSize.y + transformDelta.y);
+						obj.height = h >= 0 ? h : 0;
 					}
 					else if (dragTop) {
 						transformDelta.y = calculateTransformDelta(transformDelta.y, transformInitPos.y);
 						obj.y = transformInitPos.y + transformDelta.y;
-						obj.height = Std.int(transformInitSize.y - transformDelta.y);
+						var h = Std.int(transformInitSize.y - transformDelta.y);
+						obj.height = h >= 0 ? h : 0;
 					}
 
 

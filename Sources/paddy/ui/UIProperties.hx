@@ -1,5 +1,6 @@
 package paddy.ui;
 
+import kha.System;
 import zui.Ext;
 import zui.Id;
 import zui.Zui;
@@ -11,8 +12,14 @@ import paddy.data.Data.ObjectData;
 @:access(zui.Zui)
 class UIProperties {
 
-	public static var propsW = 200;
-	public static var propsH = 600;
+	public static var propsW(get, null):Int;
+	static function get_propsW() {
+		return Std.int(System.windowWidth() * 0.2);
+	}
+	public static var propsH(get, null):Int;
+	static function get_propsH() {
+		return Std.int(System.windowHeight());
+	}
 
 	public static var propsHandle = Id.handle();
 
@@ -21,14 +28,15 @@ class UIProperties {
 	public static var propPanelWinH = Id.handle({selected:true});
 	public static var propPanelObjH = Id.handle({selected:true});
 
-	public static var nodeSlots = [];
-
 	public static function render(ui:Zui) {
 		var window = App.window;
 
 		var selectedObj = App.selectedObj;
+		var h = (UIStatusBar.barHeight*ui.SCALE())+(UIMenu.menuHeight*ui.SCALE());
 
-		if(ui.window(propsHandle, kha.System.windowWidth()-propsW, 30, Std.int(propsW*ui.SCALE()), propsH)){
+		if(ui.window(propsHandle, kha.System.windowWidth()-propsW, Std.int(UIMenu.menuHeight*ui.SCALE()), propsW, propsH-Std.int(h))){
+			ui.g.color = ui.t.WINDOW_BG_COL;
+			ui.g.fillRect(0, 0, kha.System.windowWidth(), kha.System.windowHeight());
 			if(ui.tab(propTabHandle, "Properties")){
 				if(ui.panel(propPanelWinH, "Window")){
 					ui.indent();
@@ -103,21 +111,6 @@ class UIProperties {
 
 						obj.animate = ui.check(Id.handle().nest(id, {selected: false}), "Animate");
 
-						if(ui.panel(Id.handle(), "Nodes")){
-							if(UINodes.nodesArray.length != 0){
-								if(ui.button("Add")) obj.scripts.push({name: " ", scriptRef: " "});
-								for (slot in 0...obj.scripts.length){
-									var nodesHandle = Id.handle().nest(slot, {position: 0});
-									ui.combo(nodesHandle, UINodes.getNodesArrayNames(), Right);
-									obj.scripts[slot] = {
-										name: UINodes.getNodesArrayNames()[nodesHandle.position],
-										scriptRef: UINodes.getNodesArrayNames()[nodesHandle.position]+".json"
-									}
-								}
-							}else{
-								ui.text("Create nodes first!");
-							}
-						}
 						for (value in paddy.Plugin.plugins) if (value.propObjPanelUI != null) value.propObjPanelUI(ui);
 
 						ui.unindent();

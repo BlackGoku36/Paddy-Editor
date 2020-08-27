@@ -1,7 +1,8 @@
 package paddy;
 
 // Kha
-import zui.Popup;
+import paddy.ui.UIStatusBar;
+import kha.Color;
 import kha.Framebuffer;
 
 // Zui
@@ -12,7 +13,6 @@ import zui.Zui;
 // Editor
 import paddy.data.Data;
 import paddy.ui.UIMenu;
-import paddy.ui.UINodes;
 import paddy.ui.UIAssets;
 import paddy.ui.UIEditor;
 import paddy.files.Export;
@@ -31,14 +31,6 @@ class App {
 
 	public static var projectPath:String = "";
 
-	#if kha_windows
-	public static var platform = "windows";
-	#elseif kha_linux
-	public static var platform = "linux";
-	#else
-	public static var platform = "osx";
-	#end
-
 	var ww = kha.System.windowWidth();
 	var wh = kha.System.windowHeight();
 
@@ -56,9 +48,14 @@ class App {
 	public static var useRotationSteps:Bool = false;
 	public static var rotationSteps:Int = 15;
 
-	var assetW = 500; var assetH = 100;
-	public static var fileW = 200;
-	public static var fileH = 100;
+	public static var fileBrowserW(get, null):Int;
+	static function get_fileBrowserW() {
+		return Std.int(kha.System.windowWidth()*0.2);
+	}
+	public static var fileBrowserH(get, null):Int;
+	static function get_fileBrowserH() {
+		return Std.int((kha.System.windowHeight()*0.3));
+	}
 
 	public static var assetsWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
@@ -97,21 +94,21 @@ class App {
 
 	public static var selectedImage = null;
 
-	public static var modeHandle = Id.handle();
-	public static var buildOptions = ["Build"];
-	public static var buildMode = 0;
-	public static var modeComboHandle = Id.handle({position: 0});
-
 	public function new() {
-		kha.Assets.loadEverything(function (){
-			ui = new Zui({font: kha.Assets.fonts.mainfont});
-			uimodal = new Zui({font: kha.Assets.fonts.mainfont});
-			paddy.Paddy.changeTheme(ui, paddy.data.Themes.darkTheme);
-			paddy.Paddy.changeTheme(uimodal, paddy.data.Themes.darkTheme);
-			paddy.ObjectController.ui = ui;
-		});
-		UIEditor.editorX = kha.System.windowWidth() - UIEditor.editorW - UIProperties.propsW;
-		UIEditor.editorY = 60;
+		// kha.Assets.loadEverything(function (){
+			kha.Assets.loadFontFromPath("mainfont.ttf", (font)->{
+
+				ui = new Zui({font: font, scaleFactor: 1.7});
+				uimodal = new Zui({font: font, scaleFactor:1.7});
+				paddy.Paddy.changeTheme(ui, paddy.data.Themes.darkTheme);
+				paddy.Paddy.changeTheme(uimodal, paddy.data.Themes.darkTheme);
+				paddy.ObjectController.ui = ui;
+				UIEditor.editorX = kha.System.windowWidth() - UIEditor.editorW - UIProperties.propsW;
+				UIEditor.editorY = 60;
+				coffX = UIEditor.editorX + 20;
+				coffY = UIMenu.menuHeight*ui.SCALE()+UIEditor.editorH*ui.SCALE()+20;
+			});
+		// });
 	}
 
 	function resize() {
@@ -172,41 +169,19 @@ class App {
 
 			ObjectController.render(g);
 
-		} else {
-			var nodePanX = 0.0;
-			var nodePanY = 0.0;
-			if(UINodes.selectedNode != null) {
-				nodePanX = UINodes.selectedNode.nodes.panX * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
-				nodePanY = UINodes.selectedNode.nodes.panY * UINodes.selectedNode.nodes.SCALE() % 40 - 40;
-			}
-			g.drawImage(grid, nodePanX, nodePanY);
 		}
 
 		var col = g.color;
 		g.color = 0xff323232;
 		g.fillRect(0, 30, UIOutliner.outlinerW, UIOutliner.outlinerH);
 		g.fillRect(kha.System.windowWidth()-UIProperties.propsW, 30, UIProperties.propsW, kha.System.windowHeight());
-		g.fillRect(fileW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-fileW, kha.System.windowHeight()-UIOutliner.outlinerH);
-		g.fillRect(0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH);
+		g.fillRect(fileBrowserW, UIOutliner.outlinerH, kha.System.windowWidth()-UIProperties.propsW-fileBrowserW, kha.System.windowHeight()-UIOutliner.outlinerH);
+		g.fillRect(0, UIOutliner.outlinerH, fileBrowserW, kha.System.windowHeight()-UIOutliner.outlinerH);
 		g.fillRect(0, 0, kha.System.windowWidth(), 30);
 		g.color = col;
 		g.end();
 
 		ui.begin(g);
-
-		if(ui.window(Id.handle(), kha.System.windowWidth()-500, 0, 200, 30)){
-			ui.row([1/5, 4/5]);
-			if(ui.button("=>")){
-				if(buildMode == 0){
-					Export.exportScene();
-					Export.exportWindow();
-				}else{
-					for (plug in Plugin.plugins) plug.executeRunUI();
-				}
-			}
-			ui.combo(modeComboHandle, buildOptions, Right);
-			if (modeComboHandle.changed) buildMode = modeComboHandle.position;
-		}
 
 		UIOutliner.render(ui);
 
@@ -214,7 +189,11 @@ class App {
 
 		UIProperties.render(ui);
 
-		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH)){
+		UIStatusBar.render(ui);
+
+		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileBrowserW, fileBrowserH-Std.int(UIStatusBar.barHeight*ui.SCALE()))){
+			ui.g.color = ui.t.WINDOW_BG_COL;
+			ui.g.fillRect(0, 0, kha.System.windowWidth(), kha.System.windowHeight());
 			if(ui.tab(Id.handle(), "File Browser")){
 				ui.row([3/5, 2/5]);
 				if(ui.button("Open Browser")){
@@ -239,8 +218,6 @@ class App {
 		}
 
 		UIAssets.render(ui);
-
-		if(UIEditor.editorMode == Nodes) UINodes.renderNodesMenu(ui);
 
 		ui.end();
 
@@ -285,7 +262,7 @@ class App {
 
 		if(selectedObj!=null) UIProperties.propsHandle.redraws = 2;
 
-		if(!UIEditor.editorLocked && !ObjectController.isManipulating && ui.inputDownR && UIEditor.editorMode != Nodes) {
+		if(!UIEditor.editorLocked && !ObjectController.isManipulating && ui.inputDownR) {
 			coffX += Std.int(ui.inputDX);
 			coffY += Std.int(ui.inputDY);
 		}

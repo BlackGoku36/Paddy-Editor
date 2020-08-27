@@ -1,6 +1,7 @@
 package paddy;
 
 // Zui
+import paddy.ui.UIEditor;
 import zui.Themes;
 
 typedef PaddyData = {
@@ -13,8 +14,7 @@ class Paddy {
 
 	public static function reloadUI(){
 		App.assetsWinH.redraws = 2;
-		App.modeHandle.redraws = 2;
-		paddy.ui.UINodes.nodeHandle.redraws = 2;
+		paddy.ui.UIEditor.modeHandle.redraws = 2;
 		paddy.ui.UIAssets.assetHandle.redraws = 2;
 		paddy.ui.UIEditor.editorHandle.redraws = 2;
 		paddy.ui.UIProperties.propsHandle.redraws = 2;

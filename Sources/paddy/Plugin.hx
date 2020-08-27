@@ -17,7 +17,6 @@ class Plugin {
 	public var prefWinUI: zui.Zui->Void = null;
 	public var editorGridPanelUI: zui.Zui->Void = null;
 	public var editorRotPanelUI: zui.Zui->Void = null;
-	public var nodeMenuUI: zui.Zui->Void = null;
 	public var assetWinUI: zui.Zui->Void = null;
 	public var outlinerWinUI: zui.Zui->Void = null;
 	public var update:Void->Void = null;
@@ -64,11 +63,9 @@ class PaddyBridge {
 	public static var Assets = paddy.Assets;
 	public static var UtilMath = paddy.util.Math;
 	public static var Export = paddy.files.Export;
-	public static var NodeCreator = paddy.nodes.NodeCreator;
 	public static var UIAssets = paddy.ui.UIAssets;
 	public static var UIProperties = paddy.ui.UIProperties;
 	public static var UIOutliner = paddy.ui.UIOutliner;
-	public static var UINodes = paddy.ui.UINodes;
 	public static var UIFileBrowser = paddy.ui.UIFileBrowser;
 	public static var Path = paddy.files.Path;
 }
@@ -82,7 +79,7 @@ class UIBridge {
 @:expose("kha")
 class KhaBridge {
 	public static var Assets = kha.Assets;
-	public static var TKrom = Krom;
+	public static var System = paddy.System;
 	public static var FastVector2 = kha.math.FastVector2;
 }
 

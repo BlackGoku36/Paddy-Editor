@@ -41,13 +41,11 @@ class UIFileBrowser {
 				var pathHandle = Id.handle({text:path});
 				pathHandle.text = path;
 				var dirLoc = ui.textInput(pathHandle, "Path");
-				if(ui.button("Create Directory")) if(dirLoc!="") Krom.sysCommand('mkdir $dirLoc');
+				if(ui.button("Create Directory")) if(dirLoc!="") System.command('mkdir $dirLoc');
 			}
 			path = Ext.fileBrowser(ui, Id.handle());
 		}
 		ui.end(false);
-
-		g.begin(false);
 
 		ui.beginRegion(g, rightRect - 100, bottomRect - 30, 100);
 		if (ui.button("OK")) {
@@ -61,7 +59,5 @@ class UIFileBrowser {
 			App.showFileBrowser = false;
 		}
 		ui.endRegion();
-
-		g.end();
 	}
 }

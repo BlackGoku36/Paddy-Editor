@@ -4,14 +4,13 @@ import paddy.data.Themes;
 import zui.Id;
 import zui.Zui;
 import kha.graphics2.Graphics;
-import zui.Popup;
 
 @:access(zui.Zui)
 class UIPreference {
 
     public static var show = false;
     static var w = 900;
-    static var h = 200;
+    static var h = 300;
     static var titleHandle = Id.handle();
 
     public static var themesName = ["-!-Light-!-", "Dark"];
@@ -24,16 +23,20 @@ class UIPreference {
     public static function render(ui:Zui, g:Graphics) {
         var appW = kha.System.windowWidth();
         var appH = kha.System.windowHeight();
-        var x = Std.int(appW / 2 - (w * ui.SCALE()) / 2);
-		var y = Std.int(appH / 2 - (h * ui.SCALE()) / 2);
+        var x = Std.int(appW / 2 - w / 2);
+		var y = Std.int(appH / 2 - h / 2);
         
         ui.begin(g);
-        if(ui.window(titleHandle, x, y, w, 28)){
+        if(ui.window(titleHandle, x, y, w, Std.int(28*ui.SCALE()))){
+			ui.g.color = ui.t.WINDOW_BG_COL;
+			ui.g.fillRect(0, 0, kha.System.windowWidth(), kha.System.windowHeight());
             ui.row([1/13, 12/13]);
             if(ui.button("X")) show = false;
             ui.text("Preference", Align.Center);
         }
-        if(ui.window(winHandle, x, y+28, w, 250)){
+        if(ui.window(winHandle, x, Std.int(y+(28*ui.SCALE())), w, h)){
+			ui.g.color = ui.t.WINDOW_BG_COL;
+			ui.g.fillRect(0, 0, kha.System.windowWidth(), kha.System.windowHeight());
             if(ui.tab(tabhandle, "Editor", true)){
                 if(ui.panel(Id.handle({selected:true}), "UI")){
 					ui.indent();
