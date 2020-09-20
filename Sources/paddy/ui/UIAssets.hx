@@ -76,11 +76,11 @@ class UIAssets {
 							case "json":
 								ui.image(Assets.jsonImg, 0xffffffff, 50, 0, 0, Assets.jsonImg.width, Assets.jsonImg.height);
 								ui.text(Path.getNameFromPath(asset.path), Center);
-								ui._y += Std.int(Assets.docImg.height/50*ui.SCALE()+25);
+								ui._y += Std.int(Assets.jsonImg.height/50*ui.SCALE()+25);
 							case "code":
 								ui.image(Assets.codeImg, 0xffffffff, 50, 0, 0, Assets.codeImg.width, Assets.codeImg.height);
 								ui.text(Path.getNameFromPath(asset.path), Center);
-								ui._y += Std.int(Assets.docImg.height/50*ui.SCALE()+25);
+								ui._y += Std.int(Assets.jsonImg.height/50*ui.SCALE()+25);
 						}
 					}
 					ui.unindent();
