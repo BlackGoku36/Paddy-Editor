@@ -6,5 +6,4 @@ project.addAssets('assets/**', {
 });
 project.addSources('Sources');
 project.addLibrary('zui');
-project.addLibrary('msgpack-haxe');
 resolve(project);
