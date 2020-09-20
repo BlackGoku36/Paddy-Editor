@@ -249,7 +249,7 @@ class App {
 	public function update() {
 		if(ui == null)return;
 
-		if(ui.inputStarted && !paddy.util.Math.hitbox(ui, UIMenu.outx, UIMenu.outy, UIMenu.outw, UIMenu.outh, 0)){
+		if(ui.inputStarted && !paddy.util.Math.hitbox(ui, UIMenu.x, UIMenu.y, UIMenu.w, UIMenu.h, 0)){
 			if(UIMenu.menu != null) UIMenu.menu = null;
 		}
 
